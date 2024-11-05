@@ -26,9 +26,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('role_id')->on('roles');
-            $table->foreign('department_id')->references('department_id')->on('departments');
-            $table->foreign('sector_id')->references('sector_id')->on('sectors');
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('sector_id')->references('id')->on('sectors');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

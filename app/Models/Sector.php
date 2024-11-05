@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Sector extends Model
 {
     //
     protected $fillable = [
 
-        'role_name'
+        'sector_name',
+        'department_id',
     ];
-
 }

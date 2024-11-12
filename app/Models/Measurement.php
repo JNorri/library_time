@@ -9,6 +9,7 @@ class Measurement extends Model
     //
     protected $fillable = [
 
-        'measurement_name'
+        'measurement_name',
+        'measurement_unit'
     ];
 }

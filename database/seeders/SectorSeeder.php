@@ -19,6 +19,7 @@ class SectorSeeder extends Seeder
         $scientificMethodological = Department::where('department_name', 'Научно-методический отдел')->first();
         $acquisitionScientific = Department::where('department_name', 'Отдел комплектования и научной обработки фондов')->first();
         $educationalFictionLiterature = Department::where('department_name', 'Отдел обслуживания учебной и художественной литературой')->first();
+        $general = Department::where('department_name', 'Общие')->first();
 
         $informationBibliographic = Sector::create(array(
             'sector_name' => 'Сектор информационно-библиографической и наукометрической работы',
@@ -48,6 +49,11 @@ class SectorSeeder extends Seeder
         $rareValuable = Sector::create(array(
             'sector_name' => 'Cектор редких и ценных изданий',
             'department_id' => $educationalFictionLiterature->id,
+        ));
+
+        $reRegisterReader = Sector::create(array(
+            'sector_name' => 'Cектор регистрации читателей',
+            'department_id' => $general->id,
         ));
     }
 }

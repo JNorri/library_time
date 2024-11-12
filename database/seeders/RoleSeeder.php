@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         //
         // Уровень привелегий
-        $administrator_level = Role::create(array(
+        $headDepartment = Role::create(array(
             'role_name' => 'Заведующий отделом'
         ));
 

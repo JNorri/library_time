@@ -14,6 +14,10 @@ class DepartmentSeeder extends Seeder
     public function run(): void
     {
         //
+        $general = Department::create(array(
+            'department_name' => 'Общие'
+        ));
+
         $scientificMethodological = Department::create(array(
             'department_name' => 'Научно-методический отдел'
         ));

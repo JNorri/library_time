@@ -11,24 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
+            $table->timestamp('date_of_birth');
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('department_id');
-            $table->unsignedBigInteger('sector_id')->nullable();
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
 
-            $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('department_id')->references('id')->on('departments');
-            $table->foreign('sector_id')->references('id')->on('sectors');
+            // Foreign Keys
+            $table->foreign('role_id')->references('role_id')->on('roles');
+            $table->foreign('department_id')->references('department_id')->on('departments');
+            $table->foreign('sector_id')->references('sector_id')->on('sectors');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -39,7 +39,7 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignId('employee_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
@@ -52,7 +52,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('employees');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }

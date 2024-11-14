@@ -1,0 +1,11 @@
+POST http://127.0.0.1/sanctum/token HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "atochin99@mail.ru",
+    "password": "atochin12345",
+    "device_name": "PC"
+}
+
+12|IaaH9jyHPRtVKEfcpDUfRddzrZ8jJiancBWYak9m

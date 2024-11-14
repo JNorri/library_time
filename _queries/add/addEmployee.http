@@ -1,0 +1,9 @@
+PUT http://127.0.0.1:8000/api/privelege/add HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 9rfBbSYgvA6k6m4L7R1KhG4HlEvk3NvdU8GkTFuY
+
+
+{
+    "privelege_name" : "new_privelege1"
+}

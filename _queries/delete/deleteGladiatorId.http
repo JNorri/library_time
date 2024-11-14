@@ -1,0 +1,4 @@
+GET http://127.0.0.1:8000/api/gladiator/delete/13 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 11|VYjyf68Gz1gOX7aGEkFxeKqrpoZ94jYKMtt5UZCD

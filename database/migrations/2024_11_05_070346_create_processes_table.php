@@ -12,19 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('processes', function (Blueprint $table) {
-            $table->id();
+            $table->id('process_id');
             $table->text('process_name');
             $table->unsignedBigInteger('measurement_id')->nullable();
-            $table->float('time_in_hours')->nullable();
-            $table->boolean('process_is_daily');
-            $table->boolean('requires_description')->default(false);
+            $table->boolean('is_daily')->default(true);
+            $table->boolean('require_description')->default(false);
             $table->unsignedBigInteger('department_id');
-            $table->unsignedBigInteger('sector_id')->nullable();
+            $table->decimal('process_duration', 5, 3)->default(60);
 
-            // Foreign Key
-            $table->foreign('measurement_id')->references('id')->on('measurements');
-            $table->foreign('department_id')->references('id')->on('departments');
-            $table->foreign('sector_id')->references('id')->on('sectors');
+            // Foreign Keys
+            $table->foreign('measurement_id')->references('measurement_id')->on('measurements');
+            $table->foreign('department_id')->references('department_id')->on('departments');
         });
     }
 
@@ -33,6 +31,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('processes', function (Blueprint $table) {
+            $table->dropForeign(['measurement_id']);
+            $table->dropForeign(['department_id']);
+        });
+
         Schema::dropIfExists('processes');
     }
 };

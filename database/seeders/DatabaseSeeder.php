@@ -3,11 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\Measurement;
 use App\Models\Process;
-use App\Models\Role;
-use App\Models\Sector;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,12 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(Department::class);
-        $this->call(Measurement::class);
-        $this->call(Sector::class);
-        $this->call(Role::class);
-        $this->call(User::class);
-        $this->call(Process::class);
+        $this->call(DepartmentSeeder::class);
+        $this->call(MeasurementSeeder::class);
+        $this->call(EmployeeSeeder::class);
+        $this->call(ProcessSeeder::class);
+        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call(EmployeeProcessSeeder::class);
+        $this->call(ProcessEmployeeSeeder::class);
+        $this->call(EmployeeDepartmentSeeder::class);
 
 
 

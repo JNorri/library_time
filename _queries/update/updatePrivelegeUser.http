@@ -1,0 +1,10 @@
+PUT http://127.0.0.1/api/privelege/update HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 8|5QIGYnI6QzDcPXUsnbwJgj42QwHFKArGptyhMaOd
+
+
+{
+    "id":4,
+    "privelege_name" : "old_privelegeORNEW?11111111"
+}

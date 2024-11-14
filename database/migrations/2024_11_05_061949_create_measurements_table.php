@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('measurements', function (Blueprint $table) {
             $table->id('measurement_id');
             $table->string('measurement_name');
-            $table->text('measurement_description');
-             
+            $table->text('measurement_description')->nullable();
         });
     }
 

@@ -1,0 +1,14 @@
+PUT http://127.0.0.1:8000/api/user/update HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 2|J6bkcrqQFPP4G0z4Kdh2cvs7I5Mk1PzGPRAp0vZW
+
+
+
+{
+    "id": 8,
+    "name": "ludmila",
+    "email": "ludaa@gmail.com",
+    "password": "no secret",
+    "status": 3
+}

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id('department_id');
             $table->string('department_name');
             $table->text('department_description');
+            $table->unsignedBigInteger('parent_id')->nullable();
+
+            // Foreign Key
+            $table->foreign('parent_id')->references('department_id')->on('departments')->onDelete('cascade');
         });
     }
 
@@ -23,6 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('departments', function (Blueprint $table) {
+            $table->dropForeign(['parent_id']);
+        });
+
         Schema::dropIfExists('departments');
     }
 };

@@ -1,0 +1,13 @@
+PUT http://127.0.0.1:8000/api/measurement/add HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 4|6bTDFacNYvapM5HZMifn7DcVOv1xsGlve9IWuJmL
+
+{
+    # "X-CSRF-TOKEN": "document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content')",
+    "gladiator_name": "new",
+    "gladiator_description": "new",
+    "gladiator_type": 1,
+    "gladiator_image": "new.png",
+    "gladiators_literature": "new literature"
+}

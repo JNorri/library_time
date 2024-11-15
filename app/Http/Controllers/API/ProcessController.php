@@ -3,18 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Department;
+use App\Http\Resources\ProcessResource;
+use App\Models\Process;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProcessController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource for API.
      */
     public function index()
     {
-        $departments = Department::all();
-        return view('departments.index', compact('departments'));
+        $processes = Process::all();
+        return ProcessResource::collection($processes);
+    }
+
+    /**
+     * Display a listing of the resource for web interface.
+     */
+    public function webIndex()
+    {
+        $processes = Process::all();
+        return view('processes.index', compact('processes'));
     }
 
     /**
@@ -22,7 +33,7 @@ class ProcessController extends Controller
      */
     public function create()
     {
-        return view('departments.create');
+        return view('processes.create');
     }
 
     /**
@@ -30,56 +41,86 @@ class ProcessController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'department_name' => 'required|string|max:255',
-            'department_description' => 'required|string',
-            'parent_id' => 'nullable|exists:departments,department_id',
+        $validator = Validator::make($request->all(), [
+            'process_name' => 'required|string|max:255',
+            'process_description' => 'nullable|string',
         ]);
 
-        Department::create($validatedData);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
+        $process = Process::create($request->all());
+
+        return new ProcessResource($process);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(string $id)
     {
-        return view('departments.show', compact('department'));
+        $process = Process::find($id);
+
+        if (!$process) {
+            return response()->json(['message' => 'Process not found'], 404);
+        }
+
+        return new ProcessResource($process);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit(string $id)
     {
-        return view('departments.edit', compact('department'));
+        $process = Process::find($id);
+
+        if (!$process) {
+            return response()->json(['message' => 'Process not found'], 404);
+        }
+
+        return view('processes.edit', compact('process'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'department_name' => 'required|string|max:255',
-            'department_description' => 'required|string',
-            'parent_id' => 'nullable|exists:departments,department_id',
+        $process = Process::find($id);
+
+        if (!$process) {
+            return response()->json(['message' => 'Process not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'process_name' => 'required|string|max:255',
+            'process_description' => 'nullable|string',
         ]);
 
-        $department->update($validatedData);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
+        $process->update($request->all());
+
+        return new ProcessResource($process);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(string $id)
     {
-        $department->delete();
+        $process = Process::find($id);
 
-        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
+        if (!$process) {
+            return response()->json(['message' => 'Process not found'], 404);
+        }
+
+        $process->delete();
+
+        return response()->json(['message' => 'Process deleted'], 200);
     }
 }

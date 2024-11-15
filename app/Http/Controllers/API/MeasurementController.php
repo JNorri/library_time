@@ -3,16 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MeasurementResource;
+use App\Models\Measurement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MeasurementController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource for API.
      */
     public function index()
     {
-        //
+        $measurements = Measurement::all();
+        return MeasurementResource::collection($measurements);
+    }
+
+    /**
+     * Display a listing of the resource for web interface.
+     */
+    public function webIndex()
+    {
+        $measurements = Measurement::all();
+        return view('measurements.index', compact('measurements'));
     }
 
     /**
@@ -20,7 +33,7 @@ class MeasurementController extends Controller
      */
     public function create()
     {
-        //
+        return view('measurements.create');
     }
 
     /**
@@ -28,7 +41,18 @@ class MeasurementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'measurement_name' => 'required|string|max:255',
+            'measurement_description' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $measurement = Measurement::create($request->all());
+
+        return new MeasurementResource($measurement);
     }
 
     /**
@@ -36,7 +60,13 @@ class MeasurementController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $measurement = Measurement::find($id);
+
+        if (!$measurement) {
+            return response()->json(['message' => 'Measurement not found'], 404);
+        }
+
+        return new MeasurementResource($measurement);
     }
 
     /**
@@ -44,7 +74,13 @@ class MeasurementController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $measurement = Measurement::find($id);
+
+        if (!$measurement) {
+            return response()->json(['message' => 'Measurement not found'], 404);
+        }
+
+        return view('measurements.edit', compact('measurement'));
     }
 
     /**
@@ -52,7 +88,24 @@ class MeasurementController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $measurement = Measurement::find($id);
+
+        if (!$measurement) {
+            return response()->json(['message' => 'Measurement not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'measurement_name' => 'required|string|max:255',
+            'measurement_description' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $measurement->update($request->all());
+
+        return new MeasurementResource($measurement);
     }
 
     /**
@@ -60,6 +113,14 @@ class MeasurementController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $measurement = Measurement::find($id);
+
+        if (!$measurement) {
+            return response()->json(['message' => 'Measurement not found'], 404);
+        }
+
+        $measurement->delete();
+
+        return response()->json(['message' => 'Measurement deleted'], 200);
     }
 }

@@ -1,4 +1,0 @@
-GET http://127.0.0.1:8000/api/user/delete/10 HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer 2|LrCs1StF4fJuW5ZHSWo7m5T3CIYyNfj6mdLlllfx

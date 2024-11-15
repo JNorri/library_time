@@ -46,6 +46,6 @@ class Employee extends Authenticatable
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class, 'employees_processes', 'employee_id', 'process_id')->withPivot('date');
+        return $this->belongsToMany(Process::class, 'employees_processes', 'employee_id', 'process_id')->withPivot('start_date', 'end_date', 'status');
     }
 }

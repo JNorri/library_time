@@ -1,11 +1,13 @@
-PUT http://127.0.0.1:8000/api/user/add HTTP/1.1
+PUT http://127.0.0.1:8000/api/process/add HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 9rfBbSYgvA6k6m4L7R1KhG4HlEvk3NvdU8GkTFuY
+Authorization: Bearer your_access_token_here
 
 {
-    "name": "bsu",
-    "email": "bs@bsu.com",
-    "password": "bsu12345",
-    "status": 3
+    "process_name": "New Process",
+    "measurement_id": 1,
+    "is_daily": true,
+    "require_description": false,
+    "department_id": 1,
+    "process_duration": 60
 }

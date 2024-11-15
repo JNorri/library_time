@@ -1,4 +1,0 @@
-GET http://127.0.0.1/api/user/1 HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer 12|IaaH9jyHPRtVKEfcpDUfRddzrZ8jJiancBWYak9m

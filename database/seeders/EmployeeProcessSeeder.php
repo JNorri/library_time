@@ -22,7 +22,7 @@ class EmployeeProcessSeeder extends Seeder
         // Привязка процесса к сотруднику
         if ($employee && $process) {
             // Привязка процесса к сотруднику
-            $employee->processes()->attach($process, ['date' => now()]);
+            $employee->processes()->attach($process, ['start_date' => now(), 'end_date' => null, 'status' => 'assigned']);
         } else {
             // Обработка случая, когда сотрудник или процесс не найдены
             echo "Сотрудник или процесс не найдены.";

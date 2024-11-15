@@ -1,3 +1,4 @@
 GET http://127.0.0.1:8000/department/all HTTP/1.1
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer your_token

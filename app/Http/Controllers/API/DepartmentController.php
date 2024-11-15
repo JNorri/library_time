@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DepartmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource for API.
      */
     public function index()
+    {
+        $departments = Department::all();
+        return DepartmentResource::collection($departments);
+    }
+
+    /**
+     * Display a listing of the resource for web interface.
+     */
+    public function webIndex()
     {
         $departments = Department::all();
         return view('departments.index', compact('departments'));
@@ -27,81 +38,92 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Get all departments.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllDepartments(): JsonResponse
-    {
-        $departments = Department::all();
-
-        $formattedDepartments = $departments->map(function ($department) {
-            return [
-                'department_id' => $department->department_id,
-                'department_name' => $department->department_name,
-                'department_description' => $department->department_description,
-                'parent_id' => $department->parent_id,
-            ];
-        });
-
-        return response()->json($formattedDepartments);
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'department_name' => 'required|string|max:255',
             'department_description' => 'required|string',
             'parent_id' => 'nullable|exists:departments,department_id',
         ]);
 
-        Department::create($validatedData);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-        return redirect()->route('departments.index')->with('success', 'Department created successfully.');
+        $department = Department::create($request->all());
+
+        return new DepartmentResource($department);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
+    public function show(string $id)
     {
-        return view('departments.show', compact('department'));
+        $department = Department::find($id);
+
+        if (!$department) {
+            return response()->json(['message' => 'Department not found'], 404);
+        }
+
+        return new DepartmentResource($department);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Department $department)
+    public function edit(string $id)
     {
+        $department = Department::find($id);
+
+        if (!$department) {
+            return response()->json(['message' => 'Department not found'], 404);
+        }
+
         return view('departments.edit', compact('department'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
+        $department = Department::find($id);
+
+        if (!$department) {
+            return response()->json(['message' => 'Department not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
             'department_name' => 'required|string|max:255',
             'department_description' => 'required|string',
             'parent_id' => 'nullable|exists:departments,department_id',
         ]);
 
-        $department->update($validatedData);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
-        return redirect()->route('departments.index')->with('success', 'Department updated successfully.');
+        $department->update($request->all());
+
+        return new DepartmentResource($department);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department)
+    public function destroy(string $id)
     {
+        $department = Department::find($id);
+
+        if (!$department) {
+            return response()->json(['message' => 'Department not found'], 404);
+        }
+
         $department->delete();
 
-        return redirect()->route('departments.index')->with('success', 'Department deleted successfully.');
+        return response()->json(['message' => 'Department deleted'], 200);
     }
 }

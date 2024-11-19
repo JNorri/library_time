@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees_departments', function (Blueprint $table) {
+        Schema::create('employee_department', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('employee_id');
@@ -29,10 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('employees_departments', function (Blueprint $table) {
+        Schema::table('employee_department', function (Blueprint $table) {
             $table->dropForeign(['department_id']);
             $table->dropForeign(['employee_id']);
         });
-        Schema::dropIfExists('employees_departments');
+        Schema::dropIfExists('employee_department');
     }
 };

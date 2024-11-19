@@ -17,12 +17,16 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->timestamp('date_of_birth');
+            $table->unsignedBigInteger('role_id');
             $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // FK
+            $table->foreign('role_id')->references('role_id')->on('roles');
         });
 
         // Schema::create('password_reset_tokens', function (Blueprint $table) {

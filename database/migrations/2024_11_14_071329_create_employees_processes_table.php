@@ -11,7 +11,7 @@
          */
         public function up(): void
         {
-            Schema::create('employees_processes', function (Blueprint $table) {
+            Schema::create('employee_process', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('process_id');
                 $table->unsignedBigInteger('employee_id');
@@ -30,11 +30,11 @@
          */
         public function down(): void
         {
-            Schema::table('employees_processes', function (Blueprint $table) {
+            Schema::table('employee_process', function (Blueprint $table) {
                 $table->dropForeign(['process_id']);
                 $table->dropForeign(['employee_id']);
             });
 
-            Schema::dropIfExists('employees_processes');
+            Schema::dropIfExists('employee_process');
         }
     };

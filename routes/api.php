@@ -1,30 +1,15 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\DepartmentController as APIDepartmentController;
 use App\Http\Controllers\API\EmployeeController as APIEmployeeController;
 use App\Http\Controllers\API\MeasurementController as APIMeasurementController;
 use App\Http\Controllers\API\ProcessController as APIProcessController;
-use App\Http\Controllers\AuthEmployeeController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// // Маршрут для получения токена (POST)
-// Route::post('/sanctum/token', [AuthEmployeeController::class, 'token']);
-
-// // Маршрут для проверки токена (GET)
-// Route::get('/sanctum/check', [AuthEmployeeController::class, 'check']);
-
-// // Маршрут для получения информации о текущем сотруднике
-// Route::middleware('auth:sanctum')->get('/employee', function (Request $request): mixed {
-//     return $request->user();
-// });
-
-// // Группа маршрутов, требующих авторизации
-// Route::group(['middleware' => 'auth:sanctum'], function (): void {
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
 
 Route::get('/department/all',           [APIDepartmentController::class, 'index'])->name('departments.index');
@@ -50,4 +35,3 @@ Route::put('/process/create',           [APIProcessController::class, 'store'])-
 Route::put('/process/update/{id}',      [APIProcessController::class, 'update'])->name('processes.update');
 Route::get('/process/delete/{id}',      [APIProcessController::class, 'destroy'])->name('processes.destroy');
 Route::get('/process/{id}',             [APIProcessController::class, 'show'])->name('processes.show');
-// });

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('processes_employees', function (Blueprint $table) {
+        Schema::create('process_employee', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('process_id');
             $table->unsignedBigInteger('employee_id');
@@ -30,10 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('processes_employees', function (Blueprint $table) {
+        Schema::table('process_employee', function (Blueprint $table) {
             $table->dropForeign(['process_id']);
             $table->dropForeign(['employee_id']);
         });
-        Schema::dropIfExists('processes_employees');
+        Schema::dropIfExists('process_employee');
     }
 };

@@ -17,20 +17,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(DepartmentSeeder::class);
+        $this->call(RoleSeeder::class);
+        $this->call(PermissionSeeder::class);
+        $this->call(RolePermissionSeeder::class);
         $this->call(MeasurementSeeder::class);
         $this->call(EmployeeSeeder::class);
+        $this->call(EmployeeRoleSeeder::class);
         $this->call(ProcessSeeder::class);
-        $this->call(RolesAndPermissionsSeeder::class);
         $this->call(EmployeeProcessSeeder::class);
         $this->call(ProcessEmployeeSeeder::class);
         $this->call(EmployeeDepartmentSeeder::class);
-
-
-
-
-
-
-
 
         // $this->call(Role::class);
 

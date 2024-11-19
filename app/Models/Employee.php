@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
 class Employee extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $primaryKey = 'employee_id';
 
@@ -18,6 +18,7 @@ class Employee extends Authenticatable
         'middle_name',
         'last_name',
         'date_of_birth',
+        'role_id',
         'phone',
         'department_id',
         'email',
@@ -36,16 +37,31 @@ class Employee extends Authenticatable
 
     public function employees()
     {
-        return $this->belongsToMany(Process::class, 'processes_employees', 'employee_id', 'process_id')->withPivot('date', 'quantity', 'description');
+        return $this->belongsToMany(Process::class, 'process_employee', 'employee_id', 'process_id')->withPivot('date', 'quantity', 'description');
     }
 
     public function departments()
     {
-        return $this->belongsToMany(Department::class, 'employees_departments', 'employee_id', 'department_id')->withPivot('start_date', 'end_date');
+        return $this->belongsToMany(Department::class, 'employee_department', 'employee_id', 'department_id')->withPivot('start_date', 'end_date');
     }
 
     public function processes()
     {
-        return $this->belongsToMany(Process::class, 'employees_processes', 'employee_id', 'process_id')->withPivot('start_date', 'end_date', 'status');
+        return $this->belongsToMany(Process::class, 'employee_process', 'employee_id', 'process_id')->withPivot('start_date', 'end_date', 'status');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'employee_role', 'employee_id', 'role_id');
+    }
+
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('slug', $permission)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

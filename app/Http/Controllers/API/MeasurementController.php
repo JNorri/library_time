@@ -16,7 +16,13 @@ class MeasurementController extends Controller
     public function index()
     {
         $measurements = Measurement::all();
-        return MeasurementResource::collection($measurements);
+        return view('dashboard', compact('measurements'));
+    }
+
+    public function json()
+    {
+        $measurements = Measurement::all();
+        return response()->json($measurements);
     }
 
     /**

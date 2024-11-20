@@ -19,14 +19,12 @@ Authorization: Bearer your_access_token_here
 > Out:
 ```json
 {
-    "department_name": "your_department_name",
-    "department_description": "your_department_description",
-    "parent_id": "your_parent_id"
+    "message": "The department was successfully added."
 }
 ```
 #### *Delete*:
 ```
-/api/department/delete/{your_object_id}
+/api/department/delete/{your_department_id}
 ```
 > In: 
 ```http
@@ -37,7 +35,7 @@ Authorization: Bearer your_access_token_here
 > Out:
 ```json
 {
-    "message": "The object was successfully deleted."
+    "message": "The department was successfully deleted."
 }
 ```
 #### *Update*:
@@ -51,7 +49,7 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "id":"your_id",
+    "department_id":"your_department_id",
     "department_name":"your_department_name",
     "department_description":"your_department_description",
     "parent_id":"your_parent_id",
@@ -60,7 +58,7 @@ Authorization: Bearer your_access_token_here
 > Out:
 ```json
 {
-    "message": "The object has been successfully updated."
+    "message": "The department has been successfully updated."
 }
 ```
 #### *Get all objects*:
@@ -87,7 +85,7 @@ Authorization: Bearer your_access_token_here
 
 #### *Get object by id*:
 ```
-/api/department/{your_object_id}
+/api/department/{your_department_id}
 ```
 > In: 
 ```http
@@ -119,14 +117,17 @@ Authorization: Bearer your_access_token_here
     "first_name": "your_first_name",
     "middle_name": "your_middle_name",
     "last_name": "your_last_name",
-    "date_of_birth": "your_date_of_birth",  # example: 1990-01-01
+    "date_of_birth": "your_date_of_birth",  # example: 1999-01-01
     "email": "your_email",                  # example: example@example.ru
-    "phone": "your_phone_number",           # example: 
-    "password": "secret"
+    "phone": "your_phone_number",           # example: 79995556644
+    "password": "your_password"
 }
 ```
 > Out:
-```
+```json
+{
+    "message": "
+}
 
 ```
 #### *Delete*:

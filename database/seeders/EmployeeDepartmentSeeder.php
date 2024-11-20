@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Process;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,10 +17,22 @@ class EmployeeDepartmentSeeder extends Seeder
     {
         //
         // Получение сотрудника и процесса
-        $employee = Employee::find(1);
-        $process = Process::find(1);
+        $head = Employee::find(1);
+        $department = Department::find(1);
 
         // Привязка процесса к сотруднику
-        $employee->departments()->attach($process, ['start_date' => now(), 'end_date' => null]);
+        $head->departments()->attach($department, ['start_date' => now(), 'end_date' => null]);
+
+        $methodist = Employee::find(2);
+        $department = Department::find(4);
+
+        // Привязка процесса к сотруднику
+        $methodist->departments()->attach($department, ['start_date' => now(), 'end_date' => null]);
+
+        $employee = Employee::find(3);
+        $department = Department::find(3);
+
+        // Привязка процесса к сотруднику
+        $employee->departments()->attach($department, ['start_date' => now(), 'end_date' => null]);
     }
 }

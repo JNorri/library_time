@@ -16,8 +16,14 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::all();
-        return DepartmentResource::collection($departments);
+        $processes = Department::all();
+        return view('dashboard', compact('departments'));
+    }
+
+    public function json()
+    {
+        $processes = Department::all();
+        return response()->json($processes);
     }
 
     /**
@@ -28,6 +34,7 @@ class DepartmentController extends Controller
         $departments = Department::all();
         return view('departments.index', compact('departments'));
     }
+
 
     /**
      * Show the form for creating a new resource.

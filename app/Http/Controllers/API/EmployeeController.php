@@ -17,7 +17,14 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::all();
-        return EmployeeResource::collection($employees);
+        dd($employees); // Check if employees are retrieved
+        return view('/dashboard', compact('employees'));
+    }
+
+    public function json()
+    {
+        $employees = Employee::all();
+        return response()->json($employees);
     }
 
     /**

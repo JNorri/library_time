@@ -21,6 +21,11 @@ class Department extends Model
         return $this->belongsToMany(Employee::class, 'employee_department', 'department_id', 'employee_id')->withPivot('start_date', 'end_date');
     }
 
+    public function parentDepartment()
+    {
+        return $this->belongsTo(Department::class, 'parent_id');
+    }
+
     // public function parent()
     // {
     //     return $this->belongsTo(Department::class, 'parent_id');

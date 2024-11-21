@@ -15,7 +15,7 @@
                                 <th class="px-4 py-2">Department ID</th>
                                 <th class="px-4 py-2">Department Name</th>
                                 <th class="px-4 py-2">Description</th>
-                                <th class="px-4 py-2">Parent ID</th>
+                                <th class="px-4 py-2">Parent Department Name</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,11 +24,18 @@
                                 <td class="border px-4 py-2">{{ $department->department_id }}</td>
                                 <td class="border px-4 py-2">{{ $department->department_name }}</td>
                                 <td class="border px-4 py-2">{{ $department->department_description }}</td>
-                                <td class="border px-4 py-2">{{ $department->parent_id }}</td>
+                                <td class="border px-4 py-2">
+                                    @if($department->parentDepartment)
+                                    {{ $department->parentDepartment->department_name }}
+                                    @else
+                                    -
+                                    @endif
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $departments->links('vendor.pagination.custom') }}
                 </div>
             </div>
         </div>

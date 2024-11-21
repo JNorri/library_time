@@ -27,6 +27,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $measurements->links('vendor.pagination.custom') }}
                 </div>
             </div>
         </div>

@@ -14,10 +14,10 @@
                             <tr>
                                 <th class="px-4 py-2">Process ID</th>
                                 <th class="px-4 py-2">Process Name</th>
-                                <th class="px-4 py-2">Measurement ID</th>
+                                <th class="px-4 py-2">Measurement Name</th>
                                 <th class="px-4 py-2">Is Daily</th>
                                 <th class="px-4 py-2">Require Description</th>
-                                <th class="px-4 py-2">Department ID</th>
+                                <th class="px-4 py-2">Department Name</th>
                                 <th class="px-4 py-2">Duration</th>
                             </tr>
                         </thead>
@@ -26,15 +26,16 @@
                             <tr>
                                 <td class="border px-4 py-2">{{ $process->process_id }}</td>
                                 <td class="border px-4 py-2">{{ $process->process_name }}</td>
-                                <td class="border px-4 py-2">{{ $process->measurement_id }}</td>
+                                <td class="border px-4 py-2">{{ $process->measurement->measurement_name }}</td>
                                 <td class="border px-4 py-2">{{ $process->is_daily ? 'Yes' : 'No' }}</td>
                                 <td class="border px-4 py-2">{{ $process->require_description ? 'Yes' : 'No' }}</td>
-                                <td class="border px-4 py-2">{{ $process->department_id }}</td>
+                                <td class="border px-4 py-2">{{ $process->department->department_name }}</td>
                                 <td class="border px-4 py-2">{{ $process->process_duration }}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $processes->links('vendor.pagination.custom') }}
                 </div>
             </div>
         </div>

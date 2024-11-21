@@ -18,37 +18,37 @@ class DashboardController extends Controller
 
     public function roles()
     {
-        $roles = Role::all();
+        $roles = Role::paginate(10);
         return view('tabs.roles', compact('roles'));
     }
 
     public function departments()
     {
-        $departments = Department::all();
+        $departments = Department::with('parentDepartment')->paginate(10);
         return view('tabs.departments', compact('departments'));
     }
 
     public function processes()
     {
-        $processes = Process::all();
+        $processes = Process::with('measurement', 'department')->paginate(10);
         return view('tabs.processes', compact('processes'));
     }
 
     public function measurements()
     {
-        $measurements = Measurement::all();
+        $measurements = Measurement::paginate(10);
         return view('tabs.measurements', compact('measurements'));
     }
 
     public function employees()
     {
-        $employees = Employee::all();
+        $employees = Employee::paginate(10);
         return view('tabs.employees', compact('employees'));
     }
 
     public function permissions()
     {
-        $permissions = Permission::all();
+        $permissions = Permission::paginate(10);
         return view('tabs.permissions', compact('permissions'));
     }
 }

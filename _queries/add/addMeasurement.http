@@ -1,4 +1,4 @@
-PUT http://127.0.0.1:8000/api/measurement/add HTTP/1.1
+PUT http://127.0.0.1:8000/api/measurement/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here

@@ -39,4 +39,14 @@ class Process extends Model
     {
         return $this->belongsToMany(Employee::class, 'employee_process', 'process_id', 'employee_id')->withPivot('start_date', 'end_date', 'status');
     }
+
+    public function measurement()
+    {
+        return $this->belongsTo(Measurement::class, 'measurement_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 }

@@ -29,6 +29,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $permissions->links('vendor.pagination.custom') }}
                 </div>
             </div>
         </div>

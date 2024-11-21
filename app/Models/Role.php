@@ -10,7 +10,7 @@ class Role extends Model
     protected $primaryKey = 'role_id'; // Указываем пользовательский первичный ключ
     public $incrementing = true; // Указываем, что первичный ключ является автоинкрементным
     protected $keyType = 'integer'; // Указываем тип первичного ключа
-
+    public $timestamps = false; // Отключаем автоматическое управление временными метками
     protected $fillable = [
         'role_name',
         'role_description',

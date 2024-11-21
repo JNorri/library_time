@@ -58,7 +58,10 @@ class MeasurementController extends Controller
 
         $measurement = Measurement::create($request->all());
 
-        return new MeasurementResource($measurement);
+        return response()->json([
+            'message' => 'The measurement was successfully added.',
+            'data' => new MeasurementResource($measurement),
+        ], 201);
     }
 
     /**
@@ -111,7 +114,10 @@ class MeasurementController extends Controller
 
         $measurement->update($request->all());
 
-        return new MeasurementResource($measurement);
+        return response()->json([
+            'message' => 'The measurement was successfully updated.',
+            'data' => new MeasurementResource($measurement),
+        ], 200);
     }
 
     /**
@@ -127,6 +133,6 @@ class MeasurementController extends Controller
 
         $measurement->delete();
 
-        return response()->json(['message' => 'Measurement deleted'], 200);
+        return response()->json(['message' => 'The measurement was successfully deleted.'], 200);
     }
 }

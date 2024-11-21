@@ -19,6 +19,12 @@ class ProcessController extends Controller
         return ProcessResource::collection($processes);
     }
 
+    public function json()
+    {
+        $processes = Process::all();
+        return response()->json($processes);
+    }
+
     /**
      * Display a listing of the resource for web interface.
      */
@@ -43,7 +49,11 @@ class ProcessController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'process_name' => 'required|string|max:255',
-            'process_description' => 'nullable|string',
+            'measurement_id' => 'nullable|exists:measurements,measurement_id',
+            'is_daily' => 'boolean',
+            'require_description' => 'boolean',
+            'department_id' => 'required|exists:departments,department_id',
+            'process_duration' => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +62,10 @@ class ProcessController extends Controller
 
         $process = Process::create($request->all());
 
-        return new ProcessResource($process);
+        return response()->json([
+            'message' => 'The process was successfully added.',
+            'data' => new ProcessResource($process),
+        ], 201);
     }
 
     /**
@@ -96,7 +109,11 @@ class ProcessController extends Controller
 
         $validator = Validator::make($request->all(), [
             'process_name' => 'required|string|max:255',
-            'process_description' => 'nullable|string',
+            'measurement_id' => 'nullable|exists:measurements,measurement_id',
+            'is_daily' => 'boolean',
+            'require_description' => 'boolean',
+            'department_id' => 'required|exists:departments,department_id',
+            'process_duration' => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -105,7 +122,10 @@ class ProcessController extends Controller
 
         $process->update($request->all());
 
-        return new ProcessResource($process);
+        return response()->json([
+            'message' => 'The process was successfully updated.',
+            'data' => new ProcessResource($process),
+        ], 200);
     }
 
     /**
@@ -121,6 +141,6 @@ class ProcessController extends Controller
 
         $process->delete();
 
-        return response()->json(['message' => 'Process deleted'], 200);
+        return response()->json(['message' => 'The process was successfully deleted.'], 200);
     }
 }

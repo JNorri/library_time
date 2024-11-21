@@ -42,36 +42,35 @@
 </span>}
 </code></pre>
 <h4 class="code-line" data-line-start=40 data-line-end=41 ><a id="Update_40"></a><em>Update</em>:</h4>
-<pre><code class="has-line-data" data-line-start="42" data-line-end="44">/api/department/update
+<pre><code class="has-line-data" data-line-start="42" data-line-end="44">/api/department/update/{your_department_id}
 </code></pre>
 <blockquote>
 <p class="has-line-data" data-line-start="44" data-line-end="45">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="46" data-line-end="57" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="46" data-line-end="56" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
 <span class="json">{
-    "<span class="hljs-attribute">department_id</span>":            <span class="hljs-value"><span class="hljs-string">"your_department_id"</span></span>,
     "<span class="hljs-attribute">department_name</span>":          <span class="hljs-value"><span class="hljs-string">"your_department_name"</span></span>,
     "<span class="hljs-attribute">department_description</span>":   <span class="hljs-value"><span class="hljs-string">"your_department_description"</span></span>,
     "<span class="hljs-attribute">parent_id</span>":                <span class="hljs-value"><span class="hljs-string">"your_parent_id"</span></span>,
 }
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="57" data-line-end="58">Out:</p>
+<p class="has-line-data" data-line-start="56" data-line-end="57">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="59" data-line-end="63" class="language-json">{
+<pre><code class="has-line-data" data-line-start="58" data-line-end="62" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The department has been successfully updated."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=63 data-line-end=64 ><a id="Get_all_departments_63"></a><em>Get all departments</em>:</h4>
-<pre><code class="has-line-data" data-line-start="65" data-line-end="67">/api/department/all
+<h4 class="code-line" data-line-start=62 data-line-end=63 ><a id="Get_all_departments_62"></a><em>Get all departments</em>:</h4>
+<pre><code class="has-line-data" data-line-start="64" data-line-end="66">/api/department/all
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="67" data-line-end="68">In:</p>
+<p class="has-line-data" data-line-start="66" data-line-end="67">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="69" data-line-end="77" class="language-json">Accept: application/json
+<pre><code class="has-line-data" data-line-start="68" data-line-end="76" class="language-json">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -80,9 +79,9 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="77" data-line-end="78">Out:</p>
+<p class="has-line-data" data-line-start="76" data-line-end="77">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="79" data-line-end="91" class="language-json">{
+<pre><code class="has-line-data" data-line-start="78" data-line-end="90" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
             {
                 "<span class="hljs-attribute">department_id</span>":          <span class="hljs-value"><span class="hljs-string">"your_department_id"</span></span>,
@@ -94,21 +93,21 @@ Authorization: Bearer your_access_token_here
 </span>}
 
 </code></pre>
-<h4 class="code-line" data-line-start=92 data-line-end=93 ><a id="Get_department_by_id_92"></a><em>Get department by id</em>:</h4>
-<pre><code class="has-line-data" data-line-start="94" data-line-end="96">/api/department/{your_department_id}
+<h4 class="code-line" data-line-start=91 data-line-end=92 ><a id="Get_department_by_id_91"></a><em>Get department by id</em>:</h4>
+<pre><code class="has-line-data" data-line-start="93" data-line-end="95">/api/department/{your_department_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="96" data-line-end="97">In:</p>
+<p class="has-line-data" data-line-start="95" data-line-end="96">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="98" data-line-end="103" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="97" data-line-end="102" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
 <span class="undefined"></span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="103" data-line-end="104">Out:</p>
+<p class="has-line-data" data-line-start="102" data-line-end="103">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="105" data-line-end="114" class="language-json">{
+<pre><code class="has-line-data" data-line-start="104" data-line-end="113" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">department_id</span>":            <span class="hljs-value"><span class="hljs-string">"your_department_id"</span></span>,
                 "<span class="hljs-attribute">department_name</span>":          <span class="hljs-value"><span class="hljs-string">"your_department_name"</span></span>,
@@ -117,14 +116,14 @@ Authorization: Bearer your_access_token_here
     </span>}
 </span>}
 </code></pre>
-<h3 class="code-line" data-line-start=116 data-line-end=117 ><a id="Employee_116"></a>Employee:</h3>
-<h4 class="code-line" data-line-start=117 data-line-end=118 ><a id="Create_117"></a><em>Create</em>:</h4>
-<pre><code class="has-line-data" data-line-start="119" data-line-end="121">/api/employee/create
+<h3 class="code-line" data-line-start=115 data-line-end=116 ><a id="Employee_115"></a>Employee:</h3>
+<h4 class="code-line" data-line-start=116 data-line-end=117 ><a id="Create_116"></a><em>Create</em>:</h4>
+<pre><code class="has-line-data" data-line-start="118" data-line-end="120">/api/employee/create
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="121" data-line-end="122">In:</p>
+<p class="has-line-data" data-line-start="120" data-line-end="121">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="123" data-line-end="137" class="language-json">Accept: application/json
+<pre><code class="has-line-data" data-line-start="122" data-line-end="136" class="language-json">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -139,20 +138,20 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="137" data-line-end="138">Out:</p>
+<p class="has-line-data" data-line-start="136" data-line-end="137">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="139" data-line-end="144" class="language-json">{
+<pre><code class="has-line-data" data-line-start="138" data-line-end="143" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The employee was successfully added."</span>
 </span>}
 
 </code></pre>
-<h4 class="code-line" data-line-start=144 data-line-end=145 ><a id="Delete_144"></a><em>Delete</em>:</h4>
-<pre><code class="has-line-data" data-line-start="146" data-line-end="148">/api/employee/delete/{your_employee_id}
+<h4 class="code-line" data-line-start=143 data-line-end=144 ><a id="Delete_143"></a><em>Delete</em>:</h4>
+<pre><code class="has-line-data" data-line-start="145" data-line-end="147">/api/employee/delete/{your_employee_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="148" data-line-end="149">In:</p>
+<p class="has-line-data" data-line-start="147" data-line-end="148">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="150" data-line-end="158" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="149" data-line-end="157" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -161,24 +160,23 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="158" data-line-end="159">Out:</p>
+<p class="has-line-data" data-line-start="157" data-line-end="158">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="160" data-line-end="164" class="language-json">{
+<pre><code class="has-line-data" data-line-start="159" data-line-end="163" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The employee was successfully deleted."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=164 data-line-end=165 ><a id="Update_164"></a><em>Update</em>:</h4>
-<pre><code class="has-line-data" data-line-start="166" data-line-end="168">/api/employee/update
+<h4 class="code-line" data-line-start=163 data-line-end=164 ><a id="Update_163"></a><em>Update</em>:</h4>
+<pre><code class="has-line-data" data-line-start="165" data-line-end="167">/api/employee/update/{your_employee_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="168" data-line-end="169">In:</p>
+<p class="has-line-data" data-line-start="167" data-line-end="168">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="170" data-line-end="184">Accept: application/json
+<pre><code class="has-line-data" data-line-start="169" data-line-end="182">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    &quot;employee_id&quot;:          &quot;your_employee_id&quot;,
     &quot;last_name&quot;:            &quot;your_last_name&quot;,
     &quot;first_name&quot;:           &quot;your_first_name&quot;,
     &quot;middle_name&quot;:          &quot;your_middle_name&quot;,
@@ -188,19 +186,19 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="184" data-line-end="185">Out:</p>
+<p class="has-line-data" data-line-start="182" data-line-end="183">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="186" data-line-end="190" class="language-json">{
+<pre><code class="has-line-data" data-line-start="184" data-line-end="188" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The employee was successfully updated."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=190 data-line-end=191 ><a id="Get_all_employees_190"></a><em>Get all employees</em>:</h4>
-<pre><code class="has-line-data" data-line-start="192" data-line-end="194">/api/employee/all
+<h4 class="code-line" data-line-start=188 data-line-end=189 ><a id="Get_all_employees_188"></a><em>Get all employees</em>:</h4>
+<pre><code class="has-line-data" data-line-start="190" data-line-end="192">/api/employee/all
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="194" data-line-end="195">In:</p>
+<p class="has-line-data" data-line-start="192" data-line-end="193">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="196" data-line-end="204" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="194" data-line-end="202" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -209,9 +207,9 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="204" data-line-end="205">Out:</p>
+<p class="has-line-data" data-line-start="202" data-line-end="203">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="206" data-line-end="224" class="language-json">{
+<pre><code class="has-line-data" data-line-start="204" data-line-end="222" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
             {
                 "<span class="hljs-attribute">employee_id</span>":          <span class="hljs-value"><span class="hljs-string">"your_employee_id"</span></span>,
@@ -229,13 +227,13 @@ Authorization: Bearer your_access_token_here
     ]
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=224 data-line-end=225 ><a id="Get_employee_by_id_224"></a><em>Get employee by id</em>:</h4>
-<pre><code class="has-line-data" data-line-start="226" data-line-end="228">/api/employee/{your_employee_id}
+<h4 class="code-line" data-line-start=222 data-line-end=223 ><a id="Get_employee_by_id_222"></a><em>Get employee by id</em>:</h4>
+<pre><code class="has-line-data" data-line-start="224" data-line-end="226">/api/employee/{your_employee_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="228" data-line-end="229">In:</p>
+<p class="has-line-data" data-line-start="226" data-line-end="227">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="230" data-line-end="238" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="228" data-line-end="236" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -244,9 +242,9 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="238" data-line-end="239">Out:</p>
+<p class="has-line-data" data-line-start="236" data-line-end="237">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="240" data-line-end="255" class="language-json">{
+<pre><code class="has-line-data" data-line-start="238" data-line-end="253" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">employee_id</span>":          <span class="hljs-value"><span class="hljs-string">"your_employee_id"</span></span>,
                 "<span class="hljs-attribute">last_name</span>":            <span class="hljs-value"><span class="hljs-string">"your_last_name"</span></span>,
@@ -261,14 +259,14 @@ Authorization: Bearer your_access_token_here
   </span>}
 </span>}
 </code></pre>
-<h3 class="code-line" data-line-start=256 data-line-end=257 ><a id="Measurement_256"></a>Measurement:</h3>
-<h4 class="code-line" data-line-start=257 data-line-end=258 ><a id="Create_257"></a><em>Create</em>:</h4>
-<pre><code class="has-line-data" data-line-start="259" data-line-end="261">/api/measurement/create
+<h3 class="code-line" data-line-start=254 data-line-end=255 ><a id="Measurement_254"></a>Measurement:</h3>
+<h4 class="code-line" data-line-start=255 data-line-end=256 ><a id="Create_255"></a><em>Create</em>:</h4>
+<pre><code class="has-line-data" data-line-start="257" data-line-end="259">/api/measurement/create
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="261" data-line-end="262">In:</p>
+<p class="has-line-data" data-line-start="259" data-line-end="260">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="263" data-line-end="272" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="261" data-line-end="270" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -278,19 +276,19 @@ Authorization: Bearer your_access_token_here
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="272" data-line-end="273">Out:</p>
+<p class="has-line-data" data-line-start="270" data-line-end="271">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="274" data-line-end="278" class="language-json">{
+<pre><code class="has-line-data" data-line-start="272" data-line-end="276" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The measurement was successfully added."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=278 data-line-end=279 ><a id="Delete_278"></a><em>Delete</em>:</h4>
-<pre><code class="has-line-data" data-line-start="280" data-line-end="282">/api/measurement/delete/{your_measurement_id}
+<h4 class="code-line" data-line-start=276 data-line-end=277 ><a id="Delete_276"></a><em>Delete</em>:</h4>
+<pre><code class="has-line-data" data-line-start="278" data-line-end="280">/api/measurement/delete/{your_measurement_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="282" data-line-end="283">In:</p>
+<p class="has-line-data" data-line-start="280" data-line-end="281">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="284" data-line-end="292">Accept: application/json
+<pre><code class="has-line-data" data-line-start="282" data-line-end="290">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -299,42 +297,41 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="292" data-line-end="293">Out:</p>
+<p class="has-line-data" data-line-start="290" data-line-end="291">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="294" data-line-end="298" class="language-json">{
+<pre><code class="has-line-data" data-line-start="292" data-line-end="296" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The measurement was successfully deleted."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=298 data-line-end=299 ><a id="Update_298"></a><em>Update</em>:</h4>
-<pre><code class="has-line-data" data-line-start="300" data-line-end="302">/api/measurement/update
+<h4 class="code-line" data-line-start=296 data-line-end=297 ><a id="Update_296"></a><em>Update</em>:</h4>
+<pre><code class="has-line-data" data-line-start="298" data-line-end="300">/api/measurement/update/{your_measurement_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="302" data-line-end="303">In:</p>
+<p class="has-line-data" data-line-start="300" data-line-end="301">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="304" data-line-end="314" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="302" data-line-end="311" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
 <span class="json">{
-    "<span class="hljs-attribute">measurement_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_measurement_id"</span></span>,
     "<span class="hljs-attribute">measurement_name</span>":         <span class="hljs-value"><span class="hljs-string">"your_measurement_name"</span></span>,
     "<span class="hljs-attribute">measurement_description</span>":  <span class="hljs-value"><span class="hljs-string">"your_measurement_description"</span>
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="314" data-line-end="315">Out:</p>
+<p class="has-line-data" data-line-start="311" data-line-end="312">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="316" data-line-end="320" class="language-json">{
+<pre><code class="has-line-data" data-line-start="313" data-line-end="317" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The measurement was successfully updated."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=320 data-line-end=321 ><a id="Get_all_measurements_320"></a><em>Get all measurements</em>:</h4>
-<pre><code class="has-line-data" data-line-start="322" data-line-end="324">/api/measurement/all
+<h4 class="code-line" data-line-start=317 data-line-end=318 ><a id="Get_all_measurements_317"></a><em>Get all measurements</em>:</h4>
+<pre><code class="has-line-data" data-line-start="319" data-line-end="321">/api/measurement/all
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="324" data-line-end="325">In:</p>
+<p class="has-line-data" data-line-start="321" data-line-end="322">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="326" data-line-end="334">Accept: application/json
+<pre><code class="has-line-data" data-line-start="323" data-line-end="331">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -343,9 +340,9 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="334" data-line-end="335">Out:</p>
+<p class="has-line-data" data-line-start="331" data-line-end="332">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="336" data-line-end="347" class="language-json">{
+<pre><code class="has-line-data" data-line-start="333" data-line-end="344" class="language-json">{
    "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
             {
                 "<span class="hljs-attribute">measurement_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_measurement_id"</span></span>,
@@ -356,13 +353,13 @@ Authorization: Bearer your_access_token_here
    ]
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=347 data-line-end=348 ><a id="Get_measurement_by_id_347"></a><em>Get measurement by id</em>:</h4>
-<pre><code class="has-line-data" data-line-start="349" data-line-end="351">/api/measurement/{your_measurement_id}
+<h4 class="code-line" data-line-start=344 data-line-end=345 ><a id="Get_measurement_by_id_344"></a><em>Get measurement by id</em>:</h4>
+<pre><code class="has-line-data" data-line-start="346" data-line-end="348">/api/measurement/{your_measurement_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="351" data-line-end="352">In:</p>
+<p class="has-line-data" data-line-start="348" data-line-end="349">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="353" data-line-end="361" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="350" data-line-end="358" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -371,9 +368,9 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="361" data-line-end="362">Out:</p>
+<p class="has-line-data" data-line-start="358" data-line-end="359">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="363" data-line-end="371" class="language-json">{
+<pre><code class="has-line-data" data-line-start="360" data-line-end="368" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">measurement_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_measurement_id"</span></span>,
                 "<span class="hljs-attribute">measurement_name</span>":         <span class="hljs-value"><span class="hljs-string">"your_measurement_name"</span></span>,
@@ -381,14 +378,14 @@ Authorization: Bearer your_access_token_here
     </span>}
 </span>}
 </code></pre>
-<h3 class="code-line" data-line-start=372 data-line-end=373 ><a id="Process_372"></a>Process:</h3>
-<h4 class="code-line" data-line-start=373 data-line-end=374 ><a id="Create_373"></a><em>Create</em>:</h4>
-<pre><code class="has-line-data" data-line-start="375" data-line-end="377">/api/process/create
+<h3 class="code-line" data-line-start=369 data-line-end=370 ><a id="Process_369"></a>Process:</h3>
+<h4 class="code-line" data-line-start=370 data-line-end=371 ><a id="Create_370"></a><em>Create</em>:</h4>
+<pre><code class="has-line-data" data-line-start="372" data-line-end="374">/api/process/create
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="377" data-line-end="378">In:</p>
+<p class="has-line-data" data-line-start="374" data-line-end="375">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="379" data-line-end="392" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="376" data-line-end="389" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -402,41 +399,40 @@ Authorization: Bearer your_access_token_here
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="392" data-line-end="393">Out:</p>
+<p class="has-line-data" data-line-start="389" data-line-end="390">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="394" data-line-end="398" class="language-json">{
+<pre><code class="has-line-data" data-line-start="391" data-line-end="395" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The process was successfully added."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=398 data-line-end=399 ><a id="Delete_398"></a><em>Delete</em>:</h4>
-<pre><code class="has-line-data" data-line-start="400" data-line-end="402">/api/process/delete/{your_process_id}
+<h4 class="code-line" data-line-start=395 data-line-end=396 ><a id="Delete_395"></a><em>Delete</em>:</h4>
+<pre><code class="has-line-data" data-line-start="397" data-line-end="399">/api/process/delete/{your_process_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="402" data-line-end="403">In:</p>
+<p class="has-line-data" data-line-start="399" data-line-end="400">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="404" data-line-end="408" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="401" data-line-end="405" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="408" data-line-end="409">Out:</p>
+<p class="has-line-data" data-line-start="405" data-line-end="406">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="410" data-line-end="414" class="language-json">{
+<pre><code class="has-line-data" data-line-start="407" data-line-end="411" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The process was successfully deleted."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=414 data-line-end=415 ><a id="Update_414"></a><em>Update</em>:</h4>
-<pre><code class="has-line-data" data-line-start="416" data-line-end="418">/api/process/update
+<h4 class="code-line" data-line-start=411 data-line-end=412 ><a id="Update_411"></a><em>Update</em>:</h4>
+<pre><code class="has-line-data" data-line-start="413" data-line-end="415">/api/process/update/{your_process_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="418" data-line-end="419">In:</p>
+<p class="has-line-data" data-line-start="415" data-line-end="416">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="420" data-line-end="434" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="417" data-line-end="430" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
 <span class="json">{
-    "<span class="hljs-attribute">process_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_process_id"</span></span>,
     "<span class="hljs-attribute">process_name</span>":         <span class="hljs-value"><span class="hljs-string">"your_process_name"</span></span>,
     "<span class="hljs-attribute">measurement_id</span>":       <span class="hljs-value"><span class="hljs-string">"your_measurement_id"</span></span>,
     "<span class="hljs-attribute">is_daily</span>":             <span class="hljs-value"><span class="hljs-string">"your_is_daily"</span></span>,
@@ -446,19 +442,19 @@ Authorization: Bearer your_access_token_here
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="434" data-line-end="435">Out:</p>
+<p class="has-line-data" data-line-start="430" data-line-end="431">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="436" data-line-end="440" class="language-json">{
+<pre><code class="has-line-data" data-line-start="432" data-line-end="436" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The process was successfully updated."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=440 data-line-end=441 ><a id="Get_all_processes_440"></a><em>Get all processes</em>:</h4>
-<pre><code class="has-line-data" data-line-start="442" data-line-end="444">/api/process/all
+<h4 class="code-line" data-line-start=436 data-line-end=437 ><a id="Get_all_processes_436"></a><em>Get all processes</em>:</h4>
+<pre><code class="has-line-data" data-line-start="438" data-line-end="440">/api/process/all
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="444" data-line-end="445">In:</p>
+<p class="has-line-data" data-line-start="440" data-line-end="441">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="446" data-line-end="455">Accept: application/json
+<pre><code class="has-line-data" data-line-start="442" data-line-end="451">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -468,9 +464,9 @@ Authorization: Bearer your_access_token_here
 
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="455" data-line-end="456">Out:</p>
+<p class="has-line-data" data-line-start="451" data-line-end="452">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="457" data-line-end="481" class="language-json">{
+<pre><code class="has-line-data" data-line-start="453" data-line-end="477" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
         {
           "<span class="hljs-attribute">process_id</span>": <span class="hljs-value"><span class="hljs-string">"your_process_id"</span></span>,
@@ -494,13 +490,13 @@ Authorization: Bearer your_access_token_here
     ]
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=481 data-line-end=482 ><a id="Get_process_by_id_481"></a><em>Get process by id</em>:</h4>
-<pre><code class="has-line-data" data-line-start="484" data-line-end="486">/api/process/{your_process_id}
+<h4 class="code-line" data-line-start=477 data-line-end=478 ><a id="Get_process_by_id_477"></a><em>Get process by id</em>:</h4>
+<pre><code class="has-line-data" data-line-start="480" data-line-end="482">/api/process/{your_process_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="486" data-line-end="487">In:</p>
+<p class="has-line-data" data-line-start="482" data-line-end="483">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="488" data-line-end="496" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="484" data-line-end="492" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -509,9 +505,9 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="496" data-line-end="497">Out:</p>
+<p class="has-line-data" data-line-start="492" data-line-end="493">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="498" data-line-end="519" class="language-json">{
+<pre><code class="has-line-data" data-line-start="494" data-line-end="515" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
           "<span class="hljs-attribute">process_id</span>": <span class="hljs-value"><span class="hljs-string">"your_process_id"</span></span>,
           "<span class="hljs-attribute">process_name</span>": <span class="hljs-value"><span class="hljs-string">"your_process_name"</span></span>,
@@ -532,14 +528,14 @@ Authorization: Bearer your_access_token_here
     }  
 </span>}
 </code></pre>
-<h3 class="code-line" data-line-start=520 data-line-end=521 ><a id="Role_520"></a>Role:</h3>
-<h4 class="code-line" data-line-start=521 data-line-end=522 ><a id="Create_521"></a><em>Create</em>:</h4>
-<pre><code class="has-line-data" data-line-start="523" data-line-end="525">/api/role/create
+<h3 class="code-line" data-line-start=516 data-line-end=517 ><a id="Role_516"></a>Role:</h3>
+<h4 class="code-line" data-line-start=517 data-line-end=518 ><a id="Create_517"></a><em>Create</em>:</h4>
+<pre><code class="has-line-data" data-line-start="519" data-line-end="521">/api/role/create
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="525" data-line-end="526">In:</p>
+<p class="has-line-data" data-line-start="521" data-line-end="522">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="527" data-line-end="538" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="523" data-line-end="534" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -551,19 +547,19 @@ Authorization: Bearer your_access_token_here
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="538" data-line-end="539">Out:</p>
+<p class="has-line-data" data-line-start="534" data-line-end="535">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="540" data-line-end="544" class="language-json">{
+<pre><code class="has-line-data" data-line-start="536" data-line-end="540" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The role was successfully added."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=544 data-line-end=545 ><a id="Delete_544"></a><em>Delete</em>:</h4>
-<pre><code class="has-line-data" data-line-start="546" data-line-end="548">/api/role/delete/{your_role_id}
+<h4 class="code-line" data-line-start=540 data-line-end=541 ><a id="Delete_540"></a><em>Delete</em>:</h4>
+<pre><code class="has-line-data" data-line-start="542" data-line-end="544">/api/role/delete/{your_role_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="548" data-line-end="549">In:</p>
+<p class="has-line-data" data-line-start="544" data-line-end="545">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="550" data-line-end="558" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="546" data-line-end="554" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -572,43 +568,42 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="558" data-line-end="559">Out:</p>
+<p class="has-line-data" data-line-start="554" data-line-end="555">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="560" data-line-end="564" class="language-json">{
+<pre><code class="has-line-data" data-line-start="556" data-line-end="560" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The role was successfully deleted."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=564 data-line-end=565 ><a id="Update_564"></a><em>Update</em>:</h4>
-<pre><code class="has-line-data" data-line-start="566" data-line-end="568">/api/role/update
+<h4 class="code-line" data-line-start=560 data-line-end=561 ><a id="Update_560"></a><em>Update</em>:</h4>
+<pre><code class="has-line-data" data-line-start="562" data-line-end="564">/api/role/update/{your_role_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="568" data-line-end="569">In:</p>
+<p class="has-line-data" data-line-start="564" data-line-end="565">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="570" data-line-end="581" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="566" data-line-end="576" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
 <span class="json">{
-    "<span class="hljs-attribute">role_id</span>":              <span class="hljs-value"><span class="hljs-string">"your_role_id"</span></span>,
     "<span class="hljs-attribute">role_name</span>":            <span class="hljs-value"><span class="hljs-string">"your_role_name"</span></span>,
     "<span class="hljs-attribute">slug</span>":                 <span class="hljs-value"><span class="hljs-string">"your_slug"</span></span>,
     "<span class="hljs-attribute">role_description</span>":     <span class="hljs-value"><span class="hljs-string">"your_role_description"</span>  
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="581" data-line-end="582">Out:</p>
+<p class="has-line-data" data-line-start="576" data-line-end="577">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="583" data-line-end="587" class="language-json">{
+<pre><code class="has-line-data" data-line-start="578" data-line-end="582" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The role was successfully updated."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=587 data-line-end=588 ><a id="Get_all_roles_587"></a><em>Get all roles</em>:</h4>
-<pre><code class="has-line-data" data-line-start="589" data-line-end="591">/api/role/all
+<h4 class="code-line" data-line-start=582 data-line-end=583 ><a id="Get_all_roles_582"></a><em>Get all roles</em>:</h4>
+<pre><code class="has-line-data" data-line-start="584" data-line-end="586">/api/role/all
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="591" data-line-end="592">In:</p>
+<p class="has-line-data" data-line-start="586" data-line-end="587">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="593" data-line-end="601">Accept: application/json
+<pre><code class="has-line-data" data-line-start="588" data-line-end="596">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -617,9 +612,9 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="601" data-line-end="602">Out:</p>
+<p class="has-line-data" data-line-start="596" data-line-end="597">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="603" data-line-end="615" class="language-json">{
+<pre><code class="has-line-data" data-line-start="598" data-line-end="610" class="language-json">{
    "<span class="hljs-attribute">data</span>":<span class="hljs-value">[ 
             {
                 "<span class="hljs-attribute">role_id</span>":          <span class="hljs-value"><span class="hljs-string">"your_role_id"</span></span>,
@@ -631,18 +626,18 @@ Authorization: Bearer your_access_token_here
    ]
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=615 data-line-end=616 ><a id="Get_role_by_id_615"></a><em>Get role by id</em>:</h4>
-<pre><code class="has-line-data" data-line-start="618" data-line-end="620">/api/role/{your_role_id}
+<h4 class="code-line" data-line-start=610 data-line-end=611 ><a id="Get_role_by_id_610"></a><em>Get role by id</em>:</h4>
+<pre><code class="has-line-data" data-line-start="613" data-line-end="615">/api/role/{your_role_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="620" data-line-end="621">In:</p>
+<p class="has-line-data" data-line-start="615" data-line-end="616">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="622" data-line-end="624">
+<pre><code class="has-line-data" data-line-start="617" data-line-end="619">
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="624" data-line-end="625">Out:</p>
+<p class="has-line-data" data-line-start="619" data-line-end="620">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="626" data-line-end="635" class="language-json">{
+<pre><code class="has-line-data" data-line-start="621" data-line-end="630" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">role_id</span>":          <span class="hljs-value"><span class="hljs-string">"your_role_id"</span></span>,
                 "<span class="hljs-attribute">role_name</span>":        <span class="hljs-value"><span class="hljs-string">"your_role_name"</span></span>,
@@ -651,14 +646,14 @@ Authorization: Bearer your_access_token_here
      </span>}
 </span>}
 </code></pre>
-<h3 class="code-line" data-line-start=637 data-line-end=638 ><a id="Permission_637"></a>Permission:</h3>
-<h4 class="code-line" data-line-start=638 data-line-end=639 ><a id="Create_638"></a><em>Create</em>:</h4>
-<pre><code class="has-line-data" data-line-start="640" data-line-end="642">/api/permission/create
+<h3 class="code-line" data-line-start=632 data-line-end=633 ><a id="Permission_632"></a>Permission:</h3>
+<h4 class="code-line" data-line-start=633 data-line-end=634 ><a id="Create_633"></a><em>Create</em>:</h4>
+<pre><code class="has-line-data" data-line-start="635" data-line-end="637">/api/permission/create
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="642" data-line-end="643">In:</p>
+<p class="has-line-data" data-line-start="637" data-line-end="638">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="644" data-line-end="655">Accept: application/json
+<pre><code class="has-line-data" data-line-start="639" data-line-end="650">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -670,19 +665,19 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="655" data-line-end="656">Out:</p>
+<p class="has-line-data" data-line-start="650" data-line-end="651">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="657" data-line-end="661" class="language-json">{
+<pre><code class="has-line-data" data-line-start="652" data-line-end="656" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The permission was successfully added."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=661 data-line-end=662 ><a id="Delete_661"></a><em>Delete</em>:</h4>
-<pre><code class="has-line-data" data-line-start="663" data-line-end="665">/api/permission/delete/{your_permission_id}
+<h4 class="code-line" data-line-start=656 data-line-end=657 ><a id="Delete_656"></a><em>Delete</em>:</h4>
+<pre><code class="has-line-data" data-line-start="658" data-line-end="660">/api/permission/delete/{your_permission_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="665" data-line-end="666">In:</p>
+<p class="has-line-data" data-line-start="660" data-line-end="661">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="667" data-line-end="675">Accept: application/json
+<pre><code class="has-line-data" data-line-start="662" data-line-end="670">Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
@@ -691,43 +686,42 @@ Authorization: Bearer your_access_token_here
 }
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="675" data-line-end="676">Out:</p>
+<p class="has-line-data" data-line-start="670" data-line-end="671">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="677" data-line-end="681" class="language-json">{
+<pre><code class="has-line-data" data-line-start="672" data-line-end="676" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The permission was successfully deleted."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=681 data-line-end=682 ><a id="Update_681"></a><em>Update</em>:</h4>
-<pre><code class="has-line-data" data-line-start="683" data-line-end="685">/api/permission/update
+<h4 class="code-line" data-line-start=676 data-line-end=677 ><a id="Update_676"></a><em>Update</em>:</h4>
+<pre><code class="has-line-data" data-line-start="678" data-line-end="680">/api/permission/update/{your_permission_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="685" data-line-end="686">In:</p>
+<p class="has-line-data" data-line-start="680" data-line-end="681">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="687" data-line-end="698" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="682" data-line-end="692" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
 <span class="json">{
-    "<span class="hljs-attribute">your_permission_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_permission_id"</span></span>,
     "<span class="hljs-attribute">your_permission_name</span>":         <span class="hljs-value"><span class="hljs-string">"your_permission_name"</span></span>,
     "<span class="hljs-attribute">your_slug</span>":                    <span class="hljs-value"><span class="hljs-string">"your_slug"</span></span>,
     "<span class="hljs-attribute">your_permission_description</span>":  <span class="hljs-value"><span class="hljs-string">"your_permission_description"</span>
 </span>}
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="698" data-line-end="699">Out:</p>
+<p class="has-line-data" data-line-start="692" data-line-end="693">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="700" data-line-end="704" class="language-json">{
+<pre><code class="has-line-data" data-line-start="694" data-line-end="698" class="language-json">{
     "<span class="hljs-attribute">message</span>": <span class="hljs-value"><span class="hljs-string">"The permission was successfully updated."</span>
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=704 data-line-end=705 ><a id="Get_all_permissions_704"></a><em>Get all permissions</em>:</h4>
-<pre><code class="has-line-data" data-line-start="706" data-line-end="708">/api/permission/all
+<h4 class="code-line" data-line-start=698 data-line-end=699 ><a id="Get_all_permissions_698"></a><em>Get all permissions</em>:</h4>
+<pre><code class="has-line-data" data-line-start="700" data-line-end="702">/api/permission/all
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="708" data-line-end="709">In:</p>
+<p class="has-line-data" data-line-start="702" data-line-end="703">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="710" data-line-end="718" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="704" data-line-end="712" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -736,9 +730,9 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="718" data-line-end="719">Out:</p>
+<p class="has-line-data" data-line-start="712" data-line-end="713">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="720" data-line-end="732" class="language-json">{
+<pre><code class="has-line-data" data-line-start="714" data-line-end="726" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">[
             {
                 "<span class="hljs-attribute">your_permission_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_permission_id"</span></span>,
@@ -750,13 +744,13 @@ Authorization: Bearer your_access_token_here
     ]
 </span>}
 </code></pre>
-<h4 class="code-line" data-line-start=732 data-line-end=733 ><a id="Get_permission_by_id_732"></a><em>Get permission by id</em>:</h4>
-<pre><code class="has-line-data" data-line-start="735" data-line-end="737">/api/permission/{your_permission_id}
+<h4 class="code-line" data-line-start=726 data-line-end=727 ><a id="Get_permission_by_id_726"></a><em>Get permission by id</em>:</h4>
+<pre><code class="has-line-data" data-line-start="729" data-line-end="731">/api/permission/{your_permission_id}
 </code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="737" data-line-end="738">In:</p>
+<p class="has-line-data" data-line-start="731" data-line-end="732">In:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="739" data-line-end="747" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
+<pre><code class="has-line-data" data-line-start="733" data-line-end="741" class="language-http"><span class="hljs-attribute">Accept</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span>
 <span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Bearer your_access_token_here</span>
 
@@ -765,9 +759,9 @@ Authorization: Bearer your_access_token_here
 }</span>
 </span></code></pre>
 <blockquote>
-<p class="has-line-data" data-line-start="747" data-line-end="748">Out:</p>
+<p class="has-line-data" data-line-start="741" data-line-end="742">Out:</p>
 </blockquote>
-<pre><code class="has-line-data" data-line-start="749" data-line-end="758" class="language-json">{
+<pre><code class="has-line-data" data-line-start="743" data-line-end="752" class="language-json">{
     "<span class="hljs-attribute">data</span>": <span class="hljs-value">{
                 "<span class="hljs-attribute">your_permission_id</span>":           <span class="hljs-value"><span class="hljs-string">"your_permission_id"</span></span>,
                 "<span class="hljs-attribute">your_permission_name</span>":         <span class="hljs-value"><span class="hljs-string">"your_permission_name"</span></span>,

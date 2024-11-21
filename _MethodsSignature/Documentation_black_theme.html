@@ -917,7 +917,7 @@ Authorization: Bearer your_access_token_here
     &quot;message&quot;: <span class="hljs-string">&quot;The department was successfully deleted.&quot;</span>
 }</code></pre>
 <h4 id="update"><em>Update</em>:</h4>
-<pre><code>/api/department/update</code></pre>
+<pre><code>/api/department/update/{your_department_id}</code></pre>
 <blockquote>
   <p>In: </p>
 </blockquote>
@@ -926,7 +926,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    <span class="hljs-string">&quot;department_id&quot;</span>:            <span class="hljs-string">&quot;your_department_id&quot;</span>,
     <span class="hljs-string">&quot;department_name&quot;</span>:          <span class="hljs-string">&quot;your_department_name&quot;</span>,
     <span class="hljs-string">&quot;department_description&quot;</span>:   <span class="hljs-string">&quot;your_department_description&quot;</span>,
     <span class="hljs-string">&quot;parent_id&quot;</span>:                <span class="hljs-string">&quot;your_parent_id&quot;</span>,
@@ -1025,7 +1024,7 @@ Authorization: Bearer your_access_token_here
     &quot;message&quot;: <span class="hljs-string">&quot;The employee was successfully deleted.&quot;</span>
 }</code></pre>
 <h4 id="update-1"><em>Update</em>:</h4>
-<pre><code>/api/employee/update</code></pre>
+<pre><code>/api/employee/update/{your_employee_id}</code></pre>
 <blockquote>
   <p>In: </p>
 </blockquote>
@@ -1034,7 +1033,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    <span class="hljs-string">&quot;employee_id&quot;</span>:          <span class="hljs-string">&quot;your_employee_id&quot;</span>,
     <span class="hljs-string">&quot;last_name&quot;</span>:            <span class="hljs-string">&quot;your_last_name&quot;</span>,
     <span class="hljs-string">&quot;first_name&quot;</span>:           <span class="hljs-string">&quot;your_first_name&quot;</span>,
     <span class="hljs-string">&quot;middle_name&quot;</span>:          <span class="hljs-string">&quot;your_middle_name&quot;</span>,
@@ -1148,7 +1146,7 @@ Authorization: Bearer your_access_token_here
     &quot;message&quot;: <span class="hljs-string">&quot;The measurement was successfully deleted.&quot;</span>
 }</code></pre>
 <h4 id="update-2"><em>Update</em>:</h4>
-<pre><code>/api/measurement/update</code></pre>
+<pre><code>/api/measurement/update/{your_measurement_id}</code></pre>
 <blockquote>
   <p>In: </p>
 </blockquote>
@@ -1157,7 +1155,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    <span class="hljs-string">&quot;measurement_id&quot;</span>:           <span class="hljs-string">&quot;your_measurement_id&quot;</span>,
     <span class="hljs-string">&quot;measurement_name&quot;</span>:         <span class="hljs-string">&quot;your_measurement_name&quot;</span>,
     <span class="hljs-string">&quot;measurement_description&quot;</span>:  <span class="hljs-string">&quot;your_measurement_description&quot;</span>
 }</code></pre>
@@ -1253,7 +1250,7 @@ Authorization: Bearer your_access_token_here
     &quot;message&quot;: <span class="hljs-string">&quot;The process was successfully deleted.&quot;</span>
 }</code></pre>
 <h4 id="update-3"><em>Update</em>:</h4>
-<pre><code>/api/process/update</code></pre>
+<pre><code>/api/process/update/{your_process_id}</code></pre>
 <blockquote>
   <p>In: </p>
 </blockquote>
@@ -1262,7 +1259,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    <span class="hljs-string">&quot;process_id&quot;</span>:           <span class="hljs-string">&quot;your_process_id&quot;</span>,
     <span class="hljs-string">&quot;process_name&quot;</span>:         <span class="hljs-string">&quot;your_process_name&quot;</span>,
     <span class="hljs-string">&quot;measurement_id&quot;</span>:       <span class="hljs-string">&quot;your_measurement_id&quot;</span>,
     <span class="hljs-string">&quot;is_daily&quot;</span>:             <span class="hljs-string">&quot;your_is_daily&quot;</span>,
@@ -1390,7 +1386,7 @@ Authorization: Bearer your_access_token_here
     &quot;message&quot;: <span class="hljs-string">&quot;The role was successfully deleted.&quot;</span>
 }</code></pre>
 <h4 id="update-4"><em>Update</em>:</h4>
-<pre><code>/api/role/update</code></pre>
+<pre><code>/api/role/update/{your_role_id}</code></pre>
 <blockquote>
   <p>In: </p>
 </blockquote>
@@ -1399,7 +1395,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    <span class="hljs-string">&quot;role_id&quot;</span>:              <span class="hljs-string">&quot;your_role_id&quot;</span>,
     <span class="hljs-string">&quot;role_name&quot;</span>:            <span class="hljs-string">&quot;your_role_name&quot;</span>,
     <span class="hljs-string">&quot;slug&quot;</span>:                 <span class="hljs-string">&quot;your_slug&quot;</span>,
     <span class="hljs-string">&quot;role_description&quot;</span>:     <span class="hljs-string">&quot;your_role_description&quot;</span>  
@@ -1494,7 +1489,7 @@ Authorization: Bearer your_access_token_here
     &quot;message&quot;: <span class="hljs-string">&quot;The permission was successfully deleted.&quot;</span>
 }</code></pre>
 <h4 id="update-5"><em>Update</em>:</h4>
-<pre><code>/api/permission/update</code></pre>
+<pre><code>/api/permission/update/{your_permission_id}</code></pre>
 <blockquote>
   <p>In: </p>
 </blockquote>
@@ -1503,7 +1498,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    <span class="hljs-string">&quot;your_permission_id&quot;</span>:           <span class="hljs-string">&quot;your_permission_id&quot;</span>,
     <span class="hljs-string">&quot;your_permission_name&quot;</span>:         <span class="hljs-string">&quot;your_permission_name&quot;</span>,
     <span class="hljs-string">&quot;your_slug&quot;</span>:                    <span class="hljs-string">&quot;your_slug&quot;</span>,
     <span class="hljs-string">&quot;your_permission_description&quot;</span>:  <span class="hljs-string">&quot;your_permission_description&quot;</span>

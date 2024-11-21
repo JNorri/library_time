@@ -61,7 +61,10 @@ class DepartmentController extends Controller
 
         $department = Department::create($request->all());
 
-        return new DepartmentResource($department);
+        return response()->json([
+            'message' => 'The department was successfully added.',
+            'data' => new DepartmentResource($department),
+        ], 201);
     }
 
     /**
@@ -115,7 +118,10 @@ class DepartmentController extends Controller
 
         $department->update($request->all());
 
-        return new DepartmentResource($department);
+        return response()->json([
+            'message' => 'The department was successfully updated.',
+            'data' => new DepartmentResource($department),
+        ], 200);
     }
 
     /**
@@ -131,6 +137,6 @@ class DepartmentController extends Controller
 
         $department->delete();
 
-        return response()->json(['message' => 'Department deleted'], 200);
+        return response()->json(['message' => 'The department was successfully deleted.'], 200);
     }
 }

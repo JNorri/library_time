@@ -73,7 +73,10 @@ class EmployeeController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return new EmployeeResource($employee);
+        return response()->json([
+            'message' => 'The employee was successfully added.',
+            'data' => new EmployeeResource($employee),
+        ], 201);
     }
 
     /**
@@ -142,7 +145,10 @@ class EmployeeController extends Controller
             $employee->update(['password' => Hash::make($request->password)]);
         }
 
-        return new EmployeeResource($employee);
+        return response()->json([
+            'message' => 'The employee was successfully updated.',
+            'data' => new EmployeeResource($employee),
+        ], 200);
     }
 
     /**
@@ -158,6 +164,6 @@ class EmployeeController extends Controller
 
         $employee->delete();
 
-        return response()->json(['message' => 'Employee deleted'], 200);
+        return response()->json(['message' => 'The employee was successfully deleted.'], 200);
     }
 }

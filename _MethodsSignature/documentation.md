@@ -40,7 +40,7 @@ Authorization: Bearer your_access_token_here
 ```
 #### *Update*:
 ```
-/api/department/update
+/api/department/update/{your_department_id}
 ```
 > In: 
 ```http
@@ -49,7 +49,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "department_id":            "your_department_id",
     "department_name":          "your_department_name",
     "department_description":   "your_department_description",
     "parent_id":                "your_parent_id",
@@ -164,7 +163,7 @@ Authorization: Bearer your_access_token_here
 ```
 #### *Update*:
 ```
-/api/employee/update
+/api/employee/update/{your_employee_id}
 ```
 > In: 
 ```
@@ -173,7 +172,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "employee_id":          "your_employee_id",
     "last_name":            "your_last_name",
     "first_name":           "your_first_name",
     "middle_name":          "your_middle_name",
@@ -298,7 +296,7 @@ Authorization: Bearer your_access_token_here
 ```
 #### *Update*:
 ```
-/api/measurement/update
+/api/measurement/update/{your_measurement_id}
 ```
 > In: 
 ```http
@@ -307,7 +305,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "measurement_id":           "your_measurement_id",
     "measurement_name":         "your_measurement_name",
     "measurement_description":  "your_measurement_description"
 }
@@ -414,7 +411,7 @@ Authorization: Bearer your_access_token_here
 ```
 #### *Update*:
 ```
-/api/process/update
+/api/process/update/{your_process_id}
 ```
 > In: 
 ```http
@@ -423,7 +420,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "process_id":           "your_process_id",
     "process_name":         "your_process_name",
     "measurement_id":       "your_measurement_id",
     "is_daily":             "your_is_daily",
@@ -564,7 +560,7 @@ Authorization: Bearer your_access_token_here
 ```
 #### *Update*:
 ```
-/api/role/update
+/api/role/update/{your_role_id}
 ```
 > In: 
 ```http
@@ -573,7 +569,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "role_id":              "your_role_id",
     "role_name":            "your_role_name",
     "slug":                 "your_slug",
     "role_description":     "your_role_description"  
@@ -681,7 +676,7 @@ Authorization: Bearer your_access_token_here
 ```
 #### *Update*:
 ```
-/api/permission/update
+/api/permission/update/{your_permission_id}
 ```
 > In: 
 ```http
@@ -690,7 +685,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "your_permission_id":           "your_permission_id",
     "your_permission_name":         "your_permission_name",
     "your_slug":                    "your_slug",
     "your_permission_description":  "your_permission_description"

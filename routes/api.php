@@ -5,7 +5,7 @@ require __DIR__ . '/tokenAuth.php';
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\DepartmentController;
-use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\MeasurementController;
 use App\Http\Controllers\API\PermissionController;
 use App\Http\Controllers\API\ProcessController;
@@ -22,8 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request): mix
 // Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard',                [DashboardController::class, 'index'])->middleware('auth');
-Route::get('/employees',                [EmployeeController::class, 'index'])->name('employees.index');
-Route::get('/employees/json',           [EmployeeController::class, 'json'])->name('employees.json');
+Route::get('/employees',                [UserController::class, 'index'])->name('employees.index');
+Route::get('/employees/json',           [UserController::class, 'json'])->name('employees.json');
 
 Route::get('/measurements',             [MeasurementController::class, 'index'])->name('measurements.index');
 Route::get('/measurements/json',        [MeasurementController::class, 'json'])->name('measurements.json');
@@ -48,12 +48,12 @@ Route::put('/department/update/{id}',   [DepartmentController::class, 'update'])
 Route::get('/department/delete/{id}',   [DepartmentController::class, 'destroy'])->name('departments.destroy');
 Route::get('/department/{id}',          [DepartmentController::class, 'show'])->name('departments.show');
 
-Route::get('/employee/all',             [EmployeeController::class, 'json'])->name('employees.json');
-Route::put('/employee/create',          [EmployeeController::class, 'store'])->name('employees.store');
-// Route::put('/employee/update/{id}',     [EmployeeController::class, 'update'])->name('employees.update');
-Route::put('/employee/update',          [EmployeeController::class, 'update'])->name('employees.update');
-Route::get('/employee/delete/{id}',     [EmployeeController::class, 'destroy'])->name('employees.destroy');
-Route::get('/employee/{id}',            [EmployeeController::class, 'show'])->name('employees.show');
+Route::get('/employee/all',             [UserController::class, 'json'])->name('employees.json');
+Route::put('/employee/create',          [UserController::class, 'store'])->name('employees.store');
+// Route::put('/employee/update/{id}',     [UserController::class, 'update'])->name('employees.update');
+Route::put('/employee/update',          [UserController::class, 'update'])->name('employees.update');
+Route::get('/employee/delete/{id}',     [UserController::class, 'destroy'])->name('employees.destroy');
+Route::get('/employee/{id}',            [UserController::class, 'show'])->name('employees.show');
 
 Route::get('/measurement/all',          [MeasurementController::class, 'json'])->name('measurements.json');
 Route::put('/measurement/create',       [MeasurementController::class, 'store'])->name('measurements.store');

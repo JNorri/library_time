@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class EmployeePolicy
+class UserPolicy
 {
     use HandlesAuthorization;
     // /**
@@ -21,9 +20,9 @@ class EmployeePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(Employee $employee, Employee $model)
+    public function view(User $user, User $model)
     {
-        return $employee->employee_id === $model->employee_id;
+        return $user->id === $model->id;
     }
 
     // /**
@@ -37,24 +36,24 @@ class EmployeePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(Employee $employee, Employee $model)
+    public function update(User $user, User $model)
     {
-        return $employee->employee_id === $model->employee_id;
+        return $user->id === $model->id;
     }
 
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(Employee $employee, Employee $model)
+    public function delete(User $user, User $model)
     {
-        return $employee->employee_id === $model->employee_id;
+        return $user->id === $model->id;
     }
 
     // /**
     //  * Determine whether the user can restore the model.
     //  */
-    // public function restore(User $user, Employee $employee): bool
+    // public function restore(User $user, User $user): bool
     // {
     //     //
     // }
@@ -62,7 +61,7 @@ class EmployeePolicy
     // /**
     //  * Determine whether the user can permanently delete the model.
     //  */
-    // public function forceDelete(User $user, Employee $employee): bool
+    // public function forceDelete(User $user, User $user): bool
     // {
     //     //
     // }

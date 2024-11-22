@@ -3,28 +3,28 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EmployeeResource;
-use App\Models\Employee;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class EmployeeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource for API.
      */
     public function index()
     {
-        $employees = Employee::all();
-        dd($employees); // Check if employees are retrieved
-        return view('/dashboard', compact('employees'));
+        $users = User::all();
+        dd($users); // Check if users are retrieved
+        return view('/dashboard', compact('users'));
     }
 
     public function json()
     {
-        $employees = Employee::all();
-        return response()->json($employees);
+        $users = User::all();
+        return response()->json($users);
     }
 
     /**
@@ -32,8 +32,8 @@ class EmployeeController extends Controller
      */
     public function webIndex()
     {
-        $employees = Employee::all();
-        return view('employees.index', compact('employees'));
+        $users = User::all();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -41,7 +41,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('employees.create');
+        return view('users.create');
     }
 
     /**
@@ -54,8 +54,8 @@ class EmployeeController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
-            'email' => 'required|string|email|max:255|unique:employees',
-            'phone' => 'required|string|max:255|unique:employees',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
 
@@ -63,7 +63,7 @@ class EmployeeController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $employee = Employee::create([
+        $user = User::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -74,8 +74,8 @@ class EmployeeController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'The employee was successfully added.',
-            'data' => new EmployeeResource($employee),
+            'message' => 'The user was successfully added.',
+            'data' => new UserResource($user),
         ], 201);
     }
 
@@ -84,13 +84,13 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $employee = Employee::find($id);
+        $user = User::find($id);
 
-        if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
 
-        return new EmployeeResource($employee);
+        return new UserResource($user);
     }
 
     /**
@@ -98,13 +98,13 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        $employee = Employee::find($id);
+        $user = User::find($id);
 
-        if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
 
-        return view('employees.edit', compact('employee'));
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -112,10 +112,10 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $employee = Employee::find($id);
+        $user = User::find($id);
 
-        if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -123,8 +123,8 @@ class EmployeeController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
-            'email' => 'required|string|email|max:255|unique:employees,email,' . $employee->employee_id . ',employee_id',
-            'phone' => 'required|string|max:255|unique:employees,phone,' . $employee->employee_id . ',employee_id',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->user_id . ',user_id',
+            'phone' => 'required|string|max:255|unique:users,phone,' . $user->user_id . ',user_id',
             'password' => 'nullable|string|min:8',
         ]);
 
@@ -132,7 +132,7 @@ class EmployeeController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $employee->update([
+        $user->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -142,12 +142,12 @@ class EmployeeController extends Controller
         ]);
 
         if ($request->has('password')) {
-            $employee->update(['password' => Hash::make($request->password)]);
+            $user->update(['password' => Hash::make($request->password)]);
         }
 
         return response()->json([
-            'message' => 'The employee was successfully updated.',
-            'data' => new EmployeeResource($employee),
+            'message' => 'The user was successfully updated.',
+            'data' => new UserResource($user),
         ], 200);
     }
 
@@ -156,14 +156,14 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        $employee = Employee::find($id);
+        $user = User::find($id);
 
-        if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
 
-        $employee->delete();
+        $user->delete();
 
-        return response()->json(['message' => 'The employee was successfully deleted.'], 200);
+        return response()->json(['message' => 'The user was successfully deleted.'], 200);
     }
 }

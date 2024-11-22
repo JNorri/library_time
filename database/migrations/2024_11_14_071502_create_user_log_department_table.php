@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_department', function (Blueprint $table) {
+        Schema::create('user_log_department', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('department_id');
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamp('start_date');
             $table->timestamp('end_date')->nullable();
 
             // Foreigh Keys
             $table->foreign('department_id')->references('department_id')->on('departments')->onDelete('restrict');
-            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
     }
 
@@ -29,10 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('employee_department', function (Blueprint $table) {
+        Schema::table('user_log_department', function (Blueprint $table) {
             $table->dropForeign(['department_id']);
-            $table->dropForeign(['employee_id']);
+            $table->dropForeign(['user_id']);
         });
-        Schema::dropIfExists('employee_department');
+        Schema::dropIfExists('user_log_department');
     }
 };

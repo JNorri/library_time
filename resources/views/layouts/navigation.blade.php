@@ -27,7 +27,7 @@
                     <x-nav-link :href="route('dashboard.measurements')" :active="request()->routeIs('dashboard.measurements')">
                         {{ __('Measurements') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard.employees')" :active="request()->routeIs('dashboard.employees')">
+                    <x-nav-link :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
                         {{ __('Employees') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.permissions')" :active="request()->routeIs('dashboard.permissions')">
@@ -100,8 +100,8 @@
             <x-responsive-nav-link :href="route('dashboard.measurements')" :active="request()->routeIs('dashboard.measurements')">
                 {{ __('Measurements') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard.employees')" :active="request()->routeIs('dashboard.employees')">
-                {{ __('Employees') }}
+            <x-responsive-nav-link :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
+                {{ __('Users') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.permissions')" :active="request()->routeIs('dashboard.permissions')">
                 {{ __('Permissions') }}

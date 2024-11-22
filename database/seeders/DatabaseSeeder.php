@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Measurement;
 use App\Models\Process;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,14 +20,14 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(PermissionSeeder::class);
-        $this->call(RolePermissionSeeder::class);
+        $this->call(RoleLogPermissionSeeder::class);
         $this->call(MeasurementSeeder::class);
-        $this->call(EmployeeSeeder::class);
-        $this->call(EmployeeRoleSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(UserLogRoleSeeder::class);
         $this->call(ProcessSeeder::class);
-        $this->call(EmployeeProcessSeeder::class);
-        $this->call(ProcessEmployeeSeeder::class);
-        $this->call(EmployeeDepartmentSeeder::class);
+        $this->call(UserLogProcessSeeder::class);
+        $this->call(UserLogDepartmentSeeder::class);
+        $this->call(UserSpecificProcessSeeder::class);
 
         // $this->call(Role::class);
 

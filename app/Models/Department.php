@@ -16,10 +16,15 @@ class Department extends Model
         'parent_id',
     ];
 
-    public function departments()
+    public function users()
     {
-        return $this->belongsToMany(Employee::class, 'employee_department', 'department_id', 'employee_id')->withPivot('start_date', 'end_date');
+        return $this->belongsToMany(User::class, 'user_log_department', 'department_id', 'user_id')->withPivot('start_date', 'end_date');
     }
+
+    // public function users()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
 
     public function parentDepartment()
     {

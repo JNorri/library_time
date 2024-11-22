@@ -30,14 +30,14 @@ class Process extends Model
     //     return $this->belongsTo(Department::class, 'department_id', 'department_id');
     // }
 
-    public function employees()
+    public function users()
     {
-        return $this->belongsToMany(Employee::class, 'process_employee', 'process_id', 'employee_id')->withPivot('date', 'quantity', 'description');
+        return $this->belongsToMany(User::class, 'user_specific_process', 'process_id', 'user_id')->withPivot('date', 'quantity', 'description');
     }
 
     public function processes()
     {
-        return $this->belongsToMany(Employee::class, 'employee_process', 'process_id', 'employee_id')->withPivot('start_date', 'end_date', 'status');
+        return $this->belongsToMany(User::class, 'user_log_process', 'process_id', 'user_id')->withPivot('start_date', 'end_date');
     }
 
     public function measurement()

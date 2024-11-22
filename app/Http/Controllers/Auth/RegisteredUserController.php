@@ -30,17 +30,18 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'date_of_birth' => ['required', 'date'],
-            'phone' => ['required', 'string', 'max:255', 'unique:employees'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:employees'],
+            'phone' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $employee = Employee::create([
+        $user = User::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -50,28 +51,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Создаем запись в таблице пересечений employee_department
-        $employee->departments()->attach($request->department_id, [
+        // Создаем запись в таблице пересечений user_department
+        $user->departments()->attach($request->department_id, [
             'start_date' => now(),
             'end_date' => null,
         ]);
 
+        event(new Registered($user));
 
-        // $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
-
-        // $user = User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
-        event(new Registered($employee));
-
-        Auth::login($employee);
+        Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
     }

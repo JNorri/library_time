@@ -3,14 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\Department;
-use App\Models\Employee;
+use App\Models\User;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\VarDumper\VarDumper;
 
-class EmployeeSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,7 +18,7 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
 
-        $userHeadDepartment = Employee::create(array(
+        $userHeadDepartment = User::create(array(
             'first_name' => 'Александр',
             'middle_name' => 'Вячеславович',
             'last_name' => 'Аточин',
@@ -29,7 +29,7 @@ class EmployeeSeeder extends Seeder
         ));
 
 
-        $userHeadDepartment = Employee::create(array(
+        $userHeadDepartment = User::create(array(
             'first_name' => 'Вячеслав',
             'middle_name' => 'Борисович',
             'last_name' => 'Ложников',
@@ -40,7 +40,7 @@ class EmployeeSeeder extends Seeder
         ));
 
 
-        $userHeadDepartment = Employee::create(array(
+        $userHeadDepartment = User::create(array(
             'first_name' => 'Маруся',
             'middle_name' => 'Александровна',
             'last_name' => 'Лопатина',

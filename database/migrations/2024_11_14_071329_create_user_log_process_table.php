@@ -11,17 +11,16 @@
          */
         public function up(): void
         {
-            Schema::create('employee_process', function (Blueprint $table) {
+            Schema::create('user_log_process', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('process_id');
-                $table->unsignedBigInteger('employee_id');
+                $table->unsignedBigInteger('user_id');
                 $table->timestamp('start_date');
                 $table->timestamp('end_date')->nullable();
-                $table->enum('status', ['assigned', 'unassigned']);
 
                 // Foreigh Keys
                 $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('restrict');
-                $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('restrict');
+                $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             });
         }
 
@@ -30,11 +29,11 @@
          */
         public function down(): void
         {
-            Schema::table('employee_process', function (Blueprint $table) {
+            Schema::table('user_log_process', function (Blueprint $table) {
                 $table->dropForeign(['process_id']);
-                $table->dropForeign(['employee_id']);
+                $table->dropForeign(['user_id']);
             });
 
-            Schema::dropIfExists('employee_process');
+            Schema::dropIfExists('user_log_process');
         }
     };

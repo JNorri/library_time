@@ -1,10 +1,14 @@
 PUT http://127.0.0.1:8000/api/department/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer your_access_token_here
+Authorization: Bearer 3|9xzS1eO2AYABw17bEbGmPxDRRfIuhNRFUIQ8Yern252e5bbc
 
 {
     "department_name": "New Department",
     "department_description": "Description of the new department",
-    "parent_id": null
+    "parent_id": 3
 }
+
+# curl -X GET http://127.0.0.1:8000/api/employee \
+#     -H "Accept: application/json" \
+#     -H "Authorization: Bearer 3|dZmxl10u5o2vsVm83HDusekvtntGBlGzMxM0EKkp0379d8f0"

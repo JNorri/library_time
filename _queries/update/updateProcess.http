@@ -1,10 +1,14 @@
-PUT http://127.0.0.1/api/privelege/update HTTP/1.1
+PUT http://127.0.0.1:8000/api/process/update/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 8|5QIGYnI6QzDcPXUsnbwJgj42QwHFKArGptyhMaOd
+Authorization: Bearer 1|04HDfFg2YFFue3lcFkg5TTm8SxhBZT5SEv4DIrXr0f03f985
 
 
 {
-    "id":4,
-    "privelege_name" : "old_privelegeORNEW?11111111"
+    "process_name": "New Process",
+    "measurement_id": 1,
+    "is_daily": true,
+    "require_description": false,
+    "department_id": 1,
+    "process_duration": 60
 }

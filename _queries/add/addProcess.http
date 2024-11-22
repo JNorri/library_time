@@ -1,7 +1,7 @@
 PUT http://127.0.0.1:8000/api/process/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer your_access_token_here
+Authorization: Bearer 4|F066wvDvMvW7B0FZZqdJDWo2NG7iVjoKdP7xZKTUf5067b44
 
 {
     "process_name": "New Process",

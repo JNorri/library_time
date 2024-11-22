@@ -1,14 +1,11 @@
-PUT http://127.0.0.1/api/gladiator/update HTTP/1.1
+PUT http://127.0.0.1:8000/api/role/update/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 10|IevDihaTjyk1L7CDuRKwBkWgM2hBDox2Ajis8Neh
+Authorization: Bearer 3|hdA7Ca7oFw33ysCf90X3RfTe1wGiXdaxPXxDMBP550d91f80
 
 
 {
-    "id":"12",
-    "gladiator_name":"old",
-    "gladiator_description":"old_descrip",
-    "gladiator_type":2,
-    "gladiator_image":"nope",
-    "gladiators_literature":"old_literature"
+    "role_name": "New Role",
+    "slug": "New Slug",
+    "role_description": "Role Description"
 }

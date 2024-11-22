@@ -4,10 +4,6 @@ Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "process_name": "New Process",
-    "measurement_id": 1,
-    "is_daily": true,
-    "require_description": false,
-    "department_id": 1,
-    "process_duration": 60
+    "role_name": "New Role",
+    "role_description": "Role Description",
 }

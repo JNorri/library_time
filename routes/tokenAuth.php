@@ -16,6 +16,7 @@ Route::post('/sanctum/token', function (Request $request) {
 
     $employee = Employee::where('email', $request->email)->first();
 
+
     if (! $employee || ! Hash::check($request->password, $employee->password)) {
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],

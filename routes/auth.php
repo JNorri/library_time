@@ -9,6 +9,9 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Models\Employee;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -33,6 +36,29 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+    // Маршрут для выдачи токенов API
+    Route::post('/tokens/create', function (Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
+        ]);
+
+        $employee = Employee::where('email', $request->email)->first();
+
+        if (!$employee || !Hash::check($request->password, $employee->password)) {
+            return response()->json([
+                'message' => 'The provided credentials are incorrect.'
+            ], 401);
+        }
+
+        $token = $employee->createToken($request->device_name)->plainTextToken;
+
+        return response()->json([
+            'token' => $token
+        ]);
+    });
 });
 
 Route::middleware('auth')->group(function () {
@@ -56,4 +82,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    // Маршрут для получения информации о пользователе
+    Route::middleware('auth:sanctum')->get('/employee', function (Request $request) {
+        return $request->user();
+    });
 });

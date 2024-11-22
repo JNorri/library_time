@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Measurement extends Model
 {
     protected $primaryKey = 'measurement_id';
+    public $timestamps = false;
 
     //
     protected $fillable = [

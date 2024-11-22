@@ -1,11 +1,9 @@
 <?php
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/tokenAuth.php';
 
 use App\Http\Controllers\API\CheckCsrfTokenController;
 use App\Http\Controllers\API\DepartmentController;
-use App\Http\Controllers\AuthEmployeeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
@@ -15,6 +13,10 @@ use Illuminate\Support\Facades\Session;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::middleware('auth:sanctum')->get('/employee', function (Request $request) {
+//     return $request->user();
+// });
 
 // Route::post('/sanctum/token', [AuthEmployeeController::class, 'token']);
 
@@ -34,9 +36,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request): mixed {
+Route::middleware('auth:sanctum')->get('/employee', function (Request $request) {
     return $request->user();
 });
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile',                  [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile',                [ProfileController::class, 'update'])->name('profile.update');

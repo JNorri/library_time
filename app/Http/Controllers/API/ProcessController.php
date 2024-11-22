@@ -109,7 +109,7 @@ class ProcessController extends Controller
 
         $validator = Validator::make($request->all(), [
             'process_name' => 'required|string|max:255',
-            'measurement_id' => 'nullable|exists:measurements,measurement_id',
+            'measurement_id' => 'required|exists:measurements,measurement_id',
             'is_daily' => 'boolean',
             'require_description' => 'boolean',
             'department_id' => 'required|exists:departments,department_id',

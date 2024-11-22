@@ -8,6 +8,7 @@ class Process extends Model
 {
 
     protected $primaryKey = 'process_id';
+    public $timestamps = false; // Отключаем автоматическое управление временными метками
 
     protected $fillable = [
         'process_name',

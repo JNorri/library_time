@@ -1,13 +1,9 @@
-PUT http://127.0.0.1:8000/api/process/create HTTP/1.1
+PUT http://127.0.0.1:8000/api/permission/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer your_access_token_here
 
 {
-    "process_name": "New Process",
-    "measurement_id": 1,
-    "is_daily": true,
-    "require_description": false,
-    "department_id": 1,
-    "process_duration": 60
+    "permission_name": "New Permission",
+    "permission_description": "New Description",
 }

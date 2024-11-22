@@ -1,13 +1,14 @@
-PUT http://127.0.0.1/api/gladiator/update HTTP/1.1
+PUT http://127.0.0.1/api/employee/update/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer 10|IevDihaTjyk1L7CDuRKwBkWgM2hBDox2Ajis8Neh
 
 {
-    "id": "12",
-    "gladiator_name": "old",
-    "gladiator_description": "old_descrip",
-    "gladiator_type": 2,
-    "gladiator_image": "nope",
-    "gladiators_literature": "old_literature"
+   "first_name": "John",
+    "middle_name": "Doe",
+    "last_name": "Smith",
+    "date_of_birth": "1990-01-01",
+    "email": "john.smith@example.com",
+    "phone": "1234567890",
+    "password": "secret"
 }

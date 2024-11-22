@@ -1,7 +1,7 @@
 PUT http://127.0.0.1:8000/api/employee/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer your_access_token_here
+Authorization: Bearer 3|9xzS1eO2AYABw17bEbGmPxDRRfIuhNRFUIQ8Yern252e5bbc
 
 {
     "first_name": "John",
@@ -10,5 +10,5 @@ Authorization: Bearer your_access_token_here
     "date_of_birth": "1990-01-01",
     "email": "john.smith@example.com",
     "phone": "1234567890",
-    "password": "secret"
+    "password": "secret_1"
 }

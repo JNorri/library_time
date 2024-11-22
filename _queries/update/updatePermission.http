@@ -1,12 +1,10 @@
-PUT http://127.0.0.1/api/weapon/update HTTP/1.1
+PUT http://127.0.0.1/api/permission/update/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer 9|HX3sFJfquM1dNMrB6YdIwEkmDkAuqwD38V9b7uPM
 
 
 {
-    "id":"7",
-    "weapon_name":"old",
-    "weapon_description":"old_descrip",
-    "weapon_image":"nope"
+    "permission_name": "New Permission",
+    "permission_description": "New Description",
 }

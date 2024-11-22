@@ -4,11 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Employee;
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserLogRoleSeeder extends Seeder
+class EmployeeLogRoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,10 +15,10 @@ class UserLogRoleSeeder extends Seeder
     public function run(): void
     {
         // Получение сотрудника и процесса
-        $user = User::find(1);
+        $employee = Employee::find(1);
         $role = Role::find(1);
 
         // Привязка роли к сотруднику
-        $user->roles()->attach($role);
+        $employee->roles()->attach($role);
     }
 }

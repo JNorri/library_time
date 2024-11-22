@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_specific_process', function (Blueprint $table) {
+        Schema::create('employee_specific_process', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('process_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('employee_id');
             $table->timestamp('date');
             $table->integer('quantity');
             $table->text('description');
 
             // Foreigh Keys
             $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('restrict');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
+            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('restrict');
         });
     }
 
@@ -30,10 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_specific_process', function (Blueprint $table) {
+        Schema::table('employee_specific_process', function (Blueprint $table) {
             $table->dropForeign(['process_id']);
-            $table->dropForeign(['user_id']);
+            $table->dropForeign(['employee_id']);
         });
-        Schema::dropIfExists('user_specific_process');
+        Schema::dropIfExists('employee_specific_process');
     }
 };

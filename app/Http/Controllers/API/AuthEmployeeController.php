@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -18,7 +17,7 @@ class AuthEmployeeController extends Controller
             'device_name' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = Employee::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([

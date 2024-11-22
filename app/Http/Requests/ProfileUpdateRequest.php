@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Employee;
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

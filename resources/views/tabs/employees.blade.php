@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users') }}
+            {{ __('Employees') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,7 @@
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2">User ID</th>
+                                <th class="px-4 py-2">Employee ID</th>
                                 <th class="px-4 py-2">Last Name</th>
                                 <th class="px-4 py-2">First Name</th>
                                 <th class="px-4 py-2">Middle Name</th>
@@ -22,20 +22,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @foreach($employees as $employee)
                             <tr>
-                                <td class="border px-4 py-2">{{ $user->id }}</td>
-                                <td class="border px-4 py-2">{{ $user->last_name }}</td>
-                                <td class="border px-4 py-2">{{ $user->first_name }}</td>
-                                <td class="border px-4 py-2">{{ $user->middle_name }}</td>
-                                <td class="border px-4 py-2">{{ $user->date_of_birth }}</td>
-                                <td class="border px-4 py-2">{{ $user->email }}</td>
-                                <td class="border px-4 py-2">{{ $user->phone }}</td>
+                                <td class="border px-4 py-2">{{ $employee->employee_id }}</td>
+                                <td class="border px-4 py-2">{{ $employee->last_name }}</td>
+                                <td class="border px-4 py-2">{{ $employee->first_name }}</td>
+                                <td class="border px-4 py-2">{{ $employee->middle_name }}</td>
+                                <td class="border px-4 py-2">{{ $employee->date_of_birth }}</td>
+                                <td class="border px-4 py-2">{{ $employee->email }}</td>
+                                <td class="border px-4 py-2">{{ $employee->phone }}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $users->links('vendor.pagination.custom') }}
+                    {{ $employees->links('vendor.pagination.custom') }}
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Employee;
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +15,7 @@ Route::post('/sanctum/token', function (Request $request) {
         'device_name' => 'required',
     ]);
 
-    $user = User::where('email', $request->email)->first();
+    $user = Employee::where('email', $request->email)->first();
 
 
     if (! $employee || ! Hash::check($request->password, $employee->password)) {

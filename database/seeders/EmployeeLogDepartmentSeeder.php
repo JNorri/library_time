@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Department;
-use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 
-class UserLogDepartmentSeeder extends Seeder
+class EmployeeLogDepartmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -32,19 +32,19 @@ class UserLogDepartmentSeeder extends Seeder
         //     }
         // }
         // Получение сотрудника и процесса
-        $head = User::find(1);
+        $head = Employee::find(1);
         $department = Department::find(1);
 
         // Привязка процесса к сотруднику
         $head->departments()->attach($department, ['start_date' => now(), 'end_date' => null]);
 
-        $methodist = User::find(2);
+        $methodist = Employee::find(2);
         $department = Department::find(4);
 
         // Привязка процесса к сотруднику
         $methodist->departments()->attach($department, ['start_date' => now(), 'end_date' => null]);
 
-        $employee = User::find(3);
+        $employee = Employee::find(3);
         $department = Department::find(3);
 
         // Привязка процесса к сотруднику

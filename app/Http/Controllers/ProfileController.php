@@ -16,25 +16,25 @@ class ProfileController extends Controller
 {
     public function edit(Request $request)
     {
-        $user = $request->user();
+        $employee = $request->user();
         // dd($user);
         $departments = Department::all();
         $roles = Role::all();
 
         // Получаем текущий департамент, где end_date равен null
-        $currentDepartment = $user->departments()
+        $currentDepartment = $employee->departments()
             ->wherePivot('end_date', null)
             ->first();
 
         // Получаем текущую роль
-        $currentRole = $user->roles()->first();
+        $currentRole = $employee->roles()->first();
 
-        return view('profile.edit', compact('user', 'departments', 'roles', 'currentDepartment', 'currentRole'));
+        return view('profile.edit', compact('employee', 'departments', 'roles', 'currentDepartment', 'currentRole'));
     }
 
     public function update(Request $request)
     {
-        $user = $request->user();
+        $employee = $request->user();
 
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
@@ -44,10 +44,10 @@ class ProfileController extends Controller
             'phone' => ['required', 'string', 'max:255'],
             'department_id' => ['required', 'integer'],
             'role_id' => ['required', 'integer'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'email' => ['required', 'email', 'max:255', Rule::unique('employees')->ignore($employee->employee_id, 'employee_id')],
         ]);
 
-        $user->update([
+        $employee->update([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -57,8 +57,8 @@ class ProfileController extends Controller
         ]);
 
         // Обновляем департамент и роль
-        $user->departments()->sync([$request->department_id]);
-        $user->roles()->sync([$request->role_id]);
+        $employee->departments()->sync([$request->department_id]);
+        $employee->roles()->sync([$request->role_id]);
 
         return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
@@ -69,11 +69,11 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        $user = $request->user();
+        $employee = $request->user();
 
         Auth::logout();
 
-        $user->delete();
+        $employee->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

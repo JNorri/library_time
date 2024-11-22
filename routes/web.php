@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/departments',    [DashboardController::class, 'departments'])->name('dashboard.departments');
     Route::get('/dashboard/processes',      [DashboardController::class, 'processes'])->name('dashboard.processes');
     Route::get('/dashboard/measurements',   [DashboardController::class, 'measurements'])->name('dashboard.measurements');
-    Route::get('/dashboard/users',          [DashboardController::class, 'users'])->name('dashboard.users');
+    Route::get('/dashboard/employees',          [DashboardController::class, 'employees'])->name('dashboard.employees');
     Route::get('/dashboard/permissions',    [DashboardController::class, 'permissions'])->name('dashboard.permissions');
 });
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,12 +35,12 @@ class RegisteredUserController extends Controller
             'middle_name' => ['nullable', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'date_of_birth' => ['required', 'date'],
-            'phone' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:255', 'unique:employees'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:employees'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
+        $employee = Employee::create([
             'first_name' => $request->first_name,
             'middle_name' => $request->middle_name,
             'last_name' => $request->last_name,
@@ -51,15 +50,15 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Создаем запись в таблице пересечений user_department
-        $user->departments()->attach($request->department_id, [
+        // Создаем запись в таблице пересечений employee_department
+        $employee->departments()->attach($request->department_id, [
             'start_date' => now(),
             'end_date' => null,
         ]);
 
-        event(new Registered($user));
+        event(new Registered($employee));
 
-        Auth::login($user);
+        Auth::login($employee);
 
         return redirect(route('dashboard', absolute: false));
     }

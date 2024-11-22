@@ -5,11 +5,10 @@ namespace Database\Seeders;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Process;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserSpecificProcessSeeder extends Seeder
+class EmployeeSpecificProcessSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,10 +16,10 @@ class UserSpecificProcessSeeder extends Seeder
     public function run(): void
     {
         // Получение сотрудника и процесса
-        $user = User::find(1);
+        $employee = Employee::find(1);
         $process = Process::find(1);
 
         // Привязка процесса к сотруднику
-        $process->users()->attach($user, ['date' => now(), 'quantity' => 1, 'description' => 'Описание']);
+        $process->employees()->attach($employee, ['date' => now(), 'quantity' => 1, 'description' => 'Описание']);
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Process;
 use App\Models\Measurement;
 use App\Models\Employee;
 use App\Models\Permission;
-use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -41,10 +40,10 @@ class DashboardController extends Controller
         return view('tabs.measurements', compact('measurements'));
     }
 
-    public function users()
+    public function employees()
     {
-        $users = User::paginate(10);
-        return view('tabs.users', compact('users'));
+        $employees = Employee::paginate(10);
+        return view('tabs.employees', compact('employees'));
     }
 
     public function permissions()

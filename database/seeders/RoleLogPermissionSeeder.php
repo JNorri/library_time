@@ -16,7 +16,6 @@ class RoleLogPermissionSeeder extends Seeder
     {
         //
         $role = Role::find(1);
-        $permission = Permission::find(1);
 
         $viewDataReport = Permission::firstOrCreate(['permission_name' => 'Просмотр данных отчёта', 'slug' => 'view_data_report', 'permission_description' => 'test']);
         $viewEmployee = Permission::firstOrCreate(['permission_name' => 'Просмотр данных сотрудника', 'slug' => 'view_employee', 'permission_description' => 'test']);

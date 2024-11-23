@@ -1,7 +1,7 @@
-PUT http://127.0.0.1/api/gladiator/update/1 HTTP/1.1
+PUT http://127.0.0.1:8000/api/department/update/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 10|IevDihaTjyk1L7CDuRKwBkWgM2hBDox2Ajis8Neh
+Authorization: Bearer 2|g3LSyxxbLK5dtzq6SpqP9Eni1ozvFIJO7LDeUQch5a28a4c2
 
 
 {

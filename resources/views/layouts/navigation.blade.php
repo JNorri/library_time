@@ -13,25 +13,28 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Панель управления') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.roles')" :active="request()->routeIs('dashboard.roles')">
-                        {{ __('Roles') }}
+                        {{ __('Роли') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.departments')" :active="request()->routeIs('dashboard.departments')">
-                        {{ __('Departments') }}
+                        {{ __('Отделы') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.processes')" :active="request()->routeIs('dashboard.processes')">
-                        {{ __('Processes') }}
+                        {{ __('Процессы') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.measurements')" :active="request()->routeIs('dashboard.measurements')">
-                        {{ __('Measurements') }}
+                        {{ __('Измерения') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.employees')" :active="request()->routeIs('dashboard.employees')">
-                        {{ __('Employees') }}
+                        {{ __('Сотрудники') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard.permissions')" :active="request()->routeIs('dashboard.permissions')">
-                        {{ __('Permissions') }}
+                        {{ __('Разрешения') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('reports')" :active="request()->routeIs('reports.*')">
+                        {{ __('Отчёты') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -53,7 +56,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Профиль') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -63,7 +66,7 @@
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Выйти') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -86,25 +89,28 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Панель управления') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.roles')" :active="request()->routeIs('dashboard.roles')">
-                {{ __('Roles') }}
+                {{ __('Роли') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.departments')" :active="request()->routeIs('dashboard.departments')">
-                {{ __('Departments') }}
+                {{ __('Отделы') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.processes')" :active="request()->routeIs('dashboard.processes')">
-                {{ __('Processes') }}
+                {{ __('Процессы') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.measurements')" :active="request()->routeIs('dashboard.measurements')">
-                {{ __('Measurements') }}
+                {{ __('Измерения') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.employees')" :active="request()->routeIs('dashboard.employees')">
-                {{ __('Users') }}
+                {{ __('Сотрудники') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard.permissions')" :active="request()->routeIs('dashboard.permissions')">
-                {{ __('Permissions') }}
+                {{ __('Разрешения') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports.*')">
+                {{ __('Отчёты') }}
             </x-responsive-nav-link>
         </div>
 
@@ -117,7 +123,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Профиль') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -127,7 +133,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Выйти') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

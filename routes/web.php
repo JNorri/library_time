@@ -6,6 +6,7 @@ use App\Http\Controllers\API\CheckCsrfTokenController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\API\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -45,15 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile',                [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile',               [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/reports',                  [ReportController::class, 'index'])->name('reports');
+    Route::get('/reports/employee',         [ReportController::class, 'employeeReport'])->name('reports.employee');
+    Route::get('/reports/department',       [ReportController::class, 'departmentReport'])->name('reports.department');
+    Route::get('/reports/library',          [ReportController::class, 'libraryReport'])->name('reports.library');
     Route::get('/dashboard',                [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
-
     Route::get('/dashboard/roles',          [DashboardController::class, 'roles'])->name('dashboard.roles');
     Route::get('/dashboard/departments',    [DashboardController::class, 'departments'])->name('dashboard.departments');
     Route::get('/dashboard/processes',      [DashboardController::class, 'processes'])->name('dashboard.processes');
     Route::get('/dashboard/measurements',   [DashboardController::class, 'measurements'])->name('dashboard.measurements');
-    Route::get('/dashboard/employees',          [DashboardController::class, 'employees'])->name('dashboard.employees');
+    Route::get('/dashboard/employees',      [DashboardController::class, 'employees'])->name('dashboard.employees');
     Route::get('/dashboard/permissions',    [DashboardController::class, 'permissions'])->name('dashboard.permissions');
-});
 
-Route::get('/department/all',           [DepartmentController::class, 'index'])->name('departments.index');
-Route::get('/check-csrf-token', [CheckCsrfTokenController::class, 'checkCsrfToken']);
+    Route::get('/check-csrf-token', [CheckCsrfTokenController::class, 'checkCsrfToken']);
+});

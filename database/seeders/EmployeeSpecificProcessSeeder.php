@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Process;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeSpecificProcessSeeder extends Seeder
 {
@@ -15,11 +15,29 @@ class EmployeeSpecificProcessSeeder extends Seeder
      */
     public function run(): void
     {
-        // Получение сотрудника и процесса
-        $employee = Employee::find(1);
-        $process = Process::find(1);
+        // Примеры назначения процессов конкретным сотрудникам
+        $this->assignProcessesToEmployee(1, 1, now(), 1, 'Описание количественного процесса');
+        $this->assignProcessesToEmployee(2, 2, now(), 2, 'Описание не количественного процесса');
+        $this->assignProcessesToEmployee(3, 3, now(), 3, 'Описание ежедневного процесса');
+    }
 
-        // Привязка процесса к сотруднику
-        $process->employees()->attach($employee, ['date' => now(), 'quantity' => 1, 'description' => 'Описание']);
+    /**
+     * Назначение процесса сотруднику.
+     *
+     * @param int $employeeId
+     * @param int $processId
+     * @param string $date
+     * @param int $quantity
+     * @param string|null $description
+     */
+    private function assignProcessesToEmployee(int $employeeId, int $processId, string $date, int $quantity, ?string $description): void
+    {
+        DB::table('employee_specific_process')->insert([
+            'employee_id' => $employeeId,
+            'process_id' => $processId,
+            'date' => $date,
+            'quantity' => $quantity,
+            'description' => $description,
+        ]);
     }
 }

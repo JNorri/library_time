@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleLogPermissionSeeder extends Seeder
 {
@@ -14,12 +15,31 @@ class RoleLogPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        $role = Role::find(1);
+        // Получение ролей и разрешений
+        $roles = Role::all();
+        $permissions = Permission::all();
 
-        $viewDataReport = Permission::firstOrCreate(['permission_name' => 'Просмотр данных отчёта', 'slug' => 'view_data_report', 'permission_description' => 'test']);
-        $viewEmployee = Permission::firstOrCreate(['permission_name' => 'Просмотр данных сотрудника', 'slug' => 'view_employee', 'permission_description' => 'test']);
+        // Привязка разрешений к ролям
+        foreach ($roles as $role) {
+            // Выбираем случайное количество разрешений (от 1 до 5)
+            $randomPermissions = $permissions->random(rand(1, 5));
+            foreach ($randomPermissions as $permission) {
+                $this->assignPermissionToRole($role->role_id, $permission->permission_id);
+            }
+        }
+    }
 
-        $role->permissions()->attach([$viewDataReport->permission_id, $viewEmployee->permission_id]);
+    /**
+     * Назначение разрешения роли.
+     *
+     * @param int $roleId
+     * @param int $permissionId
+     */
+    private function assignPermissionToRole(int $roleId, int $permissionId): void
+    {
+        DB::table('role_log_permission')->insert([
+            'role_id' => $roleId,
+            'permission_id' => $permissionId,
+        ]);
     }
 }

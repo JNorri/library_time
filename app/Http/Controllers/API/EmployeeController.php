@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\ProcessResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,29 @@ class EmployeeController extends Controller
     {
         $employees = Employee::all();
         return response()->json($employees);
+    }
+
+    public function getActiveEmployees()
+    {
+        // Получаем активных сотрудников, у которых end_date равно null
+        $activeEmployees = Employee::whereHas('departments', function ($query) {
+            $query->whereNull('end_date');
+        })->get();
+
+        return response()->json($activeEmployees);
+    }
+
+    public function getActiveEmployeeProcesses(Employee $employee)
+    {
+        // Проверяем, что сотрудник активен (end_date равно null)
+        if ($employee->end_date !== null) {
+            return response()->json(['message' => 'Employee is not active'], 404);
+        }
+
+        // Получаем все процессы активного сотрудника
+        $processes = $employee->processes;
+
+        return ProcessResource::collection($processes);
     }
 
     /**

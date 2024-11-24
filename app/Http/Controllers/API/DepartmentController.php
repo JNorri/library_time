@@ -81,6 +81,18 @@ class DepartmentController extends Controller
         return new DepartmentResource($department);
     }
 
+
+    public function getDepartmentsWithEmployees()
+    {
+        // Получаем все отделы с их сотрудниками
+        $departments = Department::with(['employees' => function ($query) {
+            $query->wherePivot('end_date', null);
+        }])->get();
+
+        return response()->json($departments);
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */

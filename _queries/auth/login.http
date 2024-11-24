@@ -1,5 +1,3 @@
-# Реализовать подключение файла для получения токена.
-
 POST http://127.0.0.1:8000/api/tokens/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
@@ -10,9 +8,24 @@ Content-Type: application/json
     "device_name": "PC"
 }
 
-# curl -X POST http://127.0.0.1:8000/api/tokens/create \
-#     -H "Accept: application/json" \
-#     -d "password=atochin12345" \
-#     -d "email=atochin99@mail.ru" \
-#     -d "device_name=PC"
+# @token = {{response.body.token}}
 
+# # curl -X POST http://127.0.0.1:8000/api/tokens/create \
+# #     -H "Accept: application/json" \
+# #     -d "password=atochin12345" \
+# #     -d "email=atochin99@mail.ru" \
+# #     -d "device_name=PC"
+
+# # Функция для получения токена
+# function Get-Token {
+#     $tokenResponse = Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:8000/api/tokens/create" -Headers @{
+#         "Accept"       = "application/json"
+#         "Content-Type" = "application/json"
+#     } -Body '{
+#         "email": "atochin99@mail.ru",
+#         "password": "atochin12345",
+#         "device_name": "PC"
+#     }'
+
+#     return $tokenResponse.token
+# }

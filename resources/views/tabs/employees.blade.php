@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Employees') }}
+            {{ __('Сотрудники') }}
         </h2>
     </x-slot>
 
@@ -12,13 +12,13 @@
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2">Employee ID</th>
-                                <th class="px-4 py-2">Last Name</th>
-                                <th class="px-4 py-2">First Name</th>
-                                <th class="px-4 py-2">Middle Name</th>
-                                <th class="px-4 py-2">Date of Birth</th>
+                                <th class="px-4 py-2">ID сотрудника</th>
+                                <th class="px-4 py-2">Фамилия</th>
+                                <th class="px-4 py-2">Имя</th>
+                                <th class="px-4 py-2">Отчество</th>
+                                <th class="px-4 py-2">Дата рождения</th>
                                 <th class="px-4 py-2">Email</th>
-                                <th class="px-4 py-2">Phone</th>
+                                <th class="px-4 py-2">Телефон</th>
                             </tr>
                         </thead>
                         <tbody>

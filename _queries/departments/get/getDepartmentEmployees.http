@@ -1,0 +1,12 @@
+GET http://127.0.0.1:8000/api/department/employees HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 1|PXGn7wrqZwPrUrrnB6juXyNJX2j3x9iPDdPWWltrfb25314d
+
+{
+
+}
+
+# curl -X GET http://127.0.0.1:8000/api/employee \
+#     -H "Accept: application/json" \
+#     -H "Authorization: Bearer 3|dZmxl10u5o2vsVm83HDusekvtntGBlGzMxM0EKkp0379d8f0"

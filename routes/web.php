@@ -1,6 +1,12 @@
 <?php
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/API/departments.php';
+require __DIR__ . '/API/employees.php';
+require __DIR__ . '/API/measurements.php';
+require __DIR__ . '/API/permissions.php';
+require __DIR__ . '/API/processes.php';
+require __DIR__ . '/API/roles.php';
 
 use App\Http\Controllers\API\CheckCsrfTokenController;
 use App\Http\Controllers\API\DepartmentController;

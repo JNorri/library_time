@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Permissions') }}
+            {{ __('Разрешения') }}
         </h2>
     </x-slot>
 
@@ -12,10 +12,10 @@
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2">Permission ID</th>
-                                <th class="px-4 py-2">Permission Name</th>
+                                <th class="px-4 py-2">ID разрешения</th>
+                                <th class="px-4 py-2">Название разрешения</th>
                                 <th class="px-4 py-2">Slug</th>
-                                <th class="px-4 py-2">Description</th>
+                                <th class="px-4 py-2">Описание</th>
                             </tr>
                         </thead>
                         <tbody>

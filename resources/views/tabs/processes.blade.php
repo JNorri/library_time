@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Processes') }}
+            {{ __('Процессы') }}
         </h2>
     </x-slot>
 
@@ -12,13 +12,13 @@
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2">Process ID</th>
-                                <th class="px-4 py-2">Process Name</th>
-                                <th class="px-4 py-2">Measurement Name</th>
-                                <th class="px-4 py-2">Is Daily</th>
-                                <th class="px-4 py-2">Require Description</th>
-                                <th class="px-4 py-2">Department Name</th>
-                                <th class="px-4 py-2">Duration</th>
+                                <th class="px-4 py-2">ID процесса</th>
+                                <th class="px-4 py-2">Название процесса</th>
+                                <th class="px-4 py-2">Название измерения</th>
+                                <th class="px-4 py-2">Ежедневный</th>
+                                <th class="px-4 py-2">Требует описание</th>
+                                <th class="px-4 py-2">Название отдела</th>
+                                <th class="px-4 py-2">Длительность</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,8 +27,8 @@
                                 <td class="border px-4 py-2">{{ $process->process_id }}</td>
                                 <td class="border px-4 py-2">{{ $process->process_name }}</td>
                                 <td class="border px-4 py-2">{{ $process->measurement->measurement_name }}</td>
-                                <td class="border px-4 py-2">{{ $process->is_daily ? 'Yes' : 'No' }}</td>
-                                <td class="border px-4 py-2">{{ $process->require_description ? 'Yes' : 'No' }}</td>
+                                <td class="border px-4 py-2">{{ $process->is_daily ? 'Да' : 'Нет' }}</td>
+                                <td class="border px-4 py-2">{{ $process->require_description ? 'Да' : 'Нет' }}</td>
                                 <td class="border px-4 py-2">{{ $process->department->department_name }}</td>
                                 <td class="border px-4 py-2">{{ $process->process_duration }}</td>
                             </tr>

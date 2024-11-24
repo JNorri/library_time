@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Measurements') }}
+            {{ __('Измерения') }}
         </h2>
     </x-slot>
 
@@ -12,9 +12,9 @@
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2">Measurement ID</th>
-                                <th class="px-4 py-2">Measurement Name</th>
-                                <th class="px-4 py-2">Description</th>
+                                <th class="px-4 py-2">ID измерения</th>
+                                <th class="px-4 py-2">Название измерения</th>
+                                <th class="px-4 py-2">Описание</th>
                             </tr>
                         </thead>
                         <tbody>

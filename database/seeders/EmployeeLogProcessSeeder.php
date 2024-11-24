@@ -18,23 +18,24 @@ class EmployeeLogProcessSeeder extends Seeder
         // Получение сотрудников
         $employees = Employee::all();
 
-        // Получение процессов
+        // Получение всех процессов
         $processes = Process::all();
+
+        // Определение обязательных процессов
+        $mandatoryProcesses = $processes->take(3);
 
         // Привязка процессов к сотрудникам
         foreach ($employees as $employee) {
-            // Выбираем один активный процесс (end_date = null)
-            $activeProcess = $processes->random();
-            $this->assignProcessToEmployee($employee->employee_id, $activeProcess->process_id, now(), null);
+            // Назначение обязательных процессов
+            foreach ($mandatoryProcesses as $process) {
+                $this->assignProcessToEmployee($employee->employee_id, $process->process_id, now(), null);
+            }
 
             // Выбираем случайное количество дополнительных процессов (от 0 до 3)
-            $additionalProcesses = $processes->random(rand(0, 3));
+            $additionalProcesses = $processes->diff($mandatoryProcesses)->random(rand(0, 3));
             foreach ($additionalProcesses as $process) {
-                // Проверяем, чтобы не назначить тот же процесс, что и активный
-                if ($process->process_id !== $activeProcess->process_id) {
-                    // Привязка дополнительного процесса с указанием end_date
-                    $this->assignProcessToEmployee($employee->employee_id, $process->process_id, now(), now()->addDays(rand(1, 30)));
-                }
+                // Привязка дополнительного процесса с указанием end_date
+                $this->assignProcessToEmployee($employee->employee_id, $process->process_id, now(), now()->addDays(rand(1, 30)));
             }
         }
     }

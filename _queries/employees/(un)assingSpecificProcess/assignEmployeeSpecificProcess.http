@@ -1,0 +1,11 @@
+
+PUT http://127.0.0.1:8000/api/employee/1/specific-process/10/assign HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 1|Pce7UZodBoLQuSmwwVGDlh6dgKxe1IqywBAcd6Uy0b3fecb7
+# Authorization: Bearer token
+
+{
+    "quantity": "1",
+    "description": "dsadasdasda"
+}

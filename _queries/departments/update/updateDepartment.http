@@ -1,11 +1,11 @@
 PUT http://127.0.0.1:8000/api/department/update/1 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 2|g3LSyxxbLK5dtzq6SpqP9Eni1ozvFIJO7LDeUQch5a28a4c2
+Authorization: Bearer 2|8EjyaUwkPhcQarMLs9wmsCfubjlTdH2dk59NYJ63b021690c
 
 
 {
     "department_name": "New Department",
     "department_description": "Description of the new department",
-    "parent_id": 3
+    "parent_id": null
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
+use App\Models\Process;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +63,7 @@ class DepartmentController extends Controller
         $department = Department::create($request->all());
 
         return response()->json([
-            'message' => 'The department was successfully added.',
+            'message' => 'Отдел успешно добавлен',
             'data' => new DepartmentResource($department),
         ], 201);
     }
@@ -75,7 +76,7 @@ class DepartmentController extends Controller
         $department = Department::find($id);
 
         if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
+            return response()->json(['message' => 'Отдел не найден'], 404);
         }
 
         return new DepartmentResource($department);
@@ -101,7 +102,7 @@ class DepartmentController extends Controller
         $department = Department::find($id);
 
         if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
+            return response()->json(['message' => 'Отдел не найден'], 404);
         }
 
         return view('departments.edit', compact('department'));
@@ -115,7 +116,7 @@ class DepartmentController extends Controller
         $department = Department::find($id);
 
         if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
+            return response()->json(['message' => 'Отдел не найден'], 404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -144,11 +145,40 @@ class DepartmentController extends Controller
         $department = Department::find($id);
 
         if (!$department) {
-            return response()->json(['message' => 'Department not found'], 404);
+            return response()->json(['message' => 'Отделне найден'], 404);
         }
 
         $department->delete();
 
-        return response()->json(['message' => 'The department was successfully deleted.'], 200);
+        return response()->json(['message' => 'Отдел успешно удален'], 200);
+    }
+
+    /**
+     * Назначить процесс отделу
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function assignProcess(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'department_id' => 'required|exists:departments,department_id',
+            'process_id' => 'required|exists:processes,process_id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $process = Process::findOrFail($request->process_id);
+        
+        // Обновляем department_id у процесса
+        $process->update([
+            'department_id' => $request->department_id
+        ]);
+
+        return response()->json([
+            'message' => 'Процесс успешно назначен отделу',
+            'data' => $process
+        ], 200);
     }
 }

@@ -1,0 +1,6 @@
+
+GET http://127.0.0.1:8000/api/backup/all HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 3|XKr6Mc3r4bs1rGemGBG5jYydu1pGt7bh6iEerX2e0d5e4b96
+# Authorization: Bearer token

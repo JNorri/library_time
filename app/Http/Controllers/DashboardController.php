@@ -8,6 +8,7 @@ use App\Models\Process;
 use App\Models\Measurement;
 use App\Models\Employee;
 use App\Models\Permission;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -50,5 +51,34 @@ class DashboardController extends Controller
     {
         $permissions = Permission::paginate(10);
         return view('tabs.permissions', compact('permissions'));
+    }
+
+    public function backups()
+    {
+        // Получаем список резервных копий из BackupController
+        $backups = collect(Storage::disk('local')->files('backups'))
+            ->map(function ($file) {
+                return [
+                    'filename' => basename($file),
+                    'created_at' => date('Y-m-d H:i:s', Storage::disk('local')->lastModified($file)),
+                ];
+            })
+            ->sortByDesc('created_at')
+            ->values()
+            ->all();
+
+        return view('tabs.backups', compact('backups'));
+    }
+
+    public function reports()
+    {
+        // Пример данных для отчетов
+        $reports = [
+            ['id' => 1, 'title' => 'Отчет за Январь', 'created_at' => '2023-01-01 10:00:00'],
+            ['id' => 2, 'title' => 'Отчет за Февраль', 'created_at' => '2023-02-01 12:00:00'],
+            // Добавьте больше данных по мере необходимости
+        ];
+
+        return view('tabs.reports', compact('reports'));
     }
 }

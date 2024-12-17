@@ -16,7 +16,7 @@ class ProcessSeeder extends Seeder
     {
         // Отделы
         $departments = [
-            'Общие',
+            'Научная библиотека',
             'Научно-методический отдел',
             'Отдел комплектования и научной обработки фондов',
             'Информационно-библиографический отдел',
@@ -50,7 +50,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Подготовка рабочего места',
                 'is_daily' => true,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 0.08,
             ],
@@ -58,7 +58,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Заполнение личного дневника',
                 'is_daily' => true,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 2, // 1 дневник
                 'process_duration' => 0.17,
             ],
@@ -66,7 +66,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Заполнение дневника отдела',
                 'is_daily' => true,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 2, // 1 дневник
                 'process_duration' => 60,
             ],
@@ -74,7 +74,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Научно-методическая работа',
                 'is_daily' => true,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 60,
             ],
@@ -82,7 +82,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Повышение квалификации',
                 'is_daily' => false,
                 'require_description' => true,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 60,
             ],
@@ -90,7 +90,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Составление отчета за месяц',
                 'is_daily' => false,
                 'require_description' => true,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 3, // 1 отчет
                 'process_duration' => 25,
             ],
@@ -98,7 +98,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Методическое объединение',
                 'is_daily' => true,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 60,
             ],
@@ -106,7 +106,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Планерное совещание',
                 'is_daily' => true,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 4, // 1 совещание
                 'process_duration' => 60,
             ],
@@ -866,7 +866,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Редактирование библ/гр записи в БД',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 31, // 1 описание
                 'process_duration' => 0.05,
             ],
@@ -1186,7 +1186,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Запись читателя в биб-ку',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 39, // 1 чит.
                 'process_duration' => 0.075,
             ],
@@ -1194,7 +1194,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Перерегистрация читателей',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 39, // 1 чит.
                 'process_duration' => 0.016,
             ],
@@ -1202,7 +1202,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Прием литературы от читателей',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.03,
             ],
@@ -1210,7 +1210,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Продление срока пользования',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.03,
             ],
@@ -1218,7 +1218,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Выдача произведений печати',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.066,
             ],
@@ -1226,7 +1226,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Консультация, рекомендательная беседа',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 6, // 1 консультация
                 'process_duration' => 0.066,
             ],
@@ -1234,7 +1234,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Заполнение листа замены',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 25, // 1 лист
                 'process_duration' => 0.08,
             ],
@@ -1242,7 +1242,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Подписание обходного листа',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 25, // 1 лист
                 'process_duration' => 0.025,
             ],
@@ -1250,7 +1250,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Выполнение адресно-библ. справок',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 19, // 1 справка
                 'process_duration' => 0.023,
             ],
@@ -1258,7 +1258,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Выполнение тематической справки',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 19, // 1 справка
                 'process_duration' => 0.021,
             ],
@@ -1266,7 +1266,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Выполнение уточняющей библ. справки',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 19, // 1 справка
                 'process_duration' => 0.03,
             ],
@@ -1274,7 +1274,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Выполнение фактографической библ. справки',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 19, // 1 справка
                 'process_duration' => 0.25,
             ],
@@ -1282,7 +1282,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Работа с отказами',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 41, // 1 требование
                 'process_duration' => 0.03,
             ],
@@ -1290,7 +1290,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Работа с читательской задолженностью (составление списков)',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 39, // 1 читатель
                 'process_duration' => 60,
             ],
@@ -1298,7 +1298,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Подбор лит-ры для выставки (монтаж, демонтаж выставки)',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 3.5,
             ],
@@ -1306,7 +1306,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Расстановка фонда',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.02,
             ],
@@ -1314,7 +1314,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Обеспыливание фонда',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.18,
             ],
@@ -1322,7 +1322,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Передвижка фонда',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.078,
             ],
@@ -1330,7 +1330,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Реставрация фонда (ремонт книг в страницах)',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 42, // 1 страница
                 'process_duration' => 0.66,
             ],
@@ -1338,7 +1338,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Наклеить на документ кармашек',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.01,
             ],
@@ -1346,7 +1346,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Наклеить на документ ярлык',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.01,
             ],
@@ -1354,7 +1354,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Заполнить книжн.формуляр',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 32, // 1 формуляр
                 'process_duration' => 0.01,
             ],
@@ -1362,7 +1362,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Написать шифр на док.',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.01,
             ],
@@ -1370,7 +1370,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Написать шифр на ярлык',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.01,
             ],
@@ -1378,7 +1378,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Оформление фонда разделителями',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 43, // 1 полка
                 'process_duration' => 0.07,
             ],
@@ -1386,7 +1386,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Проверка расстановки фонда',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 0.5,
             ],
@@ -1394,7 +1394,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'RF-метка на фонд',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 22, // 1 книга
                 'process_duration' => 0.033,
             ],
@@ -1402,7 +1402,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Составление акта приема передачи фонда',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 12, // 1 название
                 'process_duration' => 0.015,
             ],
@@ -1410,7 +1410,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Написание индикаторного талона',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 44, // 1 талон
                 'process_duration' => 0.016,
             ],
@@ -1418,7 +1418,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Разбор индикат.талонов по алфавиту',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 44, // 1 талон
                 'process_duration' => 0.006,
             ],
@@ -1426,7 +1426,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Разбор индикат.талонов по номерам',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 44, // 1 талон
                 'process_duration' => 0.006,
             ],
@@ -1434,7 +1434,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Расст. индикат.талонов по алфавиту',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 44, // 1 талон
                 'process_duration' => 0.006,
             ],
@@ -1442,7 +1442,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Расст. индикат.талонов по номерам',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 44, // 1 талон
                 'process_duration' => 0.006,
             ],
@@ -1450,7 +1450,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Редактир-е( после конвертирования и приписки дублетов)',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 31, // 1 описание
                 'process_duration' => 0.1,
             ],
@@ -1458,7 +1458,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Копирование источников',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 42, // 1 страница
                 'process_duration' => 0.008,
             ],
@@ -1466,7 +1466,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Распечатка источников',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 42, // 1 страница
                 'process_duration' => 0.006,
             ],
@@ -1482,7 +1482,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Занесение библ. описания в Электронную библиотеку',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 31, // 1 описание
                 'process_duration' => 0.25,
             ],
@@ -1498,7 +1498,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Библиографический обзор (подготовка, проведение)',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // общие
+                'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 46, // 1 обзор
                 'process_duration' => 7.4,
             ],
@@ -1546,7 +1546,7 @@ class ProcessSeeder extends Seeder
                 'process_name' => 'Регистрация в ЭБС',
                 'is_daily' => false,
                 'require_description' => false,
-                'department_id' => $departmentIds['Общие'], // Общие
+                'department_id' => $departmentIds['Научная библиотека'], // Научная библиотека
                 'measurement_id' => 39, // 1 читатель
                 'process_duration' => 60,
             ],

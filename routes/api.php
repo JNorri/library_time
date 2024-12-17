@@ -6,6 +6,8 @@ require __DIR__ . '/API/measurements.php';
 require __DIR__ . '/API/permissions.php';
 require __DIR__ . '/API/processes.php';
 require __DIR__ . '/API/roles.php';
+require __DIR__ . '/API/backups.php';
+require __DIR__ . '/API/reports.php';
 // require __DIR__ . '/tokenAuth.php';
 
 use Illuminate\Http\Request;

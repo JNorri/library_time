@@ -119,7 +119,7 @@ class DepartmentSeeder extends Seeder
         $reRegisterReader = Department::create(array(
             'department_name' => 'Cектор регистрации читателей',
             'department_description' => 'Тестовое описание',
-            'parent_id' => $general->department_id,
+            'parent_id' => $main_parent->department_id,
         ));
 
         // $departments = [

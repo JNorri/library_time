@@ -33,9 +33,12 @@
                     <x-nav-link :href="route('dashboard.permissions')" :active="request()->routeIs('dashboard.permissions')">
                         {{ __('Разрешения') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('reports')" :active="request()->routeIs('reports.*')">
+                    <x-nav-link :href="route('dashboard.reports')" :active="request()->routeIs('dashboard.reports')">
                         {{ __('Отчёты') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('dashboard.backups')" :active="request()->routeIs('dashboard.backups')">
+                        {{ __('Резервные копии') }}
+                    </x-nav-link>   
                 </div>
             </div>
 
@@ -109,8 +112,11 @@
             <x-responsive-nav-link :href="route('dashboard.permissions')" :active="request()->routeIs('dashboard.permissions')">
                 {{ __('Разрешения') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports.*')">
+            <x-responsive-nav-link :href="route('dashboard.reports')" :active="request()->routeIs('dashboard.reports')">
                 {{ __('Отчёты') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard.backups')" :active="request()->routeIs('dashboard.backups')">
+                {{ __('Резервные копии') }}
             </x-responsive-nav-link>
         </div>
 

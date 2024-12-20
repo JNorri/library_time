@@ -8,316 +8,424 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    /**
-     * Показать форму для создания отчёта
-     */
-    public function index()
+
+    // Метод для API (возвращает JSON)
+    public function showEmployeeReportApiWEB(Request $request, int $employeeId)
     {
-        return view('reports.index');
+        // Логика для получения данных (как в предыдущих примерах)
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $reportData = $this->employeeReport($employeeId, $startDate, $endDate);
+
+        // Возвращаем JSON-ответ
+        return response()->json($reportData, 200);
     }
 
-    /**
-     * Показать отчёт
-     */
-    public function show(Request $request)
+    public function showEmployeeReportApi($employeeId, $startDate, $endDate)
     {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
+        $reportData = $this->employeeReport($employeeId, $startDate, $endDate);
 
-        $report = $this->getFormattedReport($request->start_date, $request->end_date);
-
-        // Если запрос требует JSON ответ - вернём его
-        if ($request->wantsJson()) {
-            return response()->json($report);
-        }
-
-        // Иначе отобразим view
-        return view('reports.show', compact('report'));
+        return response()->json($reportData, 200);
     }
 
-    /**
-     * Получить форматированный отчёт
-     */
-    private function getFormattedReport($startDate, $endDate)
+
+    public function getEmployeesByDepartment($departmentId)
     {
-        $dates = $this->generateDateRange($startDate, $endDate);
-        
-        $report = DB::table('employees')
-            ->leftJoin('employee_log_process', 'employees.id', '=', 'employee_log_process.employee_id')
-            ->leftJoin('employee_specific_process', function($join) use ($dates) {
-                $join->on('employees.id', '=', 'employee_specific_process.employee_id')
-                    ->whereBetween('employee_specific_process.date', [$dates[0], end($dates)]);
-            })
+        $employees = DB::table('employees')
+            ->where('department_id', $departmentId)
             ->select(
-                'employees.id',
-                'employees.name',
-                DB::raw('DATE(employee_specific_process.date) as work_date'),
-                DB::raw('SUM(employee_specific_process.quantity) as quantity'),
-                DB::raw('TIMESTAMPDIFF(HOUR, employee_log_process.start_date, 
-                    COALESCE(employee_log_process.end_date, NOW())) as hours')
+                'employee_id',
+                DB::raw("CONCAT(last_name, ' ', first_name, ' ', COALESCE(middle_name, '')) as full_name")
             )
-            ->groupBy('employees.id', 'employees.name', 'work_date')
             ->get();
 
-        return $this->formatReport($report, $dates);
+        return response()->json($employees, 200);
     }
 
-    private function generateDateRange($start, $end)
+    public function showEmployeeReportForm()
     {
-        $dates = [];
-        $current = strtotime($start);
-        $end = strtotime($end);
-
-        while ($current <= $end) {
-            $dates[] = date('Y-m-d', $current);
-            $current = strtotime('+1 day', $current);
-        }
-
-        return $dates;
-    }
-
-    private function formatReport($data, $dates)
-    {
-        $report = [
-            'headers' => ['Сотрудник', ...$dates, 'Итого'],
-            'rows' => [],
-            'totals' => array_fill(0, count($dates) + 2, 0)
-        ];
-
-        // Форматирование данных по сотрудникам
-        foreach ($data as $row) {
-            if (!isset($report['rows'][$row->id])) {
-                $report['rows'][$row->id] = [
-                    'name' => $row->name,
-                    'dates' => array_fill(0, count($dates), ['quantity' => 0, 'hours' => 0]),
-                    'total' => 0
-                ];
-            }
-
-            $dateIndex = array_search($row->work_date, $dates);
-            if ($dateIndex !== false) {
-                $report['rows'][$row->id]['dates'][$dateIndex] = [
-                    'quantity' => $row->quantity,
-                    'hours' => $row->hours
-                ];
-                $report['rows'][$row->id]['total'] += $row->hours;
-                $report['totals'][$dateIndex + 1] += $row->hours;
-            }
-        }
-
-        return $report;
-    }
-
-    public function getDepartmentReport(Request $request)
-    {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'department_id' => 'required|exists:departments,department_id'
-        ]);
-
-        $processes = DB::table('processes')
-            ->where('department_id', $request->department_id)
-            ->get();
-        
-        $report = DB::table('employees')
-            ->join('employee_log_department', function($join) {
-                $join->on('employees.employee_id', '=', 'employee_log_department.employee_id')
-                    ->whereNull('employee_log_department.end_date');
-            })
-            ->join('departments', 'employee_log_department.department_id', '=', 'departments.department_id')
-            ->leftJoin('employee_specific_process', function($join) use ($request) {
-                $join->on('employees.employee_id', '=', 'employee_specific_process.employee_id')
-                    ->whereBetween('employee_specific_process.date', [
-                        $request->start_date, 
-                        $request->end_date
-                    ]);
-            })
-            ->leftJoin('employee_log_process', function($join) {
-                $join->on('employees.employee_id', '=', 'employee_log_process.employee_id')
-                    ->whereNull('employee_log_process.end_date');
-            })
-            ->where('departments.department_id', $request->department_id)
+        // Получение списка сотрудников
+        $employees = DB::table('employees')
             ->select(
-                'employees.employee_id',
-                'employees.first_name as name',
-                'employee_specific_process.process_id',
-                DB::raw('SUM(employee_specific_process.quantity) as quantity'),
-                DB::raw('EXTRACT(EPOCH FROM (COALESCE(employee_log_process.end_date, NOW()) - 
-                    employee_log_process.start_date))/3600 as hours')
+                'employee_id',
+                DB::raw("CONCAT(last_name, ' ', first_name, ' ', COALESCE(middle_name, '')) as full_name")
             )
-            ->groupBy('employees.employee_id', 'employees.first_name', 'employee_specific_process.process_id')
             ->get();
 
-        $formattedReport = [
-            'headers' => ['Сотрудник', ...collect($processes)->pluck('process_name'), 'Итого'],
-            'rows' => [],
-            'totals' => array_fill(0, count($processes) + 2, 0)
-        ];
-
-        foreach ($report as $row) {
-            if (!isset($formattedReport['rows'][$row->employee_id])) {
-                $formattedReport['rows'][$row->employee_id] = [
-                    'name' => $row->name,
-                    'processes' => array_fill(0, count($processes), ['quantity' => 0, 'hours' => 0]),
-                    'total' => 0
-                ];
-            }
-
-            if ($row->process_id) {
-                $processIndex = $processes->search(function($process) use ($row) {
-                    return $process->process_id === $row->process_id;
-                });
-
-                if ($processIndex !== false) {
-                    $formattedReport['rows'][$row->employee_id]['processes'][$processIndex] = [
-                        'quantity' => $row->quantity,
-                        'hours' => $row->hours
-                    ];
-                    $formattedReport['rows'][$row->employee_id]['total'] += $row->hours;
-                    $formattedReport['totals'][$processIndex + 1] += $row->hours;
-                }
-            }
-        }
-
-        return response()->json($formattedReport);
+        return view('reports.employees', ['employees' => $employees]);
     }
 
-    public function getLibraryReport(Request $request)
+    // Метод для Web-представления (возвращает Blade-шаблон)
+    public function generateEmployeeReportWeb($employeeId, $startDate, $endDate)
     {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-        ]);
+        // Логика для получения данных (как в предыдущих примерах)
+        $reportData = $this->employeeReport($employeeId, $startDate, $endDate);
 
-        $dates = $this->generateDateRange($request->start_date, $request->end_date);
-        
-        $report = DB::table('processes')
-            ->leftJoin('employee_specific_process', function($join) use ($dates) {
-                $join->on('processes.id', '=', 'employee_specific_process.process_id')
-                    ->whereBetween('employee_specific_process.date', [$dates[0], end($dates)]);
-            })
+        // Возвращаем Blade-шаблон с данными
+        return view('reports.employee_report', ['reportData' => $reportData]);
+    }
+
+    private function employeeReport($employeeId, $startDate, $endDate)
+    {
+        // Проверка входных данных
+        if (!$employeeId || !$startDate || !$endDate) {
+            return response()->json(['error' => 'Необходимо указать ID сотрудника и период.'], 400);
+        }
+
+        // Получение данных сотрудника
+        $employee = DB::table('employees')
+            ->where('employee_id', $employeeId)
             ->select(
-                'processes.id',
-                'processes.name',
-                DB::raw('DATE(employee_specific_process.date) as work_date'),
-                DB::raw('SUM(employee_specific_process.quantity) as quantity')
+                DB::raw("CONCAT(last_name, ' ', first_name, ' ', COALESCE(middle_name, '')) as full_name")
             )
-            ->groupBy('processes.id', 'processes.name', 'work_date')
-            ->get();
+            ->first();
 
-        $formattedReport = [
-            'headers' => ['Процесс', ...$dates, 'Итого'],
-            'rows' => [],
-            'totals' => array_fill(0, count($dates) + 2, 0)
-        ];
-
-        foreach ($report as $row) {
-            if (!isset($formattedReport['rows'][$row->id])) {
-                $formattedReport['rows'][$row->id] = [
-                    'name' => $row->name,
-                    'dates' => array_fill(0, count($dates), 0),
-                    'total' => 0
-                ];
-            }
-
-            $dateIndex = array_search($row->work_date, $dates);
-            if ($dateIndex !== false) {
-                $formattedReport['rows'][$row->id]['dates'][$dateIndex] = $row->quantity;
-                $formattedReport['rows'][$row->id]['total'] += $row->quantity;
-                $formattedReport['totals'][$dateIndex + 1] += $row->quantity;
-            }
+        if (!$employee) {
+            return response()->json(['error' => 'Сотрудник не найден.'], 404);
         }
 
-        return response()->json($formattedReport);
-    }
-
-    public function getEmployeeReport(Request $request)
-    {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'employee_id' => 'required|exists:employees,employee_id'
-        ]);
-
-        $processes = DB::table('processes')
-            ->whereExists(function ($query) use ($request) {
-                $query->select(DB::raw(1))
-                    ->from('employee_specific_process')
-                    ->where('employee_specific_process.employee_id', $request->employee_id)
-                    ->whereBetween('employee_specific_process.date', [
-                        $request->start_date,
-                        $request->end_date
-                    ])
-                    ->whereRaw('employee_specific_process.process_id = processes.process_id');
-            })
-            ->get();
-
-        $report = DB::table('employees')
-            ->where('employees.employee_id', $request->employee_id)
-            ->leftJoin('employee_specific_process', function($join) use ($request) {
-                $join->on('employees.employee_id', '=', 'employee_specific_process.employee_id')
-                    ->whereBetween('employee_specific_process.date', [
-                        $request->start_date,
-                        $request->end_date
-                    ]);
-            })
-            ->leftJoin('employee_log_process', function($join) {
-                $join->on('employees.employee_id', '=', 'employee_log_process.employee_id')
-                    ->whereNull('employee_log_process.end_date');
-            })
+        // Получение данных из таблицы employee_specific_process
+        $specificProcesses = DB::table('employee_specific_process')
+            ->join('processes', 'processes.process_id', '=', 'employee_specific_process.process_id')
+            ->where('employee_id', $employeeId)
+            ->whereBetween('date', [$startDate, $endDate])
             ->select(
-                'employees.employee_id',
-                'employees.first_name as name',
                 'employee_specific_process.process_id',
                 'employee_specific_process.date',
-                DB::raw('SUM(employee_specific_process.quantity) as quantity'),
-                DB::raw('EXTRACT(EPOCH FROM (COALESCE(employee_log_process.end_date, NOW()) - 
-                    employee_log_process.start_date))/3600 as hours')
-            )
-            ->groupBy(
-                'employees.employee_id',
-                'employees.first_name',
-                'employee_specific_process.process_id',
-                'employee_specific_process.date'
+                'employee_specific_process.quantity',
+                'employee_specific_process.description',
+                'processes.require_description',
+                'processes.measurement_id',
+                'processes.process_duration',
+                'processes.is_daily'
             )
             ->get();
 
-        $dates = $this->generateDateRange($request->start_date, $request->end_date);
+        // Обработка данных
+        $specificProcesses = $specificProcesses->map(function ($process) {
+            if ($process->is_daily) {
+                $process->quantity = 1;
+            }
 
-        $formattedReport = [
-            'employee' => $report->first()->name,
-            'headers' => ['Процесс', ...$dates, 'Итого'],
-            'rows' => [],
-            'totals' => array_fill(0, count($dates) + 2, 0)
+            if ($process->require_description) {
+                $process->quantity = $process->quantity; // Для неколичественных процессов количество процессов = 1
+                $process->description = $process->description;
+            } else {
+                $process->quantity = (int)$process->quantity;
+                $process->description = null;
+            }
+            return $process;
+        });
+
+        // Суммирование данных по датам
+        $specificProcessesGrouped = $specificProcesses->groupBy(['process_id', 'date']);
+
+        $specificProcessesByDate = $specificProcessesGrouped->map(function ($group) {
+            return $group->map(function ($item) {
+                $result = [
+                    'process_id' => $item->first()->process_id,
+                    'date' => $item->first()->date,
+                    'total_quantity' => $item->sum('quantity'), // Количество процессов за дату
+                    'total_hours' => $item->sum(function ($process) {
+                        return is_numeric($process->quantity)
+                            ? $process->quantity * $process->process_duration
+                            : 0; // Сумма часов за дату
+                    }),
+                ];
+
+                if ($item->first()->require_description) {
+                    $result['description'] = $item->first()->description;
+                }
+
+                return $result;
+            });
+        })->flatten(1);
+
+        // Сортировка дат по возрастанию
+        $specificProcessesByDate = $specificProcessesByDate->sortBy('date');
+
+        // Суммирование данных по всем датам
+        $specificProcessesTotal = $specificProcesses->groupBy('process_id')->map(function ($group) {
+            $result = [
+                'process_id' => $group->first()->process_id,
+                'total_quantity' => $group->sum('quantity'), // Общее количество процессов за период
+                'total_hours' => $group->sum(function ($process) {
+                    return is_numeric($process->quantity)
+                        ? $process->quantity * $process->process_duration
+                        : 0; // Общая сумма часов за период
+                }),
+            ];
+
+            if ($group->first()->require_description) {
+                $result['description'] = $group->first()->description;
+            }
+
+            return $result;
+        });
+
+        // Суммарное количество часов по всем датам
+        $totalHoursByDate = $specificProcessesByDate->groupBy('date')->map(function ($group) {
+            return $group->sum('total_hours');
+        });
+
+        // Общая сумма часов за весь период
+        $totalHours = $specificProcessesTotal->sum('total_hours');
+
+        // Формирование отчёта
+        return [
+            'employee_name' => $employee->full_name,
+            'specific_processes' => $specificProcessesByDate,
+            'specific_processes_total' => $specificProcessesTotal,
+            'total_hours_by_date' => $totalHoursByDate,
+            'total_hours' => $totalHours,
+        ];
+    }
+
+
+    public function generateDepartmentReportApi($departmentId, $startDate, $endDate)
+    {
+        // Логика для получения данных (как в предыдущих примерах)
+        $reportData = $this->departmentReport($departmentId, $startDate, $endDate);
+
+        // Возвращаем JSON-ответ
+        return response()->json($reportData, 200);
+    }
+
+    public function getDepartments()
+    {
+        $departments = DB::table('departments')
+            ->select(
+                'department_id',
+                'department_name'
+            )
+            ->get();
+
+        return response()->json($departments, 200);
+    }
+
+    public function showDepartmentReportForm()
+    {
+        // Получение списка сотрудников
+        $departments = DB::table('departments')
+            ->select(
+                'department_id',
+                'department_name'
+            )
+            ->get();
+
+        return view('reports.departments', ['departments' => $departments]);
+    }
+
+    // Метод для Web-представления (возвращает Blade-шаблон)
+    public function generateDepartmentReportWeb($departmentId, $startDate, $endDate)
+    {
+        // Логика для получения данных (как в предыдущих примерах)
+        $reportData = $this->departmentReport($departmentId, $startDate, $endDate);
+
+        // Возвращаем Blade-шаблон с данными
+        return view('reports.department_report', ['reportData' => $reportData]);
+    }
+
+    public function showDepartmentReport(Request $request, int $departmentId)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $report = $this->departmentReport($departmentId, $startDate, $endDate);
+
+        return response()->json($report);
+    }
+
+    /**
+     * Генерация отчёта по отделу за определённый период.
+     *
+     * @param int $departmentId
+     * @param string $startDate
+     * @param string $endDate
+     * @return array
+     */
+
+    public function departmentReport(int $departmentId, string $startDate, string $endDate): array
+    {
+        // Получение данных отдела
+        $department = DB::table('departments')
+            ->where('department_id', $departmentId)
+            ->select('department_name')
+            ->first();
+
+        if (!$department) {
+            return ['error' => 'Отдел не найден.'];
+        }
+
+        // Получение сотрудников, работавших в отделе в заданный период
+        $employeesInDepartment = DB::table('employee_log_department')
+            ->join('employees', 'employees.employee_id', '=', 'employee_log_department.employee_id')
+            ->where('department_id', $departmentId)
+            ->whereBetween('start_date', [$startDate, $endDate])
+            ->where(function ($query) use ($endDate) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', $endDate);
+            })
+            ->select(
+                'employees.employee_id',
+                DB::raw("CONCAT(employees.last_name, ' ', employees.first_name, ' ', COALESCE(employees.middle_name, '')) as full_name")
+            )
+            ->get();
+
+        // Получение назначений процессов сотрудникам в заданный период
+        $processAssignments = DB::table('employee_log_process')
+            ->whereIn('employee_id', $employeesInDepartment->pluck('employee_id'))
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start_date', [$startDate, $endDate])
+                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                        $query->where('start_date', '<=', $startDate)
+                            ->where(function ($query) use ($endDate) {
+                                $query->whereNull('end_date')
+                                    ->orWhere('end_date', '>=', $endDate);
+                            });
+                    });
+            })
+            ->select('employee_id', 'process_id', 'start_date', 'end_date')
+            ->get();
+
+        // Получение данных о процессах сотрудников в заданный период
+        $processes = DB::table('employee_specific_process')
+            ->join('processes', 'processes.process_id', '=', 'employee_specific_process.process_id')
+            ->whereIn('employee_specific_process.employee_id', $employeesInDepartment->pluck('employee_id'))
+            ->whereBetween('employee_specific_process.date', [$startDate, $endDate])
+            ->select(
+                'employee_specific_process.employee_id',
+                'employee_specific_process.process_id',
+                'employee_specific_process.date',
+                'employee_specific_process.quantity',
+                'processes.process_name',
+                'processes.process_duration'
+            )
+            ->get();
+
+        // Обработка данных
+        $employees = [];
+        foreach ($employeesInDepartment as $employee) {
+            $employeeProcesses = $processes->where('employee_id', $employee->employee_id);
+
+            $employeeData = [
+                'employee_name (ФИО)' => $employee->full_name,
+                'processes' => $employeeProcesses->map(function ($process) {
+                    return [
+                        'process_name' => $process->process_name,
+                        'date' => $process->date,
+                        'count' => $process->quantity,
+                    ];
+                })->values(),
+                'total_processes_hours' => $employeeProcesses->sum(function ($process) {
+                    return $process->quantity * $process->process_duration;
+                }),
+            ];
+
+            $employees[] = $employeeData;
+        }
+
+        // Суммарное количество процессов по всем сотрудникам
+        $processCounts = $processes->groupBy('process_id')->map(function ($group) {
+            return [
+                'process_name' => $group->first()->process_name,
+                'total_count' => $group->sum('quantity'),
+            ];
+        })->values();
+
+        // Формирование отчёта
+        return [
+            'department_name' => $department->department_name,
+            'employees' => $employees,
+            'process_count' => $processCounts,
+        ];
+    }
+
+
+    public function libraryReportApi($startDate, $endDate)
+    {
+        $report = $this->libraryReport($startDate, $endDate);
+
+        return response()->json($report);
+    }
+
+    /**
+     * Получение отчёта по научной библиотеке.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function libraryReport(Request $request)
+    {
+        // Валидация входных данных
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Получение данных из таблицы employee_specific_process
+        $processes = DB::table('employee_specific_process')
+            ->join('processes', 'processes.process_id', '=', 'employee_specific_process.process_id')
+            ->whereBetween('employee_specific_process.date', [$startDate, $endDate])
+            ->select(
+                'processes.process_name',
+                'employee_specific_process.date',
+                'employee_specific_process.quantity'
+            )
+            ->get();
+
+        // Группировка данных по процессам и датам
+        $groupedProcesses = $processes->groupBy('process_name');
+
+        $report = [
+            'dates' => [],
+            'processes' => [],
+            'total_by_date' => [],
+            'total_quantity' => 0,
         ];
 
-        foreach ($processes as $process) {
-            if (!isset($formattedReport['rows'][$process->process_id])) {
-                $formattedReport['rows'][$process->process_id] = [
-                    'name' => $process->process_name,
-                    'dates' => array_fill(0, count($dates), ['quantity' => 0, 'hours' => 0]),
-                    'total' => 0
-                ];
-            }
-        }
+        // Формирование отчёта
+        foreach ($groupedProcesses as $processName => $data) {
+            $processData = [
+                'process_name' => $processName,
+                'data' => [],
+                'total_quantity' => 0,
+            ];
 
-        foreach ($report as $row) {
-            if ($row->process_id && $row->date) {
-                $dateIndex = array_search(date('Y-m-d', strtotime($row->date)), $dates);
-                if ($dateIndex !== false) {
-                    $formattedReport['rows'][$row->process_id]['dates'][$dateIndex] = [
-                        'quantity' => $row->quantity,
-                        'hours' => $row->hours
-                    ];
-                    $formattedReport['rows'][$row->process_id]['total'] += $row->hours;
-                    $formattedReport['totals'][$dateIndex + 1] += $row->hours;
+            foreach ($data as $item) {
+                $date = $item->date;
+                $quantity = $item->quantity;
+
+                // Добавление даты в массив дат
+                if (!in_array($date, $report['dates'])) {
+                    $report['dates'][] = $date;
                 }
+
+                // Добавление данных по процессу
+                $processData['data'][$date] = $quantity;
+                $processData['total_quantity'] += $quantity;
+
+                // Суммирование по датам
+                if (!isset($report['total_by_date'][$date])) {
+                    $report['total_by_date'][$date] = 0;
+                }
+                $report['total_by_date'][$date] += $quantity;
             }
+
+            $report['processes'][] = $processData;
+            $report['total_quantity'] += $processData['total_quantity'];
         }
 
-        return response()->json($formattedReport);
+        // Сортировка дат
+        sort($report['dates']);
+
+        return response()->json([
+            'scientific_library_report' => $report,
+        ]);
     }
 }

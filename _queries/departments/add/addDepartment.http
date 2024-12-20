@@ -1,7 +1,8 @@
 PUT http://127.0.0.1:8000/api/department/create HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer token
+Authorization: Bearer 4|HwvCVT8mHH0vPK9m5uTphfumdMi1VNM1qh8L0D77afd3bb34
+# Authorization: Bearer token
 
 {
     "department_name": "New Department",

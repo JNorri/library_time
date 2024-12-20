@@ -38,7 +38,7 @@ class EmployeeSpecificProcessController extends Controller
                 ->first();
 
             if ($existingProcess) {
-                return response()->json(['message' => 'Process already assigned to this employee'], 422);
+                return response()->json(['message' => 'Процесс уже назначен сотруднику'], 422);
             }
 
             // Получение количества и описания из запроса
@@ -59,7 +59,7 @@ class EmployeeSpecificProcessController extends Controller
                 'employee_id' => $employee->employee_id,
                 'process_id' => $process->process_id,
             ]);
-            return response()->json(['message' => 'Process assigned successfully'], 200);
+            return response()->json(['message' => 'Процесс назначен сотруднику'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
@@ -81,7 +81,7 @@ class EmployeeSpecificProcessController extends Controller
             ->first();
 
         if (!$existingProcess) {
-            return response()->json(['message' => 'Process not assigned to this employee'], 422);
+            return response()->json(['message' => 'Процесс не назначен сотруднику'], 422);
         }
 
         // Удаление записи о процессе
@@ -90,7 +90,7 @@ class EmployeeSpecificProcessController extends Controller
             ->where('process_id', $process->process_id)
             ->delete();
 
-        return response()->json(['message' => 'Process unassigned successfully'], 200);
+        return response()->json(['message' => 'Процесс снят с сотрудника'], 200);
     }
 
     /**
@@ -151,6 +151,6 @@ class EmployeeSpecificProcessController extends Controller
                 'description' => $request->input('description')
             ]);
         
-        return response()->json(['message' => 'Process updated successfully']);
+        return response()->json(['message' => 'Процесс успешно обновлен.']);
     }
 }

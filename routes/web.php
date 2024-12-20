@@ -10,7 +10,7 @@ require __DIR__ . '/API/roles.php';
 require __DIR__ . '/API/backups.php';
 require __DIR__ . '/API/reports.php';
 
-
+use App\Http\Controllers\API\ReportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
@@ -43,3 +43,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/backups',        [DashboardController::class, 'backups'])->name('dashboard.backups');
     Route::get('/dashboard/reports',        [DashboardController::class, 'reports'])->name('dashboard.reports');
 });
+

@@ -1,0 +1,5 @@
+PUT http://127.0.0.1:8000/api/department/1/employee/5/assign HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 2|L6UqD16bniCFV3h0vY92IIqIFqLEdeDLABOG2ka09cbb09be
+# Authorization: Bearer your_token_here

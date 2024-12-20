@@ -18,7 +18,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::all();
-        dd($employees); // Check if employees are retrieved
+        // dd($employees); // Check if employees are retrieved
         return view('/dashboard', compact('employees'));
     }
 
@@ -42,7 +42,7 @@ class EmployeeController extends Controller
     {
         // Проверяем, что сотрудник активен (end_date равно null)
         if ($employee->end_date !== null) {
-            return response()->json(['message' => 'Employee is not active'], 404);
+            return response()->json(['message' => 'Сотрудник не активен'], 404);
         }
 
         // Получаем все процессы активного сотрудника
@@ -111,7 +111,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
 
         return new EmployeeResource($employee);
@@ -125,7 +125,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
 
         return view('employees.edit', compact('employee'));
@@ -139,7 +139,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -170,7 +170,7 @@ class EmployeeController extends Controller
         }
 
         return response()->json([
-            'message' => 'The employee was successfully updated.',
+            'message' => 'Сотрудник успешно обновлен.',
             'data' => new EmployeeResource($employee),
         ], 200);
     }
@@ -183,11 +183,11 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
 
         $employee->delete();
 
-        return response()->json(['message' => 'The employee was successfully deleted.'], 200);
+        return response()->json(['message' => 'Сотрудник успешно удален.'], 200);
     }
 }

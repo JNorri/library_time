@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('employee_id');
             $table->timestamp('date');
             $table->integer('quantity');
-            $table->text('description');
+            $table->text('description')->nullable();
 
             // Foreigh Keys
             $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('restrict');

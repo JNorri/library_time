@@ -22,4 +22,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Маршруты для управления специфическими процессами сотрудников
     Route::put('/employee/{employee}/specific-process/{process}/assign',    [EmployeeSpecificProcessController::class, 'assignSpecificProcess'])->name('employees.assignSpecificProcess');
     Route::put('/employee/{employee}/specific-process/{process}/unassign',  [EmployeeSpecificProcessController::class, 'unassignSpecificProcess'])->name('employees.unassignSpecificProcess');
+
+
 });

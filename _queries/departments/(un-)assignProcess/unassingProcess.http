@@ -1,0 +1,10 @@
+PUT http://127.0.0.1:8000/api/department/unassign-process HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 1|sGsjH63GyxsFuhykkbR4qQ8oSadRkQGY1t14W82K050fc239
+# Authorization: Bearer your_token_here
+
+{
+    "department_id": 1,
+    "process_id": 1
+}

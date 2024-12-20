@@ -1,11 +1,8 @@
-GET http://127.0.0.1:8000/api/report/employee HTTP/1.1
+GET http://127.0.0.1:8000/api/report/employee/1/2023-09-10/2024-12-20 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 1|OVX9BfuYdcyDXTVtYeUZ9UCyA9crI8sEgxMMeivp148cae2a
+Authorization: Bearer 1|gjE82HwRlgGqfdt7ddanMxS46hmp0UWPrtzq71iB111cd06e
 # Authorization: Bearer your_token
 
-{
-    "start_date": "2024-01-01",
-    "end_date": "2024-01-31",
-    "employee_id": 1
-}
+
+# http://127.0.0.1:8000/report/employee/1?start_date=2024-10-01&end_date=2024-12-30

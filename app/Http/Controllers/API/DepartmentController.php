@@ -181,4 +181,40 @@ class DepartmentController extends Controller
             'data' => $process
         ], 200);
     }
+
+    /**
+     * Снять процесс с отдела и назначить на "Научную библиотеку"
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function unassignProcess(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'process_id' => 'required|exists:processes,process_id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $process = Process::findOrFail($request->process_id);
+        
+        // Находим "Научную библиотеку"
+        $mainLibrary = Department::where('department_name', 'Научная библиотека')->first();
+
+        if (!$mainLibrary) {
+            return response()->json(['message' => 'Научная библиотека не найдена'], 404);
+        }
+
+        // Обновляем department_id у процесса на id "Научной библиотеки"
+        $process->update([
+            'department_id' => $mainLibrary->department_id
+        ]);
+
+        return response()->json([
+            'message' => 'Процесс успешно снят.',
+            'data' => $process
+        ], 200);
+    }
+    
 }

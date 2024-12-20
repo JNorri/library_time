@@ -72,8 +72,8 @@ class ProcessSeeder extends Seeder
             ],
             [
                 'process_name' => 'Научно-методическая работа',
-                'is_daily' => true,
-                'require_description' => false,
+                'is_daily' => false,
+                'require_description' => true,
                 'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 60,
@@ -96,16 +96,16 @@ class ProcessSeeder extends Seeder
             ],
             [
                 'process_name' => 'Методическое объединение',
-                'is_daily' => true,
-                'require_description' => false,
+                'is_daily' => false,
+                'require_description' => true,
                 'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 1,
                 'process_duration' => 60,
             ],
             [
                 'process_name' => 'Планерное совещание',
-                'is_daily' => true,
-                'require_description' => false,
+                'is_daily' => false,
+                'require_description' => true,
                 'department_id' => $departmentIds['Научная библиотека'], // общие
                 'measurement_id' => 4, // 1 совещание
                 'process_duration' => 60,
@@ -607,7 +607,7 @@ class ProcessSeeder extends Seeder
                 'process_duration' => 0.5,
             ],
             [
-                'process_name' => 'Заполнить «лист подтвержд. замены',
+                'process_name' => 'Заполнить лист подтвержд. замены',
                 'is_daily' => true,
                 'require_description' => false,
                 'department_id' => $departmentIds['Отдел комплектования и научной обработки фондов'], // Отдел комплектования и научной обработки фондов

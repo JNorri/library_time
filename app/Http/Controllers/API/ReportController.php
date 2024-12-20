@@ -346,86 +346,84 @@ class ReportController extends Controller
 
     public function libraryReportApi($startDate, $endDate)
     {
-        $report = $this->libraryReport($startDate, $endDate);
+        // Логика для получения данных
+        $reportData = $this->libraryReport($startDate, $endDate);
 
-        return response()->json($report);
+        // Возвращаем JSON-ответ
+        return response()->json($reportData, 200);
     }
 
-    /**
-     * Получение отчёта по научной библиотеке.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function libraryReport(Request $request)
+    public function libraryReport(string $startDate, string $endDate): array
     {
-        // Валидация входных данных
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
+        // Получение всех процессов, связанных с научной библиотекой
+        $processes = DB::table('processes')
+            ->where('department_id', function ($query) {
+                $query->select('department_id')
+                    ->from('departments')
+                    ->where('department_name', 'Научная библиотека');
+            })
+            ->select('process_id', 'process_name')
+            ->get();
 
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-
-        // Получение данных из таблицы employee_specific_process
-        $processes = DB::table('employee_specific_process')
+        // Получение данных о процессах в заданный период
+        $processData = DB::table('employee_specific_process')
             ->join('processes', 'processes.process_id', '=', 'employee_specific_process.process_id')
+            ->whereIn('employee_specific_process.process_id', $processes->pluck('process_id'))
             ->whereBetween('employee_specific_process.date', [$startDate, $endDate])
             ->select(
-                'processes.process_name',
+                'employee_specific_process.process_id',
                 'employee_specific_process.date',
-                'employee_specific_process.quantity'
+                'employee_specific_process.quantity',
+                'processes.process_name'
             )
             ->get();
 
-        // Группировка данных по процессам и датам
-        $groupedProcesses = $processes->groupBy('process_name');
-
+        // Обработка данных
         $report = [
+            'library_name' => 'Научная библиотека',
             'dates' => [],
             'processes' => [],
-            'total_by_date' => [],
-            'total_quantity' => 0,
+            'total_processes' => [
+                'total' => 0
+            ]
         ];
 
-        // Формирование отчёта
-        foreach ($groupedProcesses as $processName => $data) {
-            $processData = [
+        // Сбор уникальных дат
+        $dates = $processData->pluck('date')->unique()->sort();
+        $report['dates'] = $dates->toArray();
+
+        // Группировка данных по процессам
+        $processesGrouped = $processData->groupBy('process_id');
+
+        foreach ($processesGrouped as $processId => $data) {
+            $processName = $data->first()->process_name;
+
+            $processReport = [
                 'process_name' => $processName,
                 'data' => [],
-                'total_quantity' => 0,
+                'total_count' => 0
             ];
 
-            foreach ($data as $item) {
-                $date = $item->date;
-                $quantity = $item->quantity;
-
-                // Добавление даты в массив дат
-                if (!in_array($date, $report['dates'])) {
-                    $report['dates'][] = $date;
-                }
-
-                // Добавление данных по процессу
-                $processData['data'][$date] = $quantity;
-                $processData['total_quantity'] += $quantity;
-
-                // Суммирование по датам
-                if (!isset($report['total_by_date'][$date])) {
-                    $report['total_by_date'][$date] = 0;
-                }
-                $report['total_by_date'][$date] += $quantity;
+            // Сбор данных по датам
+            foreach ($dates as $date) {
+                $count = $data->where('date', $date)->sum('quantity');
+                $processReport['data'][] = [
+                    'date' => $date,
+                    'count' => $count
+                ];
+                $processReport['total_count'] += $count;
             }
 
-            $report['processes'][] = $processData;
-            $report['total_quantity'] += $processData['total_quantity'];
+            $report['processes'][] = $processReport;
         }
 
-        // Сортировка дат
-        sort($report['dates']);
+        // Суммарное количество процессов по датам
+        foreach ($dates as $date) {
+            $total = $processData->where('date', $date)->sum('quantity');
+            $report['total_processes'][$date] = $total;
+            $report['total_processes']['total'] += $total;
+        }
 
-        return response()->json([
-            'scientific_library_report' => $report,
-        ]);
+        return $report;
     }
 }

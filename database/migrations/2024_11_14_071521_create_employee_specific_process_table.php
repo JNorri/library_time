@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('process_id');
             $table->unsignedBigInteger('employee_id');
-            $table->timestamp('date');
+            $table->date('date');
             $table->integer('quantity');
             $table->text('description')->nullable();
 

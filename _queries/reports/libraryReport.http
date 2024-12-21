@@ -1,7 +1,8 @@
 GET http://127.0.0.1:8000/api/report/science-library/2024-01-01/2024-12-31 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer your_token
+Authorization: Bearer 1|coCJ9EoXZD2SzrDYRCwCesSHQSMYh8fjA22oJROt2d97ee44
+# Authorization: Bearer your_token
 
 
 # http://127.0.0.1:8000/report/science-library/2024-01-01/2024-12-31

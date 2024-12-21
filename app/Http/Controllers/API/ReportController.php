@@ -97,9 +97,9 @@ class ReportController extends Controller
                 'employee_specific_process.quantity',
                 'employee_specific_process.description',
                 'processes.require_description',
-                'processes.measurement_id',
                 'processes.process_duration',
-                'processes.is_daily'
+                'processes.is_daily',
+                'processes.process_name' // Добавлено для имени процесса
             )
             ->get();
 
@@ -119,56 +119,37 @@ class ReportController extends Controller
             return $process;
         });
 
-        // Суммирование данных по датам
-        $specificProcessesGrouped = $specificProcesses->groupBy(['process_id', 'date']);
-
-        $specificProcessesByDate = $specificProcessesGrouped->map(function ($group) {
-            return $group->map(function ($item) {
-                $result = [
-                    'process_id' => $item->first()->process_id,
-                    'date' => $item->first()->date,
-                    'total_quantity' => $item->sum('quantity'), // Количество процессов за дату
-                    'total_hours' => $item->sum(function ($process) {
-                        return is_numeric($process->quantity)
-                            ? $process->quantity * $process->process_duration
-                            : 0; // Сумма часов за дату
-                    }),
-                ];
-
-                if ($item->first()->require_description) {
-                    $result['description'] = $item->first()->description;
-                }
-
-                return $result;
-            });
-        })->flatten(1);
-
-        // Сортировка дат по возрастанию
-        $specificProcessesByDate = $specificProcessesByDate->sortBy('date');
+        // Группировка данных по датам
+        $specificProcessesByDate = $specificProcesses->groupBy('date')->map(function ($processes, $date) {
+            return [
+                'processes' => $processes->map(function ($process) {
+                    return [
+                        'process_id' => $process->process_id,
+                        'quantity' => $process->quantity,
+                        'hours' => $process->quantity * $process->process_duration,
+                        'description' => $process->description,
+                    ];
+                })->values(),
+                'total_hours' => $processes->sum(function ($process) {
+                    return $process->quantity * $process->process_duration;
+                }),
+            ];
+        })->sortKeys(); // Сортировка по дате (ключу)
 
         // Суммирование данных по всем датам
         $specificProcessesTotal = $specificProcesses->groupBy('process_id')->map(function ($group) {
-            $result = [
-                'process_id' => $group->first()->process_id,
+            return [
                 'total_quantity' => $group->sum('quantity'), // Общее количество процессов за период
                 'total_hours' => $group->sum(function ($process) {
-                    return is_numeric($process->quantity)
-                        ? $process->quantity * $process->process_duration
-                        : 0; // Общая сумма часов за период
+                    return $process->quantity * $process->process_duration;
                 }),
             ];
-
-            if ($group->first()->require_description) {
-                $result['description'] = $group->first()->description;
-            }
-
-            return $result;
         });
 
         // Суммарное количество часов по всем датам
-        $totalHoursByDate = $specificProcessesByDate->groupBy('date')->map(function ($group) {
-            return $group->sum('total_hours');
-        });
+        $totalHoursByDate = $specificProcessesByDate->map(function ($item) {
+            return $item['total_hours'];
+        })->sortKeys(); // Сортировка по дате (ключу)
 
         // Общая сумма часов за весь период
         $totalHours = $specificProcessesTotal->sum('total_hours');
@@ -176,9 +157,9 @@ class ReportController extends Controller
         // Формирование отчёта
         return [
             'employee_name' => $employee->full_name,
-            'specific_processes' => $specificProcessesByDate,
-            'specific_processes_total' => $specificProcessesTotal,
-            'total_hours_by_date' => $totalHoursByDate,
+            'specific_processes' => $specificProcessesByDate->toArray(), // Дата становится ключом
+            'specific_processes_total' => $specificProcessesTotal, // Ключ - process_id
+            'total_hours_by_date' => $totalHoursByDate->toArray(), // Сортировка по дате
             'total_hours' => $totalHours,
         ];
     }
@@ -274,22 +255,6 @@ class ReportController extends Controller
             )
             ->get();
 
-        // Получение назначений процессов сотрудникам в заданный период
-        $processAssignments = DB::table('employee_log_process')
-            ->whereIn('employee_id', $employeesInDepartment->pluck('employee_id'))
-            ->where(function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('start_date', [$startDate, $endDate])
-                    ->orWhere(function ($query) use ($startDate, $endDate) {
-                        $query->where('start_date', '<=', $startDate)
-                            ->where(function ($query) use ($endDate) {
-                                $query->whereNull('end_date')
-                                    ->orWhere('end_date', '>=', $endDate);
-                            });
-                    });
-            })
-            ->select('employee_id', 'process_id', 'start_date', 'end_date')
-            ->get();
-
         // Получение данных о процессах сотрудников в заданный период
         $processes = DB::table('employee_specific_process')
             ->join('processes', 'processes.process_id', '=', 'employee_specific_process.process_id')
@@ -307,39 +272,62 @@ class ReportController extends Controller
 
         // Обработка данных
         $employees = [];
+        $totalEmployeesCount = 0;
+        $totalEmployeesHours = 0;
+
         foreach ($employeesInDepartment as $employee) {
             $employeeProcesses = $processes->where('employee_id', $employee->employee_id);
 
+            // Группировка процессов по датам
+            $processesByDate = $employeeProcesses->groupBy('date');
+
             $employeeData = [
-                'employee_name (ФИО)' => $employee->full_name,
-                'processes' => $employeeProcesses->map(function ($process) {
-                    return [
-                        'process_name' => $process->process_name,
-                        'date' => $process->date,
-                        'count' => $process->quantity,
-                    ];
-                })->values(),
-                'total_processes_hours' => $employeeProcesses->sum(function ($process) {
-                    return $process->quantity * $process->process_duration;
-                }),
+                'employee_name' => $employee->full_name,
+                'processes' => [],
+                'total_count_hours' => [],
+                'total_processes_count' => 0,
+                'total_processes_hours' => 0,
             ];
+
+            foreach ($processesByDate as $date => $processesOnDate) {
+                $processesOnDateGrouped = $processesOnDate->groupBy('process_id');
+
+                $employeeData['processes'][$date] = $processesOnDateGrouped->map(function ($group) {
+                    return [
+                        'process_name' => $group->first()->process_name,
+                        'total_count' => $group->sum('quantity'),
+                    ];
+                })->values()->toArray();
+
+                // Суммарное количество процессов и часов на дату
+                $totalCountOnDate = $processesOnDate->sum('quantity');
+                $totalHoursOnDate = $processesOnDate->sum(function ($process) {
+                    return $process->quantity * $process->process_duration;
+                });
+
+                $employeeData['total_count_hours'][$date] = [
+                    'total_count' => $totalCountOnDate,
+                    'total_hours' => $totalHoursOnDate,
+                ];
+
+                // Общие суммы для сотрудника
+                $employeeData['total_processes_count'] += $totalCountOnDate;
+                $employeeData['total_processes_hours'] += $totalHoursOnDate;
+            }
 
             $employees[] = $employeeData;
-        }
 
-        // Суммарное количество процессов по всем сотрудникам
-        $processCounts = $processes->groupBy('process_id')->map(function ($group) {
-            return [
-                'process_name' => $group->first()->process_name,
-                'total_count' => $group->sum('quantity'),
-            ];
-        })->values();
+            // Общие суммы для всех сотрудников
+            $totalEmployeesCount += $employeeData['total_processes_count'];
+            $totalEmployeesHours += $employeeData['total_processes_hours'];
+        }
 
         // Формирование отчёта
         return [
             'department_name' => $department->department_name,
             'employees' => $employees,
-            'process_count' => $processCounts,
+            'total_employees_count' => $totalEmployeesCount,
+            'total_employees_hours' => $totalEmployeesHours,
         ];
     }
 
@@ -380,17 +368,11 @@ class ReportController extends Controller
 
         // Обработка данных
         $report = [
-            'library_name' => 'Научная библиотека',
-            'dates' => [],
             'processes' => [],
             'total_processes' => [
                 'total' => 0
             ]
         ];
-
-        // Сбор уникальных дат
-        $dates = $processData->pluck('date')->unique()->sort();
-        $report['dates'] = $dates->toArray();
 
         // Группировка данных по процессам
         $processesGrouped = $processData->groupBy('process_id');
@@ -399,18 +381,17 @@ class ReportController extends Controller
             $processName = $data->first()->process_name;
 
             $processReport = [
+                'process_id' => $processId,
                 'process_name' => $processName,
-                'data' => [],
+                'dates' => [], // Изменено на 'dates'
                 'total_count' => 0
             ];
 
             // Сбор данных по датам
+            $dates = $data->pluck('date')->unique()->sort();
             foreach ($dates as $date) {
                 $count = $data->where('date', $date)->sum('quantity');
-                $processReport['data'][] = [
-                    'date' => $date,
-                    'count' => $count
-                ];
+                $processReport['dates'][$date] = $count; // Даты становятся ключами, а значения — количеством
                 $processReport['total_count'] += $count;
             }
 
@@ -418,9 +399,10 @@ class ReportController extends Controller
         }
 
         // Суммарное количество процессов по датам
-        foreach ($dates as $date) {
+        $allDates = $processData->pluck('date')->unique()->sort();
+        foreach ($allDates as $date) {
             $total = $processData->where('date', $date)->sum('quantity');
-            $report['total_processes'][$date] = $total;
+            $report['total_processes'][$date] = $total; // Даты становятся ключами, а значения — количеством
             $report['total_processes']['total'] += $total;
         }
 

@@ -1,7 +1,7 @@
-GET http://127.0.0.1:8000/api/report/department/1/2024-10-10/2024-12-20 HTTP/1.1
+GET http://127.0.0.1:8000/api/report/department/6/2024-10-10/2025-12-20 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 1|CPHUv1VjbioPyCU4AuqYn5vAePdD1iR9211Gdslxee54946a
+Authorization: Bearer 1|coCJ9EoXZD2SzrDYRCwCesSHQSMYh8fjA22oJROt2d97ee44
 # Authorization: Bearer your_token
 
 # http://127.0.0.1:8000/report/department/1?start_date=2024-10-01&end_date=2024-12-30

@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ReportController extends Controller
 {
-
+    use AuthorizesRequests;
     // Метод для API (возвращает JSON)
     public function showEmployeeReportApiWEB(Request $request, int $employeeId)
     {
-        // Логика для получения данных (как в предыдущих примерах)
+        // Проверка прав доступа
+        $this->authorize('view', Employee::class);
 
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
@@ -25,14 +29,19 @@ class ReportController extends Controller
 
     public function showEmployeeReportApi($employeeId, $startDate, $endDate)
     {
+        // Проверка прав доступа
+        $this->authorize('view', Employee::class);
+
         $reportData = $this->employeeReport($employeeId, $startDate, $endDate);
 
         return response()->json($reportData, 200);
     }
 
-
     public function getEmployeesByDepartment($departmentId)
     {
+        // Проверка прав доступа
+        $this->authorize('view', Department::class);
+
         $employees = DB::table('employees')
             ->where('department_id', $departmentId)
             ->select(
@@ -46,6 +55,9 @@ class ReportController extends Controller
 
     public function showEmployeeReportForm()
     {
+        // Проверка прав доступа
+        $this->authorize('view', Employee::class);
+
         // Получение списка сотрудников
         $employees = DB::table('employees')
             ->select(
@@ -60,6 +72,9 @@ class ReportController extends Controller
     // Метод для Web-представления (возвращает Blade-шаблон)
     public function generateEmployeeReportWeb($employeeId, $startDate, $endDate)
     {
+        // Проверка прав доступа
+        $this->authorize('view', Employee::class);
+
         // Логика для получения данных (как в предыдущих примерах)
         $reportData = $this->employeeReport($employeeId, $startDate, $endDate);
 
@@ -164,9 +179,11 @@ class ReportController extends Controller
         ];
     }
 
-
     public function generateDepartmentReportApi($departmentId, $startDate, $endDate)
     {
+        // Проверка прав доступа
+        $this->authorize('viewDepartmentReport', Department::class);
+
         // Логика для получения данных (как в предыдущих примерах)
         $reportData = $this->departmentReport($departmentId, $startDate, $endDate);
 
@@ -176,6 +193,9 @@ class ReportController extends Controller
 
     public function getDepartments()
     {
+        // Проверка прав доступа
+        $this->authorize('view', Department::class);
+
         $departments = DB::table('departments')
             ->select(
                 'department_id',
@@ -188,6 +208,9 @@ class ReportController extends Controller
 
     public function showDepartmentReportForm()
     {
+        // Проверка прав доступа
+        $this->authorize('view', Department::class);
+
         // Получение списка сотрудников
         $departments = DB::table('departments')
             ->select(
@@ -202,6 +225,9 @@ class ReportController extends Controller
     // Метод для Web-представления (возвращает Blade-шаблон)
     public function generateDepartmentReportWeb($departmentId, $startDate, $endDate)
     {
+        // Проверка прав доступа
+        $this->authorize('viewDepartmentReport', Department::class);
+
         // Логика для получения данных (как в предыдущих примерах)
         $reportData = $this->departmentReport($departmentId, $startDate, $endDate);
 
@@ -211,6 +237,9 @@ class ReportController extends Controller
 
     public function showDepartmentReport(Request $request, int $departmentId)
     {
+        // Проверка прав доступа
+        $this->authorize('view', Department::class);
+
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
@@ -279,12 +308,10 @@ class ReportController extends Controller
             $employeeProcesses = $processes->where('employee_id', $employee->employee_id);
 
             // Группировка процессов по датам
-            $processesByDate = $employeeProcesses->groupBy('date');
+            $processesByDate = $employeeProcesses->groupBy('date')->sortKeys(); // Сортировка дат по возрастанию
 
             $employeeData = [
-                'employee_name' => $employee->full_name,
                 'processes' => [],
-                'total_count_hours' => [],
                 'total_processes_count' => 0,
                 'total_processes_hours' => 0,
             ];
@@ -292,22 +319,21 @@ class ReportController extends Controller
             foreach ($processesByDate as $date => $processesOnDate) {
                 $processesOnDateGrouped = $processesOnDate->groupBy('process_id');
 
-                $employeeData['processes'][$date] = $processesOnDateGrouped->map(function ($group) {
-                    return [
-                        'process_name' => $group->first()->process_name,
-                        'total_count' => $group->sum('quantity'),
-                    ];
-                })->values()->toArray();
-
                 // Суммарное количество процессов и часов на дату
                 $totalCountOnDate = $processesOnDate->sum('quantity');
                 $totalHoursOnDate = $processesOnDate->sum(function ($process) {
                     return $process->quantity * $process->process_duration;
                 });
 
-                $employeeData['total_count_hours'][$date] = [
-                    'total_count' => $totalCountOnDate,
-                    'total_hours' => $totalHoursOnDate,
+                $employeeData['processes'][$date] = [
+                    'processes' => $processesOnDateGrouped->map(function ($group) {
+                        return [
+                            'process_name' => $group->first()->process_name,
+                            'total_count' => $group->sum('quantity'),
+                        ];
+                    })->values()->toArray(),
+                    'total_count' => $totalCountOnDate, // Добавлено поле total_count
+                    'total_hours' => $totalHoursOnDate, // Добавлено поле total_hours
                 ];
 
                 // Общие суммы для сотрудника
@@ -315,7 +341,8 @@ class ReportController extends Controller
                 $employeeData['total_processes_hours'] += $totalHoursOnDate;
             }
 
-            $employees[] = $employeeData;
+            // Добавляем данные сотрудника в массив с ключом ФИО
+            $employees[$employee->full_name] = $employeeData;
 
             // Общие суммы для всех сотрудников
             $totalEmployeesCount += $employeeData['total_processes_count'];
@@ -331,9 +358,11 @@ class ReportController extends Controller
         ];
     }
 
-
     public function libraryReportApi($startDate, $endDate)
     {
+        // Проверка прав доступа
+        $this->authorize('view', Department::class);
+
         // Логика для получения данных
         $reportData = $this->libraryReport($startDate, $endDate);
 

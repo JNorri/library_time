@@ -7,20 +7,28 @@ use App\Http\Resources\MeasurementResource;
 use App\Models\Measurement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class MeasurementController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource for API.
      */
     public function index()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Measurement::class);
+
         $measurements = Measurement::all();
-        return view('dashboard', compact('measurements'));
+        return response()->json($measurements);
     }
 
     public function json()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Measurement::class);
+
         $measurements = Measurement::all();
         return response()->json($measurements);
     }
@@ -30,6 +38,9 @@ class MeasurementController extends Controller
      */
     public function webIndex()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Measurement::class);
+
         $measurements = Measurement::all();
         return view('measurements.index', compact('measurements'));
     }
@@ -39,6 +50,9 @@ class MeasurementController extends Controller
      */
     public function create()
     {
+        // Проверка прав доступа
+        $this->authorize('create', Measurement::class);
+
         return view('measurements.create');
     }
 
@@ -47,6 +61,9 @@ class MeasurementController extends Controller
      */
     public function store(Request $request)
     {
+        // Проверка прав доступа
+        $this->authorize('create', Measurement::class);
+
         $validator = Validator::make($request->all(), [
             'measurement_name' => 'required|string|max:255',
             'measurement_description' => 'nullable|string',
@@ -59,7 +76,7 @@ class MeasurementController extends Controller
         $measurement = Measurement::create($request->all());
 
         return response()->json([
-            'message' => 'The measurement was successfully added.',
+            'message' => 'Измерение успешно добавлено.',
             'data' => new MeasurementResource($measurement),
         ], 201);
     }
@@ -72,8 +89,11 @@ class MeasurementController extends Controller
         $measurement = Measurement::find($id);
 
         if (!$measurement) {
-            return response()->json(['message' => 'Measurement not found'], 404);
+            return response()->json(['message' => 'Измерение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('view', $measurement);
 
         return new MeasurementResource($measurement);
     }
@@ -86,8 +106,11 @@ class MeasurementController extends Controller
         $measurement = Measurement::find($id);
 
         if (!$measurement) {
-            return response()->json(['message' => 'Measurement not found'], 404);
+            return response()->json(['message' => 'Измерение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $measurement);
 
         return view('measurements.edit', compact('measurement'));
     }
@@ -100,8 +123,11 @@ class MeasurementController extends Controller
         $measurement = Measurement::find($id);
 
         if (!$measurement) {
-            return response()->json(['message' => 'Measurement not found'], 404);
+            return response()->json(['message' => 'Измерение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $measurement);
 
         $validator = Validator::make($request->all(), [
             'measurement_name' => 'required|string|max:255',
@@ -115,7 +141,7 @@ class MeasurementController extends Controller
         $measurement->update($request->all());
 
         return response()->json([
-            'message' => 'The measurement was successfully updated.',
+            'message' => 'Измерение успешно обновлено.',
             'data' => new MeasurementResource($measurement),
         ], 200);
     }
@@ -128,11 +154,14 @@ class MeasurementController extends Controller
         $measurement = Measurement::find($id);
 
         if (!$measurement) {
-            return response()->json(['message' => 'Measurement not found'], 404);
+            return response()->json(['message' => 'Измерение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('delete', $measurement);
 
         $measurement->delete();
 
-        return response()->json(['message' => 'The measurement was successfully deleted.'], 200);
+        return response()->json(['message' => 'Измерение успешно удалено.'], 200);
     }
 }

@@ -1,38 +1,29 @@
 <?php
+namespace App\Policies;
 
-// namespace App\Policies;
+use App\Models\Role;
+use App\Models\Employee;
+use Illuminate\Auth\Access\Response;
 
-// use App\Models\Employee;
-// use App\Models\Role;
-// use Illuminate\Auth\Access\Response;
-// use Illuminate\Auth\Access\HandlesAuthorization;
+class RolePolicy
+{
+    /**
+     * Проверка прав на назначение разрешения роли.
+     */
+    public function assignPermissionToRole(Employee $user, Role $role)
+    {
+        return $user->hasPermission('assign')
+            ? Response::allow()
+            : Response::deny('У вас нет прав для назначения разрешений роли.');
+    }
 
-// class RolePolicy
-// {
-//     use HandlesAuthorization;
-
-//     public function viewAny(Employee $user)
-//     {
-//         return $user->hasPermission('view_role');
-//     }
-
-//     public function view(Employee $user, Role $role)
-//     {
-//         return $user->hasPermission('view_role');
-//     }
-
-//     public function create(Employee $user)
-//     {
-//         return $user->hasPermission('create_role');
-//     }
-
-//     public function update(Employee $user, Role $role)
-//     {
-//         return $user->hasPermission('edit_role');
-//     }
-
-//     public function delete(Employee $user, Role $role)
-//     {
-//         return $user->hasPermission('delete_role');
-//     }
-// }
+    /**
+     * Проверка прав на снятие разрешения с роли.
+     */
+    public function unassignPermissionFromRole(Employee $user, Role $role)
+    {
+        return $user->hasPermission('unassign')
+            ? Response::allow()
+            : Response::deny('У вас нет прав для снятия разрешений с роли.');
+    }
+}

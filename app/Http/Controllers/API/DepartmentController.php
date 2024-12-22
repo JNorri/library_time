@@ -1,30 +1,39 @@
 <?php
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
 use App\Models\Process;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
+    use AuthorizesRequests;
+    
     /**
      * Display a listing of the resource for API.
      */
     public function index()
     {
-        $processes = Department::all();
-        return view('dashboard', compact('departments'));
+        // Проверка прав доступа
+        $this->authorize('viewAny', Department::class);
+
+        $departments = Department::all();
+        return response()->json($departments);
     }
 
     public function json()
     {
-        $processes = Department::all();
-        return response()->json($processes);
+        // Проверка прав доступа
+        $this->authorize('viewAny', Department::class);
+
+        $departments = Department::all();
+        return response()->json($departments);
     }
 
     /**
@@ -32,16 +41,21 @@ class DepartmentController extends Controller
      */
     public function webIndex()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Department::class);
+
         $departments = Department::all();
         return view('departments.index', compact('departments'));
     }
-
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        // Проверка прав доступа
+        $this->authorize('create', Department::class);
+
         return view('departments.create');
     }
 
@@ -50,6 +64,9 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
+        // Проверка прав доступа
+        $this->authorize('create', Department::class);
+
         $validator = Validator::make($request->all(), [
             'department_name' => 'required|string|max:255',
             'department_description' => 'required|string',
@@ -79,20 +96,23 @@ class DepartmentController extends Controller
             return response()->json(['message' => 'Отдел не найден'], 404);
         }
 
+        // Проверка прав доступа
+        $this->authorize('view', $department);
+
         return new DepartmentResource($department);
     }
 
-
     public function getDepartmentsWithEmployees()
     {
-        // Получаем все отделы с их сотрудниками
+        // Проверка прав доступа
+        $this->authorize('viewAny', Department::class);
+
         $departments = Department::with(['employees' => function ($query) {
             $query->wherePivot('end_date', null);
         }])->get();
 
         return response()->json($departments);
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -104,6 +124,9 @@ class DepartmentController extends Controller
         if (!$department) {
             return response()->json(['message' => 'Отдел не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $department);
 
         return view('departments.edit', compact('department'));
     }
@@ -119,6 +142,9 @@ class DepartmentController extends Controller
             return response()->json(['message' => 'Отдел не найден'], 404);
         }
 
+        // Проверка прав доступа
+        $this->authorize('update', $department);
+
         $validator = Validator::make($request->all(), [
             'department_name' => 'required|string|max:255',
             'department_description' => 'required|string',
@@ -132,7 +158,7 @@ class DepartmentController extends Controller
         $department->update($request->all());
 
         return response()->json([
-            'message' => 'The department was successfully updated.',
+            'message' => 'Отдел успешно обновлен.',
             'data' => new DepartmentResource($department),
         ], 200);
     }
@@ -145,8 +171,11 @@ class DepartmentController extends Controller
         $department = Department::find($id);
 
         if (!$department) {
-            return response()->json(['message' => 'Отделне найден'], 404);
+            return response()->json(['message' => 'Отдел не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('delete', $department);
 
         $department->delete();
 
@@ -160,6 +189,9 @@ class DepartmentController extends Controller
      */
     public function assignProcess(Request $request): JsonResponse
     {
+        // Проверка прав доступа
+        $this->authorize('assign', Department::class);
+
         $validator = Validator::make($request->all(), [
             'department_id' => 'required|exists:departments,department_id',
             'process_id' => 'required|exists:processes,process_id',
@@ -170,7 +202,7 @@ class DepartmentController extends Controller
         }
 
         $process = Process::findOrFail($request->process_id);
-        
+
         // Обновляем department_id у процесса
         $process->update([
             'department_id' => $request->department_id
@@ -189,6 +221,9 @@ class DepartmentController extends Controller
      */
     public function unassignProcess(Request $request): JsonResponse
     {
+        // Проверка прав доступа
+        $this->authorize('unassign', Department::class);
+
         $validator = Validator::make($request->all(), [
             'process_id' => 'required|exists:processes,process_id',
         ]);
@@ -198,7 +233,7 @@ class DepartmentController extends Controller
         }
 
         $process = Process::findOrFail($request->process_id);
-        
+
         // Находим "Научную библиотеку"
         $mainLibrary = Department::where('department_name', 'Научная библиотека')->first();
 
@@ -216,5 +251,4 @@ class DepartmentController extends Controller
             'data' => $process
         ], 200);
     }
-    
 }

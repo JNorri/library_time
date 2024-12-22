@@ -7,20 +7,28 @@ use App\Http\Resources\ProcessResource;
 use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProcessController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource for API.
      */
     public function index()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Process::class);
+
         $processes = Process::all();
         return ProcessResource::collection($processes);
     }
 
     public function json()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Process::class);
+
         $processes = Process::all();
         return response()->json($processes);
     }
@@ -30,6 +38,9 @@ class ProcessController extends Controller
      */
     public function webIndex()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Process::class);
+
         $processes = Process::all();
         return view('processes.index', compact('processes'));
     }
@@ -39,6 +50,9 @@ class ProcessController extends Controller
      */
     public function create()
     {
+        // Проверка прав доступа
+        $this->authorize('create', Process::class);
+
         return view('processes.create');
     }
 
@@ -47,6 +61,9 @@ class ProcessController extends Controller
      */
     public function store(Request $request)
     {
+        // Проверка прав доступа
+        $this->authorize('create', Process::class);
+
         $validator = Validator::make($request->all(), [
             'process_name' => 'required|string|max:255',
             'measurement_id' => 'nullable|exists:measurements,measurement_id',
@@ -63,7 +80,7 @@ class ProcessController extends Controller
         $process = Process::create($request->all());
 
         return response()->json([
-            'message' => 'The process was successfully added.',
+            'message' => 'Процесс успешно добавлен.',
             'data' => new ProcessResource($process),
         ], 201);
     }
@@ -76,8 +93,11 @@ class ProcessController extends Controller
         $process = Process::find($id);
 
         if (!$process) {
-            return response()->json(['message' => 'Process not found'], 404);
+            return response()->json(['message' => 'Процесс не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('view', $process);
 
         return new ProcessResource($process);
     }
@@ -90,8 +110,11 @@ class ProcessController extends Controller
         $process = Process::find($id);
 
         if (!$process) {
-            return response()->json(['message' => 'Process not found'], 404);
+            return response()->json(['message' => 'Процесс не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $process);
 
         return view('processes.edit', compact('process'));
     }
@@ -104,8 +127,11 @@ class ProcessController extends Controller
         $process = Process::find($id);
 
         if (!$process) {
-            return response()->json(['message' => 'Process not found'], 404);
+            return response()->json(['message' => 'Процесс не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $process);
 
         $validator = Validator::make($request->all(), [
             'process_name' => 'required|string|max:255',
@@ -123,7 +149,7 @@ class ProcessController extends Controller
         $process->update($request->all());
 
         return response()->json([
-            'message' => 'The process was successfully updated.',
+            'message' => 'Процесс успешно обновлен.',
             'data' => new ProcessResource($process),
         ], 200);
     }
@@ -136,11 +162,14 @@ class ProcessController extends Controller
         $process = Process::find($id);
 
         if (!$process) {
-            return response()->json(['message' => 'Process not found'], 404);
+            return response()->json(['message' => 'Процесс не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('delete', $process);
 
         $process->delete();
 
-        return response()->json(['message' => 'The process was successfully deleted.'], 200);
+        return response()->json(['message' => 'Процесс успешно удален.'], 200);
     }
 }

@@ -3,29 +3,20 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\DashboardController;
 use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RoleController extends Controller
 {
-    // protected $DashboardController;
-
-    // public function __construct(DashboardController $DashboardController)
-    // {
-    //     $this->DashboardController = $DashboardController;
-    // }
-
-    // public function index()
-    // {
-    //     $data = $this->DashboardController->getAllData();
-    //     return view('dashboard', $data);
-    // }
-
+    use AuthorizesRequests;
     public function json()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Role::class);
+
         $roles = Role::all();
         return response()->json($roles);
     }
@@ -38,14 +29,20 @@ class RoleController extends Controller
         $role = Role::find($id);
 
         if (!$role) {
-            return response()->json(['message' => 'Role not found'], 404);
+            return response()->json(['message' => 'Роль не найдена'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('view', $role);
 
         return new RoleResource($role);
     }
 
     public function store(Request $request)
     {
+        // Проверка прав доступа
+        $this->authorize('create', Role::class);
+
         $validator = Validator::make($request->all(), [
             'role_name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:roles',
@@ -59,7 +56,7 @@ class RoleController extends Controller
         $role = Role::create($request->all());
 
         return response()->json([
-            'message' => 'The role was successfully added.',
+            'message' => 'Роль успешно добавлена.',
             'data' => new RoleResource($role),
         ], 201);
     }
@@ -69,8 +66,11 @@ class RoleController extends Controller
         $role = Role::find($id);
 
         if (!$role) {
-            return response()->json(['message' => 'Role not found'], 404);
+            return response()->json(['message' => 'Роль не найдена'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $role);
 
         $validator = Validator::make($request->all(), [
             'role_name' => 'required|string|max:255',
@@ -85,7 +85,7 @@ class RoleController extends Controller
         $role->update($request->all());
 
         return response()->json([
-            'message' => 'The role was successfully updated.',
+            'message' => 'Роль успешно обновлена.',
             'data' => new RoleResource($role),
         ], 200);
     }
@@ -95,11 +95,14 @@ class RoleController extends Controller
         $role = Role::find($id);
 
         if (!$role) {
-            return response()->json(['message' => 'Role not found'], 404);
+            return response()->json(['message' => 'Роль не найдена'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('delete', $role);
 
         $role->delete();
 
-        return response()->json(['message' => 'The role was successfully deleted.'], 200);
+        return response()->json(['message' => 'Роль успешно удалена.'], 200);
     }
 }

@@ -9,21 +9,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EmployeeSpecificProcessController extends Controller
-{  
-
+{
+    use AuthorizesRequests;
     /**
      * Assign a specific process to an employee.
      */
     public function assignSpecificProcess(Request $request, Employee $employee, Process $process)
     {
         try {
+            // Проверка прав доступа
+            $this->authorize('assign', $process);
+
             // Проверка статуса сотрудника
             $this->checkEmployeeStatus($employee);
-            
+
             DB::beginTransaction();
-            
+
             // Валидация входных данных
             $validator = Validator::make($request->all(), $this->getValidationRules($process));
 
@@ -71,9 +75,12 @@ class EmployeeSpecificProcessController extends Controller
      */
     public function unassignSpecificProcess(Request $request, Employee $employee, Process $process)
     {
+        // Проверка прав доступа
+        $this->authorize('unassign', $process);
+
         // Проверка статуса сотрудника
         $this->checkEmployeeStatus($employee);
-        
+
         // Проверка, что процесс назначен сотруднику
         $existingProcess = DB::table('employee_specific_process')
             ->where('employee_id', $employee->employee_id)
@@ -120,29 +127,35 @@ class EmployeeSpecificProcessController extends Controller
 
     public function getEmployeeProcesses(Employee $employee)
     {
+        // Проверка прав доступа
+        $this->authorize('view', $employee);
+
         // Проверка статуса сотрудника
         $this->checkEmployeeStatus($employee);
-        
+
         $processes = DB::table('employee_specific_process')
             ->where('employee_id', $employee->employee_id)
             ->join('processes', 'processes.process_id', '=', 'employee_specific_process.process_id')
             ->select('processes.*', 'employee_specific_process.date', 'employee_specific_process.quantity')
             ->get();
-        
+
         return response()->json($processes);
     }
 
     public function updateSpecificProcess(Request $request, Employee $employee, Process $process)
     {
+        // Проверка прав доступа
+        $this->authorize('update', $process);
+
         // Проверка статуса сотрудника
         $this->checkEmployeeStatus($employee);
-        
+
         $validator = Validator::make($request->all(), $this->getValidationRules($process));
-        
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        
+
         DB::table('employee_specific_process')
             ->where('employee_id', $employee->employee_id)
             ->where('process_id', $process->process_id)
@@ -150,7 +163,7 @@ class EmployeeSpecificProcessController extends Controller
                 'quantity' => $request->input('quantity'),
                 'description' => $request->input('description')
             ]);
-        
+
         return response()->json(['message' => 'Процесс успешно обновлен.']);
     }
 }

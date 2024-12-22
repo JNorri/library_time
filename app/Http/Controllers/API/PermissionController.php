@@ -7,24 +7,16 @@ use App\Http\Resources\PermissionResource;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PermissionController extends Controller
 {
-    // protected $dataController;
-
-    // public function __construct(DataController $dataController)
-    // {
-    //     $this->dataController = $dataController;
-    // }
-
-    // public function index()
-    // {
-    //     $data = $this->dataController->getAllData();
-    //     return view('dashboard', $data);
-    // }
-
+    use AuthorizesRequests;
     public function json()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Permission::class);
+
         $permissions = Permission::all();
         return response()->json($permissions);
     }
@@ -37,14 +29,20 @@ class PermissionController extends Controller
         $permission = Permission::find($id);
 
         if (!$permission) {
-            return response()->json(['message' => 'Permission not found'], 404);
+            return response()->json(['message' => 'Разрешение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('view', $permission);
 
         return new PermissionResource($permission);
     }
 
     public function store(Request $request)
     {
+        // Проверка прав доступа
+        $this->authorize('create', Permission::class);
+
         $validator = Validator::make($request->all(), [
             'permission_name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:permissions',
@@ -58,7 +56,7 @@ class PermissionController extends Controller
         $permission = Permission::create($request->all());
 
         return response()->json([
-            'message' => 'The permission was successfully added.',
+            'message' => 'Разрешение успешно добавлено.',
             'data' => new PermissionResource($permission),
         ], 201);
     }
@@ -68,8 +66,11 @@ class PermissionController extends Controller
         $permission = Permission::find($id);
 
         if (!$permission) {
-            return response()->json(['message' => 'Permission not found'], 404);
+            return response()->json(['message' => 'Разрешение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $permission);
 
         $validator = Validator::make($request->all(), [
             'permission_name' => 'required|string|max:255',
@@ -84,7 +85,7 @@ class PermissionController extends Controller
         $permission->update($request->all());
 
         return response()->json([
-            'message' => 'The permission was successfully updated.',
+            'message' => 'Разрешение успешно обновлено.',
             'data' => new PermissionResource($permission),
         ], 200);
     }
@@ -94,11 +95,14 @@ class PermissionController extends Controller
         $permission = Permission::find($id);
 
         if (!$permission) {
-            return response()->json(['message' => 'Permission not found'], 404);
+            return response()->json(['message' => 'Разрешение не найдено'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('delete', $permission);
 
         $permission->delete();
 
-        return response()->json(['message' => 'The permission was successfully deleted.'], 200);
+        return response()->json(['message' => 'Разрешение успешно удалено.'], 200);
     }
 }

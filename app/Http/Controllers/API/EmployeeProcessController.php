@@ -7,15 +7,18 @@ use App\Models\Employee;
 use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class EmployeeProcessController extends Controller
 {
-    //
+    use AuthorizesRequests;
     /**
      * Assign a process to an employee.
      */
     public function assignProcess(Request $request, Employee $employee, Process $process)
     {
+        // Проверка прав доступа
+        $this->authorize('assignToEmployee', $process);
+
         // Проверка, что процесс еще не назначен сотруднику
         $existingProcess = DB::table('employee_log_process')
             ->where('employee_id', $employee->employee_id)
@@ -43,6 +46,9 @@ class EmployeeProcessController extends Controller
      */
     public function unassignProcess(Request $request, Employee $employee, Process $process)
     {
+        // Проверка прав доступа
+        $this->authorize('unassignFromEmployee', $process);
+
         // Проверка, что процесс назначен сотруднику
         $existingProcess = DB::table('employee_log_process')
             ->where('employee_id', $employee->employee_id)
@@ -63,4 +69,3 @@ class EmployeeProcessController extends Controller
         return response()->json(['message' => 'Процесс снят с сотрудника'], 200);
     }
 }
-

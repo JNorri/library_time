@@ -1,5 +1,5 @@
 GET http://127.0.0.1:8000/api/employees/json HTTP/1.1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer 2|h9b8iDSdvxsWNBo10mJTC1xsASFk3O9slfqvlbVX9f8c2aac
+Authorization: Bearer 14|SlF9mCjwsLzNXUT7qV9Th19rH9YJVu4uZRbEpCVHb82cf07b
 # Authorization: Bearer your_token

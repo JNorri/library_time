@@ -8,9 +8,10 @@ use App\Models\Employee;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class EmployeeDepartmentController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Назначить сотрудника в отдел.
      *
@@ -21,6 +22,9 @@ class EmployeeDepartmentController extends Controller
      */
     public function assignEmployeeToDepartment(Request $request, Department $department, Employee $employee): JsonResponse
     {
+        // Проверка прав доступа
+        $this->authorize('assign', $employee);
+
         // Проверки
         $validationResponse = $this->validateEmployeeAndDepartment($employee->employee_id, $department->department_id);
         if ($validationResponse) {
@@ -54,8 +58,7 @@ class EmployeeDepartmentController extends Controller
             'end_date' => null,
         ]);
 
-        // return response()->json(['message' => 'Сотрудник успешно назначен в отдел.'], 200);
-        return response()->json(['message' => 'Employee successfully assigned to department.'], 200);
+        return response()->json(['message' => 'Сотрудник успешно назначен в отдел.'], 200);
     }
 
     /**
@@ -68,6 +71,9 @@ class EmployeeDepartmentController extends Controller
      */
     public function unassignEmployeeFromDepartment(Request $request, Department $department, Employee $employee): JsonResponse
     {
+        // Проверка прав доступа
+        $this->authorize('unassign', $employee);
+
         // Проверки
         $validationResponse = $this->validateEmployeeAndDepartment($employee->employee_id, $department->department_id);
         if ($validationResponse) {
@@ -86,8 +92,7 @@ class EmployeeDepartmentController extends Controller
             ->whereNull('end_date')
             ->update(['end_date' => now()]);
 
-        // return response()->json(['message' => 'Сотрудник успешно снят с отдела.'], 200);
-        return response()->json(['message' => 'Employee successfully unassigned from department.'], 200);
+        return response()->json(['message' => 'Сотрудник успешно снят с отдела.'], 200);
     }
 
     /**
@@ -103,13 +108,11 @@ class EmployeeDepartmentController extends Controller
         $department = Department::find($departmentId);
 
         if (!$employee) {
-            // return response()->json(['message' => 'Сотрудник не найден.'], 404);
-            return response()->json(['message' => 'Employee not found.'], 404);
+            return response()->json(['message' => 'Сотрудник не найден.'], 404);
         }
 
         if (!$department) {
-            // return response()->json(['message' => 'Отдел не найден.'], 404);
-            return response()->json(['message' => 'Department not found.'], 404);
+            return response()->json(['message' => 'Отдел не найден.'], 404);
         }
 
         return null;
@@ -131,8 +134,7 @@ class EmployeeDepartmentController extends Controller
             ->first();
 
         if ($existingAssignment) {
-            // return response()->json(['message' => 'Сотрудник уже работает в этом отделе.'], 422);
-            return response()->json(['message' => 'Employee already works in this department.'], 422);
+            return response()->json(['message' => 'Сотрудник уже работает в этом отделе.'], 422);
         }
 
         return null;
@@ -154,11 +156,9 @@ class EmployeeDepartmentController extends Controller
             ->first();
 
         if (!$existingAssignment) {
-            // return response()->json(['message' => 'Сотрудник не работает в этом отделе.'], 422);
-            return response()->json(['message' => 'Employee does not work in this department.'], 422);
+            return response()->json(['message' => 'Сотрудник не работает в этом отделе.'], 422);
         }
 
         return null;
     }
 }
-

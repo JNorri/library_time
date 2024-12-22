@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\EmployeeProcessController;
+use App\Http\Controllers\API\EmployeeRoleController;
 use App\Http\Controllers\API\EmployeeSpecificProcessController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/employee/{employee}/specific-process/{process}/assign',    [EmployeeSpecificProcessController::class, 'assignSpecificProcess'])->name('employees.assignSpecificProcess');
     Route::put('/employee/{employee}/specific-process/{process}/unassign',  [EmployeeSpecificProcessController::class, 'unassignSpecificProcess'])->name('employees.unassignSpecificProcess');
 
+    Route::post('/employees/{employee}/roles/{role}/assign',                [EmployeeRoleController::class, 'assignRole']);
 
+    // Снять роль с сотрудника
+    Route::post('/employees/{employee}/roles/{role}/unassign',              [EmployeeRoleController::class, 'unassignRole']);
 });

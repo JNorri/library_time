@@ -25,25 +25,9 @@ class RoleSeeder extends Seeder
                 ['role_name' => 'Сотрудник', 'role_description' => 'test', 'slug' => 'employee'],
             ];
 
-            foreach ($roles as $roleData) {
-                $role = Role::firstOrCreate($roleData);
-                Log::info("Роль '{$role->role_name}' создана.");
-
-                // Назначение разрешений роли (например, для "Заведующий отделом")
-                if ($role->slug === 'head_department') {
-                    $permissions = Permission::whereIn('slug', [
-                        'view_data_report',
-                        'edit_data_report',
-                        'view_employee',
-                        'edit_employee',
-                        'view_department',
-                        'edit_department',
-                    ])->get();
-
-                    $role->permissions()->sync($permissions->pluck('permission_id')->toArray());
-                    Log::info("Разрешения назначены роли '{$role->role_name}'.");
-                }
-            }
+        
+        
+            DB::table('roles')->insert($roles);
 
             DB::commit();
         } catch (\Exception $e) {

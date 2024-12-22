@@ -9,28 +9,42 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class EmployeeController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource for API.
      */
     public function index()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Employee::class);
+
         $employees = Employee::all();
-        // dd($employees); // Check if employees are retrieved
-        return view('/dashboard', compact('employees'));
+        return response()->json($employees, 200);
     }
 
     public function json()
     {
-        $employees = Employee::all();
-        return response()->json($employees);
+        try {
+            // Проверка прав доступа
+            $this->authorize('viewAny', Employee::class);
+
+            $employees = Employee::all();
+            return response()->json($employees, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function getActiveEmployees()
     {
-        // Получаем активных сотрудников, у которых end_date равно null
+        // Проверка прав доступа
+        $this->authorize('viewAny', Employee::class);
+
         $activeEmployees = Employee::whereHas('departments', function ($query) {
             $query->whereNull('end_date');
         })->get();
@@ -40,12 +54,13 @@ class EmployeeController extends Controller
 
     public function getActiveEmployeeProcesses(Employee $employee)
     {
-        // Проверяем, что сотрудник активен (end_date равно null)
+        // Проверка прав доступа
+        $this->authorize('view', $employee);
+
         if ($employee->end_date !== null) {
             return response()->json(['message' => 'Сотрудник не активен'], 404);
         }
 
-        // Получаем все процессы активного сотрудника
         $processes = $employee->processes;
 
         return ProcessResource::collection($processes);
@@ -56,6 +71,9 @@ class EmployeeController extends Controller
      */
     public function webIndex()
     {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Employee::class);
+
         $employees = Employee::all();
         return view('employees.index', compact('employees'));
     }
@@ -65,6 +83,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        // Проверка прав доступа
+        $this->authorize('create', Employee::class);
+
         return view('employees.create');
     }
 
@@ -73,6 +94,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        // Проверка прав доступа
+        $this->authorize('create', Employee::class);
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -98,7 +122,7 @@ class EmployeeController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'The employee was successfully added.',
+            'message' => 'Сотрудник успешно добавлен.',
             'data' => new EmployeeResource($employee),
         ], 201);
     }
@@ -114,6 +138,9 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
 
+        // Проверка прав доступа
+        $this->authorize('view', $employee);
+
         return new EmployeeResource($employee);
     }
 
@@ -128,6 +155,9 @@ class EmployeeController extends Controller
             return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
 
+        // Проверка прав доступа
+        $this->authorize('update', $employee);
+
         return view('employees.edit', compact('employee'));
     }
 
@@ -141,6 +171,9 @@ class EmployeeController extends Controller
         if (!$employee) {
             return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('update', $employee);
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
@@ -185,6 +218,9 @@ class EmployeeController extends Controller
         if (!$employee) {
             return response()->json(['message' => 'Сотрудник не найден'], 404);
         }
+
+        // Проверка прав доступа
+        $this->authorize('delete', $employee);
 
         $employee->delete();
 

@@ -59,13 +59,17 @@ class Employee extends Authenticatable
         return $this->belongsToMany(Role::class, 'employee_log_role', 'employee_id', 'role_id');
     }
 
-    public function hasPermission($permission)
+    public function permissions()
     {
-        foreach ($this->roles as $role) {
-            if ($role->permissions->contains('slug', $permission)) {
-                return true;
-            }
-        }
-        return false;
+        return $this->belongsToMany(Permission::class, 'role_log_permission', 'role_id', 'permission_id')
+            ->wherePivotIn('role_id', $this->roles->pluck('role_id')->toArray());
+    }
+
+    public function hasPermission($permissionSlug)
+    {
+        // Проверяем, есть ли у пользователя хотя бы одна роль с указанным разрешением
+        return $this->roles->contains(function ($role) use ($permissionSlug) {
+            return $role->permissions->contains('slug', $permissionSlug);
+        });
     }
 }

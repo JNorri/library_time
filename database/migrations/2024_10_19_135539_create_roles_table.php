@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('role_name');
             $table->string('slug')->unique();
             $table->text('role_description');
+            $table->softDeletes();
         });
     }
 

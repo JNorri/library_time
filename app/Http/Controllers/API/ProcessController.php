@@ -172,4 +172,66 @@ class ProcessController extends Controller
 
         return response()->json(['message' => 'Процесс успешно удален.'], 200);
     }
+
+    /**
+     * Display a listing of the resource for API, including trashed.
+     */
+    public function indexWithTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Process::class);
+
+        $processes = Process::withTrashed()->get();
+        return ProcessResource::collection($processes);
+    }
+
+    /**
+     * Display a listing of the resource for API, only trashed.
+     */
+    public function indexOnlyTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Process::class);
+
+        $processes = Process::onlyTrashed()->get();
+        return ProcessResource::collection($processes);
+    }
+
+    /**
+     * Restore a trashed process.
+     */
+    public function restore($id)
+    {
+        $process = Process::withTrashed()->find($id);
+
+        if (!$process) {
+            return response()->json(['message' => 'Процесс не найден'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('restore', $process);
+
+        $process->restore();
+
+        return response()->json(['message' => 'Процесс успешно восстановлен'], 200);
+    }
+
+    /**
+     * Force delete a process.
+     */
+    public function forceDelete($id)
+    {
+        $process = Process::withTrashed()->find($id);
+
+        if (!$process) {
+            return response()->json(['message' => 'Процесс не найден'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('forceDelete', $process);
+
+        $process->forceDelete();
+
+        return response()->json(['message' => 'Процесс удален без возможности восстановления'], 200);
+    }
 }

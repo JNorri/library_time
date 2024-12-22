@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Добавьте это
 
 class Department extends Model
 {
-    protected $primaryKey = 'department_id';
+    use SoftDeletes; // Добавьте это
 
+    protected $primaryKey = 'department_id';
     public $timestamps = false;
 
     protected $fillable = [
@@ -16,28 +18,17 @@ class Department extends Model
         'parent_id',
     ];
 
+    protected $dates = ['deleted_at']; // Добавьте это
+
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'employee_log_department', 'department_id', 'employee_id')->withPivot('start_date', 'end_date');
+        return $this->belongsToMany(Employee::class, 'employee_log_department', 'department_id', 'employee_id')
+                    ->withPivot('start_date', 'end_date')
+                    ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
     }
-
-    // public function users()
-    // {
-    //     return $this->belongsToMany(User::class);
-    // }
 
     public function parentDepartment()
     {
         return $this->belongsTo(Department::class, 'parent_id');
     }
-
-    // public function parent()
-    // {
-    //     return $this->belongsTo(Department::class, 'parent_id');
-    // }
-
-    // public function children()
-    // {
-    //     return $this->hasMany(Department::class, 'parent_id');
-    // }
 }

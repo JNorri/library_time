@@ -17,7 +17,6 @@
                 $table->unsignedBigInteger('employee_id');
                 $table->date('start_date');
                 $table->date('end_date')->nullable();
-
                 // Foreigh Keys
                 $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('restrict');
                 $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('restrict');

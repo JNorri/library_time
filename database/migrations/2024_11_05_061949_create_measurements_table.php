@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('measurement_id');
             $table->string('measurement_name');
             $table->text('measurement_description')->nullable();
+            $table->softDeletes();
         });
     }
 

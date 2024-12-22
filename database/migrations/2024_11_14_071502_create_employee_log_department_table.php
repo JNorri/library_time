@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('employee_id');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-
             // Foreigh Keys
             $table->foreign('department_id')->references('department_id')->on('departments')->onDelete('restrict');
             $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('restrict');

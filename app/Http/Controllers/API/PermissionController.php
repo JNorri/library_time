@@ -105,4 +105,66 @@ class PermissionController extends Controller
 
         return response()->json(['message' => 'Разрешение успешно удалено.'], 200);
     }
+
+    /**
+     * Display a listing of the resource for API, including trashed.
+     */
+    public function indexWithTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Permission::class);
+
+        $permissions = Permission::withTrashed()->get();
+        return response()->json($permissions);
+    }
+
+    /**
+     * Display a listing of the resource for API, only trashed.
+     */
+    public function indexOnlyTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Permission::class);
+
+        $permissions = Permission::onlyTrashed()->get();
+        return response()->json($permissions);
+    }
+
+    /**
+     * Restore a trashed permission.
+     */
+    public function restore($id)
+    {
+        $permission = Permission::withTrashed()->find($id);
+
+        if (!$permission) {
+            return response()->json(['message' => 'Разрешение не найдено'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('restore', $permission);
+
+        $permission->restore();
+
+        return response()->json(['message' => 'Разрешение успешно восстановлено'], 200);
+    }
+
+    /**
+     * Force delete a permission.
+     */
+    public function forceDelete($id)
+    {
+        $permission = Permission::withTrashed()->find($id);
+
+        if (!$permission) {
+            return response()->json(['message' => 'Разрешение не найдено'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('forceDelete', $permission);
+
+        $permission->forceDelete();
+
+        return response()->json(['message' => 'Разрешение удалено без возможности восстановления'], 200);
+    }
 }

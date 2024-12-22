@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('date');
             $table->integer('quantity');
             $table->text('description')->nullable();
-
             // Foreigh Keys
             $table->foreign('process_id')->references('process_id')->on('processes')->onDelete('restrict');
             $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('restrict');

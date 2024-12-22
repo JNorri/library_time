@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employee_log_role', function (Blueprint $table) {
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('role_id');
-
+            
             $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
             $table->foreign('role_id')->references('role_id')->on('roles')->onDelete('cascade');
 

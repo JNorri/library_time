@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('require_description')->default(false);
             $table->unsignedBigInteger('department_id');
             $table->decimal('process_duration', 5, 3)->default(60);
-
+            $table->softDeletes();
             // Foreign Keys
             $table->foreign('measurement_id')->references('measurement_id')->on('measurements')->onDelete('cascade');
             $table->foreign('department_id')->references('department_id')->on('departments')->onDelete('cascade');

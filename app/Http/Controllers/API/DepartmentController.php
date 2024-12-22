@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class DepartmentController extends Controller
 {
     use AuthorizesRequests;
-    
+
     /**
      * Display a listing of the resource for API.
      */
@@ -250,5 +251,67 @@ class DepartmentController extends Controller
             'message' => 'Процесс успешно снят.',
             'data' => $process
         ], 200);
+    }
+
+    /**
+     * Display a listing of the resource for API, including trashed.
+     */
+    public function indexWithTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Department::class);
+
+        $departments = Department::withTrashed()->get();
+        return response()->json($departments);
+    }
+
+    /**
+     * Display a listing of the resource for API, only trashed.
+     */
+    public function indexOnlyTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Department::class);
+
+        $departments = Department::onlyTrashed()->get();
+        return response()->json($departments);
+    }
+
+    /**
+     * Restore a trashed department.
+     */
+    public function restore($id)
+    {
+        $department = Department::withTrashed()->find($id);
+
+        if (!$department) {
+            return response()->json(['message' => 'Отдел не найден'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('restore', $department);
+
+        $department->restore();
+
+        return response()->json(['message' => 'Отдел успешно восстановлен'], 200);
+    }
+
+    /**
+     * Force delete a department.
+     */
+    public function forceDelete($id)
+    {
+        $department = Department::withTrashed()->find($id);
+
+        if (!$department) {
+            return response()->json(['message' => 'Отдел не найден'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('forceDelete', $department);
+
+        $department->forceDelete();
+
+        return response()->json(['message' => 'Отдел удален без возможности восстановления'], 200);
     }
 }

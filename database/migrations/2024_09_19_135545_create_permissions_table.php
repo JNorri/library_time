@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('permission_name');
             $table->string('slug')->unique();
             $table->text('permission_description');
+            $table->softDeletes();
         });
     }
 

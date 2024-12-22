@@ -226,4 +226,66 @@ class EmployeeController extends Controller
 
         return response()->json(['message' => 'Сотрудник успешно удален.'], 200);
     }
+
+    /**
+     * Display a listing of the resource for API, including trashed.
+     */
+    public function indexWithTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Employee::class);
+
+        $employees = Employee::withTrashed()->get();
+        return response()->json($employees, 200);
+    }
+
+    /**
+     * Display a listing of the resource for API, only trashed.
+     */
+    public function indexOnlyTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Employee::class);
+
+        $employees = Employee::onlyTrashed()->get();
+        return response()->json($employees, 200);
+    }
+
+    /**
+     * Restore a trashed employee.
+     */
+    public function restore($id)
+    {
+        $employee = Employee::withTrashed()->find($id);
+
+        if (!$employee) {
+            return response()->json(['message' => 'Сотрудник не найден'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('restore', $employee);
+
+        $employee->restore();
+
+        return response()->json(['message' => 'Сотрудник успешно восстановлен'], 200);
+    }
+
+    /**
+     * Force delete an employee.
+     */
+    public function forceDelete($id)
+    {
+        $employee = Employee::withTrashed()->find($id);
+
+        if (!$employee) {
+            return response()->json(['message' => 'Сотрудник не найден'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('forceDelete', $employee);
+
+        $employee->forceDelete();
+
+        return response()->json(['message' => 'Сотрудник удален без возможности восстановления'], 200);
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('department_name');
             $table->text('department_description');
             $table->unsignedBigInteger('parent_id')->nullable();
-
+            $table->softDeletes();
             // Foreign Key
             $table->foreign('parent_id')->references('department_id')->on('departments')->onDelete('cascade');
         });

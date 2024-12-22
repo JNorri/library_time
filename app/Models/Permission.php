@@ -3,23 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Добавьте это
 
 class Permission extends Model
 {
-    protected $primaryKey = 'permission_id'; // Указываем пользовательский первичный ключ
-    public $incrementing = true; // Указываем, что первичный ключ является автоинкрементным
-    protected $keyType = 'integer'; // Указываем тип первичного ключа
-    public $timestamps = false; // Отключаем автоматическое управление временными метками
+    use SoftDeletes; // Добавьте это
+
+    protected $primaryKey = 'permission_id';
+    public $incrementing = true;
+    protected $keyType = 'integer';
+    public $timestamps = false;
+
+    protected $dates = ['deleted_at']; // Добавьте это
 
     protected $fillable = [
         'permission_name',
         'permission_description',
-        'slug'
-
+        'slug',
     ];
 
     public function permissions()
     {
-        return $this->belongsToMany(Role::class, 'role_log_permission', 'permission_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'role_log_permission', 'permission_id', 'role_id')
+            ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
     }
 }

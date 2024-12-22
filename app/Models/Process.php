@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Добавьте это
 
 class Process extends Model
 {
+    use SoftDeletes; // Добавьте это
 
     protected $primaryKey = 'process_id';
-    public $timestamps = false; // Отключаем автоматическое управление временными метками
+    public $timestamps = false;
+
+    protected $dates = ['deleted_at']; // Добавьте это
 
     protected $fillable = [
         'process_name',
@@ -19,26 +23,18 @@ class Process extends Model
         'process_duration',
     ];
 
-    // // Отношение к модели Measurement
-    // public function measurement()
-    // {
-    //     return $this->belongsTo(Measurement::class, 'measurement_id', 'measurement_id');
-    // }
-
-    // // Отношение к модели Department
-    // public function department()
-    // {
-    //     return $this->belongsTo(Department::class, 'department_id', 'department_id');
-    // }
-
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'employee_specific_process', 'process_id', 'employee_id')->withPivot('date', 'quantity', 'description');
+        return $this->belongsToMany(Employee::class, 'employee_specific_process', 'process_id', 'employee_id')
+            ->withPivot('date', 'quantity', 'description')
+            ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
     }
 
     public function processes()
     {
-        return $this->belongsToMany(Employee::class, 'employee_log_process', 'process_id', 'employee_id')->withPivot('start_date', 'end_date');
+        return $this->belongsToMany(Employee::class, 'employee_log_process', 'process_id', 'employee_id')
+            ->withPivot('start_date', 'end_date')
+            ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
     }
 
     public function measurement()

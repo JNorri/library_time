@@ -164,4 +164,66 @@ class MeasurementController extends Controller
 
         return response()->json(['message' => 'Измерение успешно удалено.'], 200);
     }
+
+    /**
+     * Display a listing of the resource for API, including trashed.
+     */
+    public function indexWithTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Measurement::class);
+
+        $measurements = Measurement::withTrashed()->get();
+        return response()->json($measurements);
+    }
+
+    /**
+     * Display a listing of the resource for API, only trashed.
+     */
+    public function indexOnlyTrashed()
+    {
+        // Проверка прав доступа
+        $this->authorize('viewAny', Measurement::class);
+
+        $measurements = Measurement::onlyTrashed()->get();
+        return response()->json($measurements);
+    }
+
+    /**
+     * Restore a trashed measurement.
+     */
+    public function restore($id)
+    {
+        $measurement = Measurement::withTrashed()->find($id);
+
+        if (!$measurement) {
+            return response()->json(['message' => 'Измерение не найдено'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('restore', $measurement);
+
+        $measurement->restore();
+
+        return response()->json(['message' => 'Измерение успешно восстановлено'], 200);
+    }
+
+    /**
+     * Force delete a measurement.
+     */
+    public function forceDelete($id)
+    {
+        $measurement = Measurement::withTrashed()->find($id);
+
+        if (!$measurement) {
+            return response()->json(['message' => 'Измерение не найдено'], 404);
+        }
+
+        // Проверка прав доступа
+        $this->authorize('forceDelete', $measurement);
+
+        $measurement->forceDelete();
+
+        return response()->json(['message' => 'Измерение удалено без возможности восстановления'], 200);
+    }
 }

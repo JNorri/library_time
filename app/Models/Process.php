@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; // Добавьте это
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Process extends Model
 {
-    use SoftDeletes; // Добавьте это
+    use SoftDeletes;
 
     protected $primaryKey = 'process_id';
     public $timestamps = false;
 
-    protected $dates = ['deleted_at']; // Добавьте это
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'process_name',
@@ -26,15 +26,13 @@ class Process extends Model
     public function employees()
     {
         return $this->belongsToMany(Employee::class, 'employee_specific_process', 'process_id', 'employee_id')
-            ->withPivot('date', 'quantity', 'description')
-            ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
+            ->withPivot('date', 'quantity', 'description');
     }
 
     public function processes()
     {
         return $this->belongsToMany(Employee::class, 'employee_log_process', 'process_id', 'employee_id')
-            ->withPivot('start_date', 'end_date')
-            ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
+            ->withPivot('start_date', 'end_date');
     }
 
     public function measurement()

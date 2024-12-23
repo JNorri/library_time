@@ -23,7 +23,7 @@ class BasePolicy
     /**
      * Проверка прав на просмотр конкретного ресурса.
      */
-    public function view(Employee $user, $model)
+    public function view(Employee $user)
     {
         return $user->hasPermission('view')
             ? Response::allow()
@@ -43,7 +43,7 @@ class BasePolicy
     /**
      * Проверка прав на обновление ресурса.
      */
-    public function update(Employee $user, $model)
+    public function update(Employee $user)
     {
         return $user->hasPermission('update')
             ? Response::allow()
@@ -53,7 +53,7 @@ class BasePolicy
     /**
      * Проверка прав на удаление ресурса.
      */
-    public function delete(Employee $user, $model)
+    public function delete(Employee $user)
     {
         return $user->hasPermission('delete')
             ? Response::allow()
@@ -63,7 +63,7 @@ class BasePolicy
     /**
      * Проверка прав на назначение.
      */
-    public function assign(Employee $user, $model)
+    public function assign(Employee $user)
     {
         return $user->hasPermission('assign')
             ? Response::allow()
@@ -73,7 +73,7 @@ class BasePolicy
     /**
      * Проверка прав на назначение.
      */
-    public function unassign(Employee $user, $model)
+    public function unassign(Employee $user)
     {
         return $user->hasPermission('unassign')
             ? Response::allow()

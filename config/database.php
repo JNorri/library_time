@@ -95,6 +95,11 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => 'prefer',
+            'dump' => [
+                'dump_binary_path' => 'D:\Installers\postgresqlbinaries\pgsql\bin', // Укажите абсолютный путь к pg_dump
+                'use_single_transaction',
+                'timeout' => 60, // Таймаут в секундах
+            ],
         ],
 
         'sqlsrv' => [

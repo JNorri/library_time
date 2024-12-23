@@ -37,7 +37,12 @@ class PermissionSeeder extends Seeder
                 ['permission_name' => 'Просмотр данных роли',               'slug' => 'view_role', 'permission_description' => 'Разрешение на просмотр данных роли'],
                 ['permission_name' => 'Редактирование данных роли',         'slug' => 'edit_role', 'permission_description' => 'Разрешение на редактирование данных роли'],
                 ['permission_name' => 'Удаление данных роли',               'slug' => 'delete_role', 'permission_description' => 'Разрешение на удаление данных роли'],
-                ['permission_name' => 'Создание данных роли',               'slug' => 'create_role', 'permission_description' => 'Разрешение на создание данных роли'],
+                ['permission_name' => 'Создание',               'slug' => 'create', 'permission_description' => 'Разрешение на создание данных роли'],
+                ['permission_name' => 'Удаление',               'slug' => 'delete', 'permission_description' => 'Разрешение на удаление данных роли'],
+                ['permission_name' => 'Просмотр чего-либо',               'slug' => 'view_any', 'permission_description' => 'Разрешение на просмотр чего-либо'],
+                ['permission_name' => 'Просмотр',               'slug' => 'view', 'permission_description' => 'Разрешение на просмотр чего-либо'],
+                ['permission_name' => 'Назначение',               'slug' => 'assign', 'permission_description' => 'Разрешение на назначение чего-либо'],
+                ['permission_name' => 'Снятие',               'slug' => 'unassign', 'permission_description' => 'Разрешение на удаление чего-либо'],
             ];
 
             foreach ($permissions as $permission) {

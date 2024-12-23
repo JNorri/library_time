@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes; // Добавьте это
 
 class Permission extends Model
 {
-    use SoftDeletes; // Добавьте это
+    use SoftDeletes;
 
     protected $primaryKey = 'permission_id';
     public $incrementing = true;
     protected $keyType = 'integer';
     public $timestamps = false;
 
-    protected $dates = ['deleted_at']; // Добавьте это
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'permission_name',
@@ -24,7 +24,6 @@ class Permission extends Model
 
     public function permissions()
     {
-        return $this->belongsToMany(Role::class, 'role_log_permission', 'permission_id', 'role_id')
-            ->wherePivotNull('deleted_at'); // Фильтрация "удаленных" записей
+        return $this->belongsToMany(Role::class, 'role_log_permission', 'permission_id', 'role_id');
     }
 }

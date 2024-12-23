@@ -57,7 +57,13 @@ class ProfileController extends Controller
         ]);
 
         // Обновляем департамент и роль
-        $employee->departments()->sync([$request->department_id]);
+        $employee->departments()->sync([
+            $request->department_id => [
+                'start_date' => now(), // Указываем текущую дату как start_date
+                'end_date' => null,    // Указываем end_date как null
+            ]
+        ]);
+
         $employee->roles()->sync([$request->role_id]);
 
         return redirect()->route('profile.edit')->with('status', 'profile-updated');

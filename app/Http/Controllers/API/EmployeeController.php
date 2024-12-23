@@ -15,6 +15,10 @@ class EmployeeController extends Controller
 {
     use AuthorizesRequests;
 
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Employee::class, 'employee');
+    // }
     /**
      * Display a listing of the resource for API.
      */
